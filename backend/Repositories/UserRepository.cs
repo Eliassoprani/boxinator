@@ -11,11 +11,12 @@ namespace backend.Repositories
         {
             _databaseContext = db;
         }
-        public async Task<User?> CreateAUser(string Name, string Email, int Phone)
+        public async Task<User?> CreateAUser(string FirstName, string LastName, string Email, int Phone)
         {
             User User = new User()
             {
-                Name = Name,
+                FirstName = FirstName,
+                LastName = LastName,
                 Email = Email,
                 Phone = Phone,
                 CreatedAt = DateTime.UtcNow,
@@ -58,18 +59,17 @@ namespace backend.Repositories
             return User;
         }
 
-        public async Task<User?> UpdateUser(int Userid, string Name, string Email, int Phone)
+        public async Task<User?> UpdateUser(int Userid, string FirstName, string LastName, string Email, int Phone)
         {
             User? User = await GetUserById(Userid);
             if (User == null)
             {
                 return null;
             }
-            User.Name = Name;
+            User.FirstName = FirstName;
+            User.LastName = LastName;
             User.Email = Email;
             User.Phone = Phone;
-            User.CreatedAt = DateTime.UtcNow;
-            User.UpdatedAt = DateTime.UtcNow;
             User.UpdatedAt = DateTime.UtcNow;
             await _databaseContext.SaveChangesAsync();
 
