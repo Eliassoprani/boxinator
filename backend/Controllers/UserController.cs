@@ -18,7 +18,7 @@ namespace backend.Controllers
 
         private static async Task<IResult> CreateUser(IUserRepository UserRepository, UserPostPayload payload)
         {
-            User? User = await UserRepository.CreateAUser(payload.Name, payload.Email, payload.Phone);
+            User? User = await UserRepository.CreateAUser(payload.FirstName, payload.LastName, payload.Email, payload.Phone);
 
             return TypedResults.Created("created", User);
         }

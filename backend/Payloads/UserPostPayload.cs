@@ -1,4 +1,4 @@
 namespace backend.Payloads
 {
-    public record UserPostPayload(string Name, string Email, int Phone);
+    public record UserPostPayload(string FirstName, string LastName, string Email, int Phone);
 }
