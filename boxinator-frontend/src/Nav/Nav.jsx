@@ -18,9 +18,16 @@ function Nav() {
 
     return (
         <>
-            <div className="nav">
+            <div className='nav'>
                 <div className='title'>
                     <h1>Boxinator</h1>
+                </div>
+
+                <div className='menu'>
+                    <div>About Us</div>
+                    {loggedIn && (
+                        <div>New Shipment</div>
+                    )}
                 </div>
 
                 {loggedIn && user.role === "guest" && (
