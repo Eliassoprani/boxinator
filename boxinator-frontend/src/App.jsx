@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Nav from './Nav/Nav';
 import Dashboard from './Dashboard/Dashboard';
 import Login from './Login/Login';
+import Footer from './Footer/Footer';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -24,6 +25,8 @@ function App() {
           <Route path="/" element={<Dashboard />} />
         </Routes>
         )}
+
+        <Footer />
       </div>
     </>
   )
