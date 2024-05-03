@@ -1,0 +1,11 @@
+.footer {
+    display: flex;
+    flex-direction: grid;
+    justify-content: space-evenly;
+    padding: 20px;
+    margin-top: auto; /* Push footer to the bottom */  
+}
+
+.footer p {
+    padding: 10px;
+}
