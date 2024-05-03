@@ -68,12 +68,12 @@ function Login() {
             token: token,
         });
 
-        setLoggedIn(true);
-
-        //Spara i local storage om användare uppdaterar/stänger fönstret
+        //Save to local storage in case user refreshes/closes window
         localStorage.setItem('user', JSON.stringify(user));
 
-        //Ev behövs ej
+        setLoggedIn(true);
+
+        //Navigate maybe not needed?
         navigate("/");
     }
 
