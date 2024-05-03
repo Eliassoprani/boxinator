@@ -8,11 +8,11 @@ namespace backend.Repositories
         public Task<IEnumerable<User>> GetAllUsers();
         public Task<User?> CreateAUser(UserPostPayload payload);
 
-        public Task<User?> UpdateUser(int Userid, string FirstName, string LastName, string Email, int Phone);
+        public Task<User?> UpdateUser(string Userid, string FirstName, string LastName, string Email, int Phone);
 
-        public Task<User?> GetUserById(int Userid);
+        public Task<User?> GetUserById(string Userid);
 
-        public Task<User?> DeleteUser(int Userid);
+        public Task<User?> DeleteUser(string Userid);
 
     }
 }

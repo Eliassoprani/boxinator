@@ -19,7 +19,7 @@ namespace backend.Models
         [Column("cost")]
         public float Cost { get; set; }
         [Column("user_id")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
         [Column("status")]
         public OrderStatus status { get; set; }
