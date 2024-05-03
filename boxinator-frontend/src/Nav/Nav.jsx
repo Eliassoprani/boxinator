@@ -1,10 +1,20 @@
 import './Nav.css'
 import { useContext } from 'react'
 import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
+
 
 function Nav() {
-    const { user, loggedIn } = useContext(UserContext);
-    const initials = user.firstName.get(0) + user.lastName.get(0);
+    const navigate = useNavigate();
+    const { user, setUser, loggedIn, setLoggedIn } = useContext(UserContext);
+
+    const logout = () => {
+        setUser({});
+        //Remove user credentials from storage
+        localStorage.clear();
+        setLoggedIn(false);
+        navigate("/");
+    }
 
     return (
         <>
@@ -12,11 +22,19 @@ function Nav() {
                 <div className='title'>
                     <h1>Boxinator</h1>
                 </div>
-                <div className='userLogo'>
-                    {loggedIn && (
-                        <p>{initials}</p>
-                    )}
-                </div>
+
+                {loggedIn && user.role === "guest" && (
+                    <button onClick={logout}>Log in / Sign up</button>
+                )}
+
+                {loggedIn && user.role !== "guest" && (
+                    <>
+                        <div className='userLogo'>
+                            <p>{user.firstName}</p>
+                        </div>
+                        <button onClick={logout}>Log out</button>
+                    </>
+                )}
             </div>
         </>
     )
