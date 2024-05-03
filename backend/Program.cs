@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddDbContext<DatabaseContext>(
-    opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("ExternalConnectionString")));
+    opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 /*
 //Remove comment and comment out above code if using docker
 builder.Services.AddDbContext<DatabaseContext>(
