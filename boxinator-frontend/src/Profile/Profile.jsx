@@ -1,11 +1,15 @@
-
+import { useContext } from 'react'
+import { UserContext } from "../App";
+import "./Profile.css"
 
 function Profile() {
+    const { user } = useContext(UserContext);
 
     return (
         <>
             <div className="profile">
-                User info that can be edited
+                <p>First name: {user.firstName}</p>
+                <p>Email: {user.email}</p>
             </div>
         </>
     )
