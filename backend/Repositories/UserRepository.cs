@@ -1,7 +1,9 @@
 using backend.Models;
 using backend.Data;
 using Microsoft.EntityFrameworkCore;
-
+using backend.Payloads;
+using backend.Enums;
+using backend.Security;
 namespace backend.Repositories
 {
     public class UserRepository : IUserRepository
@@ -11,14 +13,19 @@ namespace backend.Repositories
         {
             _databaseContext = db;
         }
-        public async Task<User?> CreateAUser(string FirstName, string LastName, string Email, int Phone)
+        public async Task<User?> CreateAUser(UserPostPayload payload)
         {
             User User = new User()
             {
-                FirstName = FirstName,
-                LastName = LastName,
-                Email = Email,
-                Phone = Phone,
+                FirstName = payload.FirstName,
+                LastName = payload.LastName,
+                Email = payload.Email,
+                Password = PasswordHasher.HashPassword(payload.Password),
+                DateOfBirth = payload.DateOfBirth,
+                CountryOfResidence = payload.CountryOfResidence,
+                Role = UserRoles.User,
+                ZipCode = payload.ZipCode,
+                Phone = payload.Phone,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };
@@ -74,6 +81,14 @@ namespace backend.Repositories
             await _databaseContext.SaveChangesAsync();
 
             return User;
+        }
+
+        public async Task<User?> Login(string Email, string Password)
+        {
+            User? User = await _databaseContext.Users
+                            .Where(m => m.Email == Email && m.Password == PasswordHasher.HashPassword(Password))
+                            .SingleOrDefaultAsync();
+            return User;   
         }
     }
 }

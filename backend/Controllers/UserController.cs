@@ -9,6 +9,7 @@ namespace backend.Controllers
         public static void ConfigureUserApi(this WebApplication app)
         {
             app.MapPost("/Users", CreateUser);
+            app.MapGet("/Users", GetAllUsers);
         }
 
         private static async Task<IResult> GetAllUsers(IUserRepository UserRepository)
@@ -18,7 +19,7 @@ namespace backend.Controllers
 
         private static async Task<IResult> CreateUser(IUserRepository UserRepository, UserPostPayload payload)
         {
-            User? User = await UserRepository.CreateAUser(payload.FirstName, payload.LastName, payload.Email, payload.Phone);
+            User? User = await UserRepository.CreateAUser(payload);
 
             return TypedResults.Created("created", User);
         }
