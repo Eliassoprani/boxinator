@@ -5,9 +5,10 @@ import Nav from './Nav/Nav';
 import Dashboard from './Dashboard/Dashboard';
 import Login from './Login/Login';
 import Footer from './Footer/Footer';
+import Profile from './Profile/Profile';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
         {loggedIn && (
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
         )}
 
