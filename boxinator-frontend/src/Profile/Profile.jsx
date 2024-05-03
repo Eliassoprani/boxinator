@@ -8,8 +8,17 @@ function Profile() {
     return (
         <>
             <div className="profile">
-                <p>First name: {user.firstName}</p>
-                <p>Email: {user.email}</p>
+                {user.role !== "guest" && (
+                    <div>
+                        <p>First name: {user.firstName}</p>
+                        <p>Email: {user.email}</p>
+                    </div>
+                )}
+                {user.role === "guest" && (
+                    <div>
+                        <p>Logged in as guest.</p>
+                    </div>
+                )}
             </div>
         </>
     )
