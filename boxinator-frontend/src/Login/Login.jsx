@@ -91,9 +91,24 @@ function Login() {
         login();
     }
 
+    const guestLogin = () => {
+        setUser({
+            role: "guest",
+        });
+
+        localStorage.setItem('user', JSON.stringify(user));
+
+        setLoggedIn(true);
+    }
+
     return (
         <>
             <div className="login">
+
+                <div className="guest-login">
+                    <p>Do not want to sign up?</p>
+                    <button onClick={guestLogin}>Continue as guest</button>
+                </div>
 
                 {!signUp && (
                     <>
@@ -130,7 +145,7 @@ function Login() {
 
                         <div className="switch">
                             <p>Not already a user?</p>
-                            <button className="sign-up-btn" onClick={() => setSignUp(true)}>Sign up</button>
+                            <button onClick={() => setSignUp(true)}>Sign up</button>
                         </div>
                     </>
                 )}
@@ -230,7 +245,7 @@ function Login() {
 
                         <div className="switch">
                             <p>Already a user?</p>
-                            <button className="log-in-btn" onClick={() => setSignUp(false)}>Log in</button>
+                            <button onClick={() => setSignUp(false)}>Log in</button>
                         </div>
                     </>
                 )}
