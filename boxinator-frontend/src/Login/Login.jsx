@@ -6,7 +6,7 @@ import { UserContext } from "../App";
 function Login() {
     const navigate = useNavigate();
 
-    const { user, setUser, loggedIn, setLoggedIn } = useContext(UserContext);
+    const { user, setUser, setLoggedIn } = useContext(UserContext);
 
     const initialState = {
         firstName: "",
@@ -33,6 +33,9 @@ function Login() {
     };
 
     const login = async () => {
+
+        //A confirmation e-mail should be sent before an account becomes activated. (https://sendgrid.com/)
+
         const logInResponse = await fetch("http://localhost:4000/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -106,7 +109,6 @@ function Login() {
             <div className="login">
 
                 <div className="guest-login">
-                    <p>Do not want to sign up?</p>
                     <button onClick={guestLogin}>Continue as guest</button>
                 </div>
 
@@ -226,7 +228,7 @@ function Login() {
                             </label>
 
                             <label>
-                                Contact number:
+                                Phone number:
                                 <input
                                     type="text"
                                     name="phone"
