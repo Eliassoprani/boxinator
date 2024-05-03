@@ -11,7 +11,7 @@ const UserContext = createContext();
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
