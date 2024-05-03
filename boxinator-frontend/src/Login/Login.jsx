@@ -1,9 +1,12 @@
 import './Login.css'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../App";
 
 function Login() {
     const navigate = useNavigate();
+
+    const { user, setUser, loggedIn, setLoggedIn } = useContext(UserContext);
 
     const initialState = {
         firstName: "",
@@ -11,9 +14,9 @@ function Login() {
         email: "",
         password: "",
         dateOfBirth: "",
+        phone: "",
         countryOfResidence: "",
         zipCode: "",
-        contactNumber: "",
     };
 
     const [signUp, setSignUp] = useState(false);
@@ -29,12 +32,63 @@ function Login() {
         }));
     };
 
-    const login = () => {
-        navigate("/dashboard");
+    const login = async () => {
+        const logInResponse = await fetch("http://localhost:4000/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: userData.email, password: userData.password }),
+        });
+
+        if (!logInResponse.ok) {
+            throw new Error("Failed to log in");
+        }
+
+        const {
+            id,
+            firstName,
+            lastName,
+            email,
+            dateOfBirth,
+            phone,
+            countryOfResidence,
+            zipCode,
+            role,
+            token } = await logInResponse.json();
+
+        setUser({
+            id: id,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            dateOfBirth: dateOfBirth,
+            phone: phone,
+            countryOfResidence: countryOfResidence,
+            zipCode: zipCode,
+            role: role,
+            token: token,
+        });
+
+        setLoggedIn(true);
+
+        //Spara i local storage om användare uppdaterar/stänger fönstret
+        localStorage.setItem('user', JSON.stringify(user));
+
+        //Ev behövs ej
+        navigate("/");
     }
 
-    const signup = () => {
-        navigate("/dashboard");
+    const signup = async () => {
+        const signUpResponse = await fetch("http://localhost:4000/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userData),
+        });
+
+        if (!signUpResponse.ok) {
+            throw new Error("Failed to sign up");
+        }
+
+        login();
     }
 
     return (
@@ -83,97 +137,98 @@ function Login() {
 
                 {signUp && (
                     <>
-                    <form className="form">
-                        <h2>Sign up Page</h2>
+                        <form className="form">
+                            <h2>Sign up Page</h2>
 
-                        <label>
-                            First Name:
-                            <input
-                                type="text"
-                                name="firstName"
-                                value={userData.firstName}
-                                onChange={handleChange}
-                            />
-                        </label>
+                            <label>
+                                First Name:
+                                <input
+                                    type="text"
+                                    name="firstName"
+                                    value={userData.firstName}
+                                    onChange={handleChange}
+                                />
+                            </label>
 
-                        <label>
-                            Last Name:
-                            <input
-                                type="text"
-                                name="lastName"
-                                value={userData.lastName}
-                                onChange={handleChange}
-                            />
-                        </label>
+                            <label>
+                                Last Name:
+                                <input
+                                    type="text"
+                                    name="lastName"
+                                    value={userData.lastName}
+                                    onChange={handleChange}
+                                />
+                            </label>
 
-                        <label>
-                            Email:
-                            <input
-                                type="text"
-                                name="email"
-                                value={userData.email}
-                                onChange={handleChange}
-                            />
-                        </label>
+                            <label>
+                                Email:
+                                <input
+                                    type="text"
+                                    name="email"
+                                    value={userData.email}
+                                    onChange={handleChange}
+                                />
+                            </label>
 
-                        <label>
-                            Password:
-                            <input
-                                type="password"
-                                name="password"
-                                value={userData.password}
-                                onChange={handleChange}
-                            />
-                        </label>
+                            <label>
+                                Password:
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={userData.password}
+                                    onChange={handleChange}
+                                />
+                            </label>
 
-                        <label>
-                            Date of birth:
-                            <input
-                                type="text"
-                                name="dateOfBirth"
-                                value={userData.dateOfBirth}
-                                onChange={handleChange}
-                            />
-                        </label>
+                            <label>
+                                Date of birth:
+                                <input
+                                    type="text"
+                                    name="dateOfBirth"
+                                    value={userData.dateOfBirth}
+                                    onChange={handleChange}
+                                />
+                            </label>
 
-                        <label>
-                            Country of residence:
-                            <input
-                                type="text"
-                                name="countryOfResidence"
-                                value={userData.countryOfResidence}
-                                onChange={handleChange}
-                            />
-                        </label>
+                            <label>
+                                Country of residence:
+                                <input
+                                    type="text"
+                                    name="countryOfResidence"
+                                    value={userData.countryOfResidence}
+                                    onChange={handleChange}
+                                />
+                            </label>
 
-                        <label>
-                            Zip code:
-                            <input
-                                type="text"
-                                name="zipCode"
-                                value={userData.zipCode}
-                                onChange={handleChange}
-                            />
-                        </label>
+                            <label>
+                                Zip code:
+                                <input
+                                    type="text"
+                                    name="zipCode"
+                                    value={userData.zipCode}
+                                    onChange={handleChange}
+                                />
+                            </label>
 
-                        <label>
-                            Contact number:
+                            <label>
+                                Contact number:
+                                <input
+                                    type="text"
+                                    name="phone"
+                                    value={userData.phone}
+                                    onChange={handleChange}
+                                />
+                            </label>
+
                             <input
-                                type="text"
-                                name="contactNumber"
-                                value={userData.contactNumber}
-                                onChange={handleChange}
+                                className="form-submit"
+                                type="submit"
+                                value="Sign up"
+                                onClick={signup}
                             />
-                        </label>
-                        <input
-                            className="form-submit"
-                            type="submit"
-                            value="Sign up"
-                            onClick={signup}
-                        />
-                    </form>
-                    
-                    <div className="switch">
+                        </form>
+
+                        <div className="switch">
                             <p>Already a user?</p>
                             <button className="log-in-btn" onClick={() => setSignUp(false)}>Log in</button>
                         </div>
