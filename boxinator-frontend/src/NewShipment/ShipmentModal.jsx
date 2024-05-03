@@ -69,7 +69,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                     <label>
                         Box colour:
                         <input
-                            type="text"
+                            type="color"
                             name="boxColour"
                             value={shipmentData.boxColour}
                             onChange={handleChange}
