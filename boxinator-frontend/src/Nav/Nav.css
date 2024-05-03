@@ -1,3 +1,10 @@
 .nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     padding: 30px;
+}
+
+.nav div {
+    padding: 20px;
 }
