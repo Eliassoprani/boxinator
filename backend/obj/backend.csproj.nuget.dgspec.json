@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\AHarns\\Documents\\boxinator\\backend\\backend.csproj": {}
+    "C:\\Users\\ESopra\\boxinator\\backend\\backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\AHarns\\Documents\\boxinator\\backend\\backend.csproj": {
+    "C:\\Users\\ESopra\\boxinator\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\AHarns\\Documents\\boxinator\\backend\\backend.csproj",
+        "projectUniqueName": "C:\\Users\\ESopra\\boxinator\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Users\\AHarns\\Documents\\boxinator\\backend\\backend.csproj",
-        "packagesPath": "C:\\Users\\AHarns\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\AHarns\\Documents\\boxinator\\backend\\obj\\",
+        "projectPath": "C:\\Users\\ESopra\\boxinator\\backend\\backend.csproj",
+        "packagesPath": "C:\\Users\\ESopra\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ESopra\\boxinator\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\AHarns\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\ESopra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,11 +34,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -115,7 +112,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
