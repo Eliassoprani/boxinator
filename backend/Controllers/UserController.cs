@@ -29,7 +29,12 @@ namespace backend.Controllers
         /// <returns></returns> 200 if the payload is ok and the user is in the database, 400 if the payload is bad or missing
         public static async Task<IResult> Login(IUserRepository userRepository, LoginPayload payload)
         {
-            return TypedResults.Ok(userRepository.Login(payload));
+            LoginResPayload? response = await userRepository.Login(payload);
+            if(response != null){
+                return TypedResults.Ok(response);
+            }
+
+            return TypedResults.BadRequest();
         }
 
         /// <summary>
@@ -40,7 +45,13 @@ namespace backend.Controllers
         /// <returns></returns> 201 created if successfull, 400 if the payload is bad or missing
         public static async Task<IResult> Register(IUserRepository userRepository, RegisterPayload payload)
         {
-            return TypedResults.Ok(userRepository.CreateAUser(payload));
+            RegisterResPayload? response = await userRepository.CreateAUser(payload);
+            if (response != null)
+            {
+
+                return TypedResults.Ok();
+            }
+            return TypedResults.BadRequest();
         }
 
         public static async Task<IResult> getAllUsers(UserManager<User> userManager)
@@ -55,7 +66,8 @@ namespace backend.Controllers
         public static async Task<IResult> deleteUserById(IUserRepository userRepository, string id)
         {
             bool userDeleted = await userRepository.DeleteUser(id);
-            if (userDeleted) {
+            if (userDeleted)
+            {
                 return TypedResults.Ok("user has been deleted");
             }
             return TypedResults.BadRequest();
