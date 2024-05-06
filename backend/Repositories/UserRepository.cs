@@ -23,20 +23,29 @@ namespace backend.Repositories
         {
             if (payload.Email == null) return null;
             if (payload.Password == null || payload.Password == "") return null;
+            DateTime ca = DateTime.UtcNow;
+            Console.WriteLine(ca);
             var result = await _userManager.CreateAsync(
                 new User
                 {
-                    UserName = payload.Username,
+                    UserName = payload.Email,
                     Email = payload.Email,
-
-                    Role = UserRoles.User
+                    FirstName = payload.FirstName,
+                    LastName = payload.LastName,
+                    DateOfBirth = payload.DateOfBirth,
+                    Phone = payload.Phone,
+                    CountryOfResidence = payload.CountryOfResidence,
+                    ZipCode = payload.ZipCode,
+                    Role = UserRoles.User,
+                    CreatedAt = ca,
+                    UpdatedAt = ca
                 },
                 payload.Password!
             );
 
             if (result.Succeeded)
             {
-                return new RegisterResPayload(payload.Username, payload.Email);
+                return new RegisterResPayload(payload.Email);
             }
             else
             {
@@ -93,7 +102,7 @@ namespace backend.Repositories
 
             var token = _tokenService.CreateToken(user);
 
-            return new LoginResPayload(token, user.UserName, user.Email, user.Id, user.Role);
+            return new LoginResPayload(token, user.Email, user.Id, user.Role, user.FirstName, user.LastName, user.DateOfBirth, user.Phone, user.CountryOfResidence, user.ZipCode);
 
         }
     }

@@ -5,9 +5,9 @@ namespace backend.Payloads
     public class AuthPayload
     {
         public record LoginPayload(string Email, string Password);
-        public record LoginResPayload(string Token, string Username, string Email, string Id, UserRoles Role);
+        public record LoginResPayload(string Token, string Email, string Id, UserRoles Role, string FirstName, string LastName, DateTime DateOfBirth, int Phone, string CountryOfResidence, int ZipCode);
 
-        public record RegisterPayload(string Username, string Email, string Password);
-        public record RegisterResPayload(string Username, string Email);
+        public record RegisterPayload(string Email, string Password, string FirstName, string LastName, DateTime DateOfBirth, int Phone, string CountryOfResidence, int ZipCode);
+        public record RegisterResPayload(string Email);
     }
 }
