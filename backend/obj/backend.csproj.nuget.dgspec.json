@@ -1,24 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\elias\\boxinator\\backend\\backend.csproj": {}
+    "C:\\Users\\AHarns\\Documents\\boxinator\\backend\\backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\elias\\boxinator\\backend\\backend.csproj": {
+    "C:\\Users\\AHarns\\Documents\\boxinator\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\elias\\boxinator\\backend\\backend.csproj",
+        "projectUniqueName": "C:\\Users\\AHarns\\Documents\\boxinator\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Users\\elias\\boxinator\\backend\\backend.csproj",
-        "packagesPath": "C:\\Users\\elias\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\elias\\boxinator\\backend\\obj\\",
+        "projectPath": "C:\\Users\\AHarns\\Documents\\boxinator\\backend\\backend.csproj",
+        "packagesPath": "C:\\Users\\AHarns\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\AHarns\\Documents\\boxinator\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\elias\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\AHarns\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
@@ -40,6 +43,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "Microsoft.AspNet.Cors": {
               "target": "Package",
               "version": "[5.3.0, )"
@@ -108,7 +115,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
