@@ -115,7 +115,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
-app.ConfigureAuthApi();
+app.ConfigureUserApi();
 app.Run();
 
 public partial class Program { } // needed for testing - please ignore
