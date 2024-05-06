@@ -32,19 +32,21 @@ function Login() {
         }));
     };
 
-    const login = async () => {
-
+    const login = async (e) => {
+        e.preventDefault();
         //A confirmation e-mail should be sent before an account becomes activated. (https://sendgrid.com/)
 
-        const logInResponse = await fetch("http://localhost:4000/login", {
+        const logInResponse = await fetch("http://localhost:5012/authentication/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: userData.email, password: userData.password }),
+            //body: '{"email": "abc@abc.com", "password": "ABCdef123"}'
         });
 
         if (!logInResponse.ok) {
             throw new Error("Failed to log in");
         }
+        console.log(logInResponse);
 
         const {
             id,
@@ -81,7 +83,7 @@ function Login() {
     }
 
     const signup = async () => {
-        const signUpResponse = await fetch("http://localhost:4000/signup", {
+        const signUpResponse = await fetch("http://localhost:5012/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userData),
