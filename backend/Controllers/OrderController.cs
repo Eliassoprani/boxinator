@@ -9,10 +9,11 @@ namespace backend.Controllers
 {
     public static class OrderController
     {
-        public static void ConfigureOrderController(this WebApplication app)
+        public static void ConfigureOrdersApi(this WebApplication app)
         {
-            app.MapGet("/orders", GetAllOrders);
-            app.MapGet("/orders/{userId}", GetAllUserOrders);
+            var authGroup = app.MapGroup("orders");
+            authGroup.MapGet("/", GetAllOrders);
+            authGroup.MapGet("/{userId}", GetAllUserOrders);
             //app.MapPost("/Orders", CreateAnOrder);
             //app.MapPut("/Orders", UpdateOrder);
             //app.MapGet("/Orders/{OrderId}", GetOrderById);
@@ -22,13 +23,15 @@ namespace backend.Controllers
         //[Authorize(Roles = "Admin")]
         private static async Task<IResult> GetAllOrders(IOrderRepository OrderRepository)
         {
-            return TypedResults.Ok(await OrderRepository.GetAllOrders());    
+            //return TypedResults.Ok(await OrderRepository.GetAllOrders());    
+            return null;
         }
 
         //För roll "user" där endast de ordrar med user id returneras
         private static async Task<IResult> GetAllUserOrders(IOrderRepository OrderRepository, string UserId)
         {
-            return TypedResults.Ok(await OrderRepository.GetAllUserOrders(UserId)); 
+            //return TypedResults.Ok(await OrderRepository.GetAllUserOrders(UserId)); 
+            return null;
         }
 
 /*

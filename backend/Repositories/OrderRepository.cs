@@ -18,6 +18,7 @@ namespace backend.Repositories
             _databaseContext = db;
         }
 
+        //Obs installera IMapper med commando: dotnet add package AutoMapper
         private readonly IMapper _mapper;
 
         public OrderRepository(IMapper mapper)
