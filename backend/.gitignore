@@ -1,0 +1,8 @@
+# Ignore compiled binaries
+bin/
+obj/
+
+# Ignore user-specific files
+*.userprefs
+*.dll
+*.cache
