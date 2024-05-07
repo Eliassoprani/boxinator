@@ -16,6 +16,6 @@ namespace backend.Repositories
 
         public Task<Order?> UpdateOrder(OrderPostPayload payload, int OrderId);
 
-        /*public Task<Order?> DeleteOrder(string OrderId);*/
+        public Task<Order?> DeleteOrder(int OrderId);
     }
 }

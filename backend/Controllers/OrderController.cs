@@ -20,6 +20,7 @@ namespace backend.Controllers
             authGroup.MapPost("/createAnOrder", createAnOrder);
             authGroup.MapGet("/getAllUserOrders", getAllUserOrders);
             authGroup.MapPut("/updateOrder", updateOrder);
+            authGroup.MapDelete("/deleteOrder", deleteOrder);
         }
 
         [Authorize(Roles = "Admin")]
@@ -91,6 +92,16 @@ namespace backend.Controllers
         {
             //Hämta från IOrderRepository
             var order = await orderRepository.UpdateOrder(payload, OrderId);
+
+            if(order == null) return TypedResults.BadRequest();
+
+            return TypedResults.Ok(order);
+        }
+
+
+        public static async Task<IResult> deleteOrder([FromServices] IOrderRepository orderRepository, int OrderId)
+        {
+            var order = await orderRepository.DeleteOrder(OrderId);
 
             if(order == null) return TypedResults.BadRequest();
 

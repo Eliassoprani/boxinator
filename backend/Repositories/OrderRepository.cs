@@ -99,10 +99,18 @@ namespace backend.Repositories
             return order;
         }
 
-        /*
-                public async Task<Order?> DeleteOrder(string OrderId)
-                {
-                    return null;
-                }*/
+        public async Task<Order?> DeleteOrder(int OrderId)
+        {
+            //Hämta order
+            var order = await GetOrderById(OrderId);
+
+            //Radera order i databas kontext
+            _databaseContext.Orders.Remove(order);
+
+            //Spara ändring i databas
+            await _databaseContext.SaveChangesAsync();
+
+            return order;
+        }
     }
 }
