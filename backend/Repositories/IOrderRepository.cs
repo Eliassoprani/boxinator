@@ -8,9 +8,9 @@ namespace backend.Repositories
     {
         public Task<IEnumerable<Order>> GetAllOrders();
 
-        /*public Task<IEnumerable<OrderDTO>> GetAllUserOrders(string UserId);
-
         public Task<Order?> CreateAnOrder(OrderPostPayload payload);
+
+        /*public Task<IEnumerable<Order>> GetAllUserOrders(string UserId);
 
         public Task<Order?> UpdateOrder(OrderPostPayload payload);
 
