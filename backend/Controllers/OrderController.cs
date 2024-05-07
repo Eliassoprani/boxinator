@@ -7,6 +7,7 @@ using backend.Repositories;
 using backend.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
@@ -15,10 +16,10 @@ namespace backend.Controllers
         public static void ConfigureOrderApi(this WebApplication app)
         {
             var authGroup = app.MapGroup("orders");
-            authGroup.MapPost("/getAllOrders", getAllOrders);
+            authGroup.MapGet("/getAllOrders", getAllOrders);
         }
 
-        public static async Task<IResult> getAllOrders(IOrderRepository orderRepository)
+        public static async Task<IResult> getAllOrders([FromServices] IOrderRepository orderRepository)
         {
             //Hämta från IOrderRepository
             var ordersTask = orderRepository.GetAllOrders();

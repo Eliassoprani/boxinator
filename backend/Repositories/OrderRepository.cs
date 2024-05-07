@@ -18,15 +18,10 @@ namespace backend.Repositories
             _databaseContext = db;
         }
 
-        //Obs installera IMapper med commando: dotnet add package AutoMapper
-
         public async Task<IEnumerable<Order>> GetAllOrders()
         {
             // Retrieve orders from the database
             var orders = await _databaseContext.Orders.ToListAsync();
-
-            // Map entity models to DTOs using AutoMapper
-            //var orderDtos = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDTO>>(orders);
 
             return orders;
         }
