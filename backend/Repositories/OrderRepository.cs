@@ -19,24 +19,19 @@ namespace backend.Repositories
         }
 
         //Obs installera IMapper med commando: dotnet add package AutoMapper
-        private readonly IMapper _mapper;
 
-        public OrderRepository(IMapper mapper)
-        {
-            _mapper = mapper;
-        }
-
-        public async Task<IEnumerable<OrderDTO>> GetAllOrders()
+        public async Task<IEnumerable<Order>> GetAllOrders()
         {
             // Retrieve orders from the database
             var orders = await _databaseContext.Orders.ToListAsync();
 
             // Map entity models to DTOs using AutoMapper
-            var orderDtos = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDTO>>(orders);
+            //var orderDtos = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDTO>>(orders);
 
-            return orderDtos;
+            return orders;
         }
 
+/*
         public async Task<IEnumerable<OrderDTO>> GetAllUserOrders(string UserId)
         {
             //Filtrera ut och returnera endast de ordrar som har rätt user
@@ -65,7 +60,7 @@ namespace backend.Repositories
             return null;
         }
 
-        /*public async Task<Order?> DeleteOrder(string OrderId)
+        public async Task<Order?> DeleteOrder(string OrderId)
         {
             return null;
         }*/

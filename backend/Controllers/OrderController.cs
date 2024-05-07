@@ -1,75 +1,41 @@
+using System.Web.Http;
+using backend.DTOs;
+using backend.Enums;
 using backend.Models;
 using backend.Payloads;
 using backend.Repositories;
-using System.Web.Http;
+using backend.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace backend.Controllers
 {
-    public static class OrderController
+    public static class OrderApi
     {
-        public static void ConfigureOrdersApi(this WebApplication app)
+        public static void ConfigureOrderApi(this WebApplication app)
         {
             var authGroup = app.MapGroup("orders");
-            authGroup.MapGet("/", GetAllOrders);
-            authGroup.MapGet("/{userId}", GetAllUserOrders);
-            //app.MapPost("/Orders", CreateAnOrder);
-            //app.MapPut("/Orders", UpdateOrder);
-            //app.MapGet("/Orders/{OrderId}", GetOrderById);
-            //app.MapDelete("/Orders/{OrderId}", DeleteOrder);
+            authGroup.MapPost("/getAllOrders", getAllOrders);
         }
 
-        //[Authorize(Roles = "Admin")]
-        private static async Task<IResult> GetAllOrders(IOrderRepository OrderRepository)
+        public static async Task<IResult> getAllOrders(IOrderRepository orderRepository)
         {
-            //return TypedResults.Ok(await OrderRepository.GetAllOrders());    
-            return null;
-        }
+            //Hämta från IOrderRepository
+            var ordersTask = orderRepository.GetAllOrders();
 
-        //För roll "user" där endast de ordrar med user id returneras
-        private static async Task<IResult> GetAllUserOrders(IOrderRepository OrderRepository, string UserId)
-        {
-            //return TypedResults.Ok(await OrderRepository.GetAllUserOrders(UserId)); 
-            return null;
-        }
+            //Vänta tills alla orders hämtats
+            var orders = await ordersTask;
 
-/*
-        private static async Task<IResult> CreateAnOrder(IOrderRepository OrderRepository, OrderPostPayload payload)
-        {
-            Order? Order = await OrderRepository.CreateAnOrder(payload);
+            //Gör om till DTOs
+            var orderDTOs = new List<OrderDTO>();
 
-            return TypedResults.Created("created", Order);
-        }
-
-        //[Authorize(Roles = "Admin")]
-        private static async Task<IResult> UpdateOrder(IOrderRepository OrderRepository, OrderPostPayload payload)
-        {
-            Order? Order = await OrderRepository.UpdateOrder(payload);
-
-            return TypedResults.Created("created", Order);
-        }
-
-        private static async Task<IResult> GetOrderById(IOrderRepository OrderRepository, string OrderId)
-        {
-            Order? Order = await OrderRepository.GetOrderById(orderId);
-
-            return TypedResults.Ok(Order);
-        }
-
-        //[Authorize(Roles = "Admin")]
-        /*public static async Task<IResult> deleteOrder(IOrderRepository OrderRepository, string OrderId) {
-            var order = await OrderRepository.GetOrderById(OrderId);
-
-            if (order == null) return TypedResults.NotFound($"Could not find order with id: {OrderId}");
-
-            var result = await OrderRepository.deleteOrder(OrderId);
-
-            if (result.Succeeded) {
-                return TypedResults.Ok($"Order with id: {OrderId} has been removed");
+            foreach (var order in orders)
+            {
+                var orderDTO = new OrderDTO(order);
+                orderDTOs.Add(orderDTO);
             }
 
-            return TypedResults.BadRequest();
-        }*/
+            return TypedResults.Ok(orderDTOs);
+        }
     }
 }
