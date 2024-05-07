@@ -73,13 +73,15 @@ namespace backend.Repositories
             return userOrders;
         }
 
+        public async Task<Order?> GetOrderById(int OrderId)
+        {
+            var order = await _databaseContext.Orders.FirstOrDefaultAsync(order => order.Id == OrderId);
+
+            return order;
+        }
+
         /*
                 public async Task<Order?> UpdateOrder(OrderPostPayload payload)
-                {
-                    return null;
-                }
-        
-                public async Task<Order?> GetOrderById(string OrderId)
                 {
                     return null;
                 }
