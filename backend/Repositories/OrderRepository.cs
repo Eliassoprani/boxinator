@@ -63,20 +63,17 @@ namespace backend.Repositories
             return order;
         }
 
+        public async Task<IEnumerable<Order>> GetAllUserOrders(string UserId)
+        {
+            //Filtrera ut och returnera endast de ordrar som har rätt user
+            List<Order> userOrders = await _databaseContext
+                .Orders.Where(order => order.UserId == UserId)
+                .ToListAsync();
+
+            return userOrders;
+        }
+
         /*
-                public async Task<IEnumerable<OrderDTO>> GetAllUserOrders(string UserId)
-                {
-                    //Filtrera ut och returnera endast de ordrar som har rätt user
-                    List<Order> userOrders = await _databaseContext
-                        .Orders.Where(order => order.UserId == UserId)
-                        .ToListAsync();
-        
-                    // Map entity models to DTOs using AutoMapper
-                    var userOrderDtos = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDTO>>(userOrders);
-        
-                    return userOrderDtos;
-                }
-        
                 public async Task<Order?> UpdateOrder(OrderPostPayload payload)
                 {
                     return null;
