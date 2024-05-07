@@ -102,6 +102,7 @@ builder.Services.AddDbContext<DatabaseContext>(
     opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<TokenService, TokenService>();
 
 var app = builder.Build();
