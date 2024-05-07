@@ -10,8 +10,9 @@ namespace backend.DTOs
         public string RecieverName { get; set; }
         public float Weight { get; set; }
         public string BoxColor { get; set; }
-        //public Country Country { get; set; }
-        //public OrderStatus status { get; set; }
+        public int CountryId { get; set; }  //Switch för att få country name och multiplier
+        public int Status { get; set; } //Switch på status för att få ut enum/string
+        public float Cost { get; set; }
 
         public OrderDTO(Order order)
         {
@@ -19,10 +20,9 @@ namespace backend.DTOs
             RecieverName = order.RecieverName;
             Weight = order.Weight;
             BoxColor = order.BoxColor;
-            //CountryId = order.Country.CountryId;
-            //CountryName = order.Country.CountryName;
-            //CountryMultiplier = order.Country.CountryMultiplier;
-            //OrderStatus = order.status;
+            CountryId = order.CountryId;
+            Status = order.Status;
+            Cost = order.Cost;
         }
     }
 }

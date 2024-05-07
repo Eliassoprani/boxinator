@@ -6,8 +6,8 @@ using backend.Payloads;
 using backend.Repositories;
 using backend.Services;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers
 {
@@ -19,7 +19,10 @@ namespace backend.Controllers
             authGroup.MapGet("/getAllOrders", getAllOrders);
         }
 
-        public static async Task<IResult> getAllOrders([FromServices] IOrderRepository orderRepository)
+        [Authorize(Roles = "Admin")]
+        public static async Task<IResult> getAllOrders(
+            [FromServices] IOrderRepository orderRepository
+        )
         {
             //Hämta från IOrderRepository
             var ordersTask = orderRepository.GetAllOrders();

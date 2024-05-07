@@ -11,6 +11,5 @@ namespace backend.Models
         public string CountryName { get; set; }
          [Column("multiplier")]
         public float Multiplier { get; set; }
-
     }
 }
