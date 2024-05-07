@@ -22,7 +22,6 @@ namespace backend.Models
         public string UserId { get; set; }
         public User User { get; set; }
         [Column("status")]
-        public OrderStatus status { get; set; }
-
+        public int Status { get; set; }
     }
 }
