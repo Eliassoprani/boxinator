@@ -71,5 +71,19 @@ namespace backend.Controllers
 
             return TypedResults.Ok(orderDTOs);
         }
+
+        public static async Task<IResult> getOrderById([FromServices] IOrderRepository orderRepository, int OrderId)
+        {
+            //Hämta från IOrderRepository
+            var orderTask = orderRepository.GetOrderById(OrderId);
+
+            //Vänta tills alla orders hämtats
+            var order = await orderTask;
+
+            //Gör om till DTO
+            var orderDTO = new OrderDTO(order);
+
+            return TypedResults.Ok(orderDTO);
+        }
     }
 }
