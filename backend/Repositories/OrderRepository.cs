@@ -75,17 +75,31 @@ namespace backend.Repositories
 
         public async Task<Order?> GetOrderById(int OrderId)
         {
-            var order = await _databaseContext.Orders.FirstOrDefaultAsync(order => order.Id == OrderId);
+            var order = await _databaseContext.Orders.FirstOrDefaultAsync(order =>
+                order.Id == OrderId
+            );
+
+            return order;
+        }
+
+        public async Task<Order?> UpdateOrder(OrderPostPayload payload, int OrderId)
+        {
+            //Hämta order 
+            var order = await GetOrderById(OrderId);
+
+            //Uppdatera order
+            order.RecieverName = payload.RecieverName;
+            order.Weight = payload.Weight;
+            order.BoxColor = payload.BoxColor;
+            order.Status = payload.Status;
+ 
+            //Spara i databas
+            await _databaseContext.SaveChangesAsync();
 
             return order;
         }
 
         /*
-                public async Task<Order?> UpdateOrder(OrderPostPayload payload)
-                {
-                    return null;
-                }
-        
                 public async Task<Order?> DeleteOrder(string OrderId)
                 {
                     return null;
