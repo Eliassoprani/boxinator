@@ -12,10 +12,10 @@ namespace backend.Repositories
 
         public Task<IEnumerable<Order>> GetAllUserOrders(string UserId);
 
-        public Task<Order?> GetOrderById(string OrderId);
+        public Task<Order?> GetOrderById(int OrderId);
 
-        /*public Task<Order?> UpdateOrder(OrderPostPayload payload);
+        public Task<Order?> UpdateOrder(OrderPostPayload payload, int OrderId);
 
-        public Task<Order?> DeleteOrder(string OrderId);*/
+        /*public Task<Order?> DeleteOrder(string OrderId);*/
     }
 }

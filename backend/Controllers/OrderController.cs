@@ -19,6 +19,7 @@ namespace backend.Controllers
             authGroup.MapGet("/getAllOrders", getAllOrders);
             authGroup.MapPost("/createAnOrder", createAnOrder);
             authGroup.MapGet("/getAllUserOrders", getAllUserOrders);
+            authGroup.MapPut("/updateOrder", updateOrder);
         }
 
         [Authorize(Roles = "Admin")]
@@ -84,6 +85,16 @@ namespace backend.Controllers
             var orderDTO = new OrderDTO(order);
 
             return TypedResults.Ok(orderDTO);
+        }
+
+        public static async Task<IResult> updateOrder([FromServices] IOrderRepository orderRepository, OrderPostPayload payload, int OrderId)
+        {
+            //Hämta från IOrderRepository
+            var order = await orderRepository.UpdateOrder(payload, OrderId);
+
+            if(order == null) return TypedResults.BadRequest();
+
+            return TypedResults.Ok(order);
         }
     }
 }
