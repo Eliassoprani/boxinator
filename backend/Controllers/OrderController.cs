@@ -20,9 +20,7 @@ namespace backend.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public static async Task<IResult> getAllOrders(
-            [FromServices] IOrderRepository orderRepository
-        )
+        public static async Task<IResult> getAllOrders([FromServices] IOrderRepository orderRepository)
         {
             //Hämta från IOrderRepository
             var ordersTask = orderRepository.GetAllOrders();
@@ -40,6 +38,16 @@ namespace backend.Controllers
             }
 
             return TypedResults.Ok(orderDTOs);
+        }
+
+        public static async Task<IResult> CreateAnOrder([FromServices] IOrderRepository orderRepository)
+        {
+            //Hämta från IOrderRepository
+            var order = await orderRepository.GetAllOrders();
+
+            if(order == null) return TypedResults.BadRequest();
+
+            return TypedResults.Created(order);
         }
     }
 }
