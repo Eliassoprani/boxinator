@@ -42,9 +42,23 @@ namespace backend.Repositories
                 Status = payload.Status,
                 //if(payload.Email)   //Om email finns med => role är guest. Email bör sparas i databas
                 //Cost = payload.Cost;  //Bör räknas ut i frontend så användare kan se vad det kostar
+
+                //Dummy värden för att testa databas
+                CountryId = 2,
+                UserId = "6ed30c52-372e-4c3d-a2a3-8a893fc56a3e",
             };
 
-            //Lägg till manuellt i databas?
+            //Lägg till manuellt i databas
+            try
+            {
+                _databaseContext.Orders.Add(order);
+                await _databaseContext.SaveChangesAsync();
+                return order;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
 
             return order;
         }
