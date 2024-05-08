@@ -15,7 +15,7 @@ namespace backend.Models
         public string BoxColor { get; set; }
         [Column("country_id")]
         public int CountryId { get; set; }
-        public Country Country { get; set; }
+        public Country DestinationCountry { get; set; }
         [Column("cost")]
         public float Cost { get; set; }
         [Column("user_id")]

@@ -27,19 +27,10 @@ namespace backend.Controllers
         public static async Task<IResult> getAllOrders([FromServices] IOrderRepository orderRepository)
         {
             //Hämta från IOrderRepository
-            var ordersTask = orderRepository.GetAllOrders();
-
-            //Vänta tills alla orders hämtats
-            var orders = await ordersTask;
+            var orders = await orderRepository.GetAllOrders();
 
             //Gör om till DTOs
-            var orderDTOs = new List<OrderDTO>();
-
-            foreach (var order in orders)
-            {
-                var orderDTO = new OrderDTO(order);
-                orderDTOs.Add(orderDTO);
-            }
+            var orderDTOs =  orders.Select(order => new OrderDTO(order)).ToList();
 
             return TypedResults.Ok(orderDTOs);
         }
@@ -57,19 +48,10 @@ namespace backend.Controllers
         public static async Task<IResult> getAllUserOrders([FromServices] IOrderRepository orderRepository, string UserId)
         {
             //Hämta från IOrderRepository
-            var ordersTask = orderRepository.GetAllUserOrders(UserId);
-
-            //Vänta tills alla orders hämtats
-            var orders = await ordersTask;
+            var orders = await orderRepository.GetAllUserOrders(UserId);
 
             //Gör om till DTOs
-            var orderDTOs = new List<OrderDTO>();
-
-            foreach (var order in orders)
-            {
-                var orderDTO = new OrderDTO(order);
-                orderDTOs.Add(orderDTO);
-            }
+            var orderDTOs =  orders.Select(order => new OrderDTO(order)).ToList();
 
             return TypedResults.Ok(orderDTOs);
         }
@@ -77,10 +59,7 @@ namespace backend.Controllers
         public static async Task<IResult> getOrderById([FromServices] IOrderRepository orderRepository, int OrderId)
         {
             //Hämta från IOrderRepository
-            var orderTask = orderRepository.GetOrderById(OrderId);
-
-            //Vänta tills alla orders hämtats
-            var order = await orderTask;
+            var order = await orderRepository.GetOrderById(OrderId);
 
             //Gör om till DTO
             var orderDTO = new OrderDTO(order);
