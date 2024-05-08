@@ -103,6 +103,7 @@ builder.Services.AddDbContext<DatabaseContext>(
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<TokenService, TokenService>();
 
 var app = builder.Build();
@@ -118,6 +119,7 @@ app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 app.ConfigureUserApi();
 app.ConfigureOrderApi();
+app.ConfigureCountriesApi();
 app.Run();
 
 public partial class Program { } // needed for testing - please ignore

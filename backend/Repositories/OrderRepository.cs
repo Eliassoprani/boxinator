@@ -12,10 +12,11 @@ namespace backend.Repositories
     public class OrderRepository : IOrderRepository
     {
         private DatabaseContext _databaseContext;
-
-        public OrderRepository(DatabaseContext db)
+        private readonly ICountryRepository _countryRepository;
+        public OrderRepository(DatabaseContext db, ICountryRepository countryRepository)
         {
             _databaseContext = db;
+            _countryRepository = countryRepository;
         }
 
         public async Task<IEnumerable<Order>> GetAllOrders()
@@ -31,7 +32,10 @@ namespace backend.Repositories
             //Checka så inga fält är null
 
             //konvertera country string till int?
-
+            Country? country = await _countryRepository.getCountryByCountryName(payload.Country);
+            if(country == null){
+                return null; //country finns inte tillgängligt, kan inte skapa order
+            }
             //Lägg till user id
             var order = new Order
             {
@@ -44,7 +48,7 @@ namespace backend.Repositories
                 //Cost = payload.Cost;  //Bör räknas ut i frontend så användare kan se vad det kostar
 
                 //Dummy värden för att testa databas
-                CountryId = 2,
+                CountryId = country.Id,
                 UserId = "6ed30c52-372e-4c3d-a2a3-8a893fc56a3e",
             };
 

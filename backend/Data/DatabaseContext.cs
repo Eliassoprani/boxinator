@@ -24,6 +24,12 @@ namespace backend.Data
               .WithMany()
               .HasForeignKey(t => t.UserId)
               .IsRequired();
+
+            modelBuilder.Entity<Country>().HasData(
+                new Country { Id = 1, CountryName = "Sweden", Multiplier = 1 },
+                new Country { Id = 2, CountryName = "Norway", Multiplier = 1.5f },
+                new Country { Id = 3, CountryName = "Denmark", Multiplier = 2.5f}
+            );
         }
         public DbSet<User> Users {get; set;}
         public DbSet<Order> Orders {get; set;}

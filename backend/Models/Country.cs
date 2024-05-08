@@ -9,7 +9,7 @@ namespace backend.Models
         public int Id { get; set; }
         [Column("country_name")]
         public string CountryName { get; set; }
-         [Column("multiplier")]
+        [Column("multiplier")]
         public float Multiplier { get; set; }
     }
 }
