@@ -1,0 +1,19 @@
+.modal {
+    background-color: rgba(138, 169, 209);
+    border: 1px solid #ccc;
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 10%;
+  }
+  
+  .modal input {
+    color: black; /* Black color for input text */
+    background-color: white; /* White background for input field */
+    padding: 8px;
+    border-radius: 4px;
+  }
+  
+  .close-button {
+    margin-left: auto;
+  }
