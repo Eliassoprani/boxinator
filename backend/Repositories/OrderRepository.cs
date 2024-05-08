@@ -44,7 +44,6 @@ namespace backend.Repositories
                 BoxColor = payload.BoxColor,
                 //CountryId = payload.Country,
                 Status = payload.Status,
-                //if(payload.Email)   //Om email finns med => role är guest. Email bör sparas i databas
                 //Cost = payload.Cost;  //Bör räknas ut i frontend så användare kan se vad det kostar
 
                 //Dummy värden för att testa databas
