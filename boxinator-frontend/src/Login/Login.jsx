@@ -101,7 +101,7 @@ function Login() {
             role: "guest",
         });
 
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify({ role: "guest" }));
 
         setLoggedIn(true);
     }

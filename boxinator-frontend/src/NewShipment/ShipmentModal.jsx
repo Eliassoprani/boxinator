@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../App";
+import('./ShipmentModal.css');
 import Modal from 'react-modal';
 Modal.setAppElement('#root'); // Set the root element for accessibility
 import PropTypes from 'prop-types';
@@ -12,7 +13,7 @@ function ShipmentModal({ isOpen, closeModal }) {
         weight: "",
         boxColour: "",
         destinationCountry: "",
-        email: "",
+        sourceCountry: "",
     }
 
     const [shipmentData, setShipmentData] = useState(initialState);
@@ -33,17 +34,21 @@ function ShipmentModal({ isOpen, closeModal }) {
         // Close modal
         closeModal();
 
+        //todo: send email
         //todo: set up thank you note
     }
 
     return (
         <Modal
+            className="modal"
             isOpen={isOpen}
             onRequestClose={closeModal}
             contentLabel="New Shipment Prompt"
         >
             <div className="new-shipment">
                 <form className="form">
+                    <button className="close-button" onClick={closeModal}>X</button>
+
                     <h2>New Shipment</h2>
 
                     <label>
@@ -76,6 +81,18 @@ function ShipmentModal({ isOpen, closeModal }) {
                         />
                     </label>
 
+                    {user.role === "guest" && (
+                        <label>
+                            Source country:
+                            <input
+                                type="text"
+                                name="text"
+                                value={shipmentData.sourceCountry}
+                                onChange={handleChange}
+                            />
+                        </label>
+                    )}
+
                     <label>
                         Destination country:
                         <input
@@ -85,18 +102,6 @@ function ShipmentModal({ isOpen, closeModal }) {
                             onChange={handleChange}
                         />
                     </label>
-
-                    {user.role === "guest" && (
-                        <label>
-                            Email:
-                            <input
-                                type="text"
-                                name="email"
-                                value={shipmentData.email}
-                                onChange={handleChange}
-                            />
-                        </label>
-                    )}
 
                     <input
                         className="form-submit"
@@ -113,6 +118,6 @@ function ShipmentModal({ isOpen, closeModal }) {
 ShipmentModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     closeModal: PropTypes.func.isRequired,
-  };
+};
 
 export default ShipmentModal

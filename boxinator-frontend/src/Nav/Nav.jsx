@@ -26,7 +26,7 @@ function Nav() {
                 <div className='menu'>
                     <div>About Us</div>
                     {loggedIn && (
-                        <div>New Shipment</div>
+                        <div onClick={() => navigate('/newshipment')}>New Shipment</div>
                     )}
                 </div>
 
