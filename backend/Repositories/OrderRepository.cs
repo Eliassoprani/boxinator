@@ -1,10 +1,6 @@
-using AutoMapper;
 using backend.Data;
-using backend.DTOs;
-using backend.Enums;
 using backend.Models;
 using backend.Payloads;
-using backend.Security;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repositories
@@ -13,10 +9,14 @@ namespace backend.Repositories
     {
         private DatabaseContext _databaseContext;
         private readonly ICountryRepository _countryRepository;
-        public OrderRepository(DatabaseContext db, ICountryRepository countryRepository)
+
+                private readonly IUserRepository _userRepository;
+
+        public OrderRepository(DatabaseContext db, ICountryRepository countryRepository, IUserRepository userRepository)
         {
             _databaseContext = db;
             _countryRepository = countryRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<IEnumerable<Order>> GetAllOrders()
@@ -30,9 +30,10 @@ namespace backend.Repositories
         public async Task<Order?> CreateAnOrder(OrderPostPayload payload)
         {
             //Checka så inga fält är null
-
+            User? user = await _userRepository.GetUserById(payload.UserId);
+            if (user == null) return null;
             //konvertera country string till int?
-            Country? country = await _countryRepository.getCountryByCountryName(payload.Country);
+            Country? country = await _countryRepository.getCountryByCountryName(payload.DestinationCountry);
             if(country == null){
                 return null; //country finns inte tillgängligt, kan inte skapa order
             }
@@ -43,12 +44,12 @@ namespace backend.Repositories
                 Weight = payload.Weight,
                 BoxColor = payload.BoxColor,
                 //CountryId = payload.Country,
-                Status = payload.Status,
+                Status = payload.OrderStatus,
                 //Cost = payload.Cost;  //Bör räknas ut i frontend så användare kan se vad det kostar
 
                 //Dummy värden för att testa databas
                 CountryId = country.Id,
-                UserId = "6ed30c52-372e-4c3d-a2a3-8a893fc56a3e",
+                UserId = payload.UserId,
             };
 
             //Lägg till manuellt i databas
@@ -62,8 +63,6 @@ namespace backend.Repositories
             {
                 return null;
             }
-
-            return order;
         }
 
         public async Task<IEnumerable<Order>> GetAllUserOrders(string UserId)
@@ -94,7 +93,7 @@ namespace backend.Repositories
             order.RecieverName = payload.RecieverName;
             order.Weight = payload.Weight;
             order.BoxColor = payload.BoxColor;
-            order.Status = payload.Status;
+            order.Status = payload.OrderStatus;
  
             //Spara i databas
             await _databaseContext.SaveChangesAsync();

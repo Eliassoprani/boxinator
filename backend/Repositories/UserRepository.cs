@@ -80,12 +80,23 @@ namespace backend.Repositories
 
         public async Task<User?> GetUserById(string Userid)
         {
-            return null;
+            var user = await _userManager.FindByIdAsync(Userid);
+
+            if (user == null) return null;
+            return user;
         }
 
         public async Task<User?> UpdateUser(string Userid, string FirstName, string LastName, string Email, int Phone)
         {
-            return null;
+            User? user = await GetUserById(Userid);
+            if (user == null) return null;
+           
+            user.FirstName = FirstName;
+            user.LastName = LastName;
+            user.Email = Email;
+            user.Phone = Phone;
+
+            return user;
         }
 
         public async Task<LoginResPayload?> Login(LoginPayload payload)
