@@ -13,7 +13,7 @@ namespace backend.DTOs
         public int CountryId { get; set; }  //Switch för att få country name och multiplier
         public OrderStatus Status { get; set; } //Switch på status för att få ut enum/string
         public float Cost { get; set; }
-
+        public string DestinationCountry {get; set;}
         public OrderDTO(Order order)
         {
             Id = order.Id;
@@ -23,6 +23,7 @@ namespace backend.DTOs
             CountryId = order.CountryId;
             Status = order.Status;
             Cost = order.Cost;
+            DestinationCountry = order.DestinationCounty;
         }
     }
 }

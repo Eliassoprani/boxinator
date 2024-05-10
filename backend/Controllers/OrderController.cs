@@ -41,8 +41,8 @@ namespace backend.Controllers
             var order = await orderRepository.CreateAnOrder(payload);
 
             if(order == null) return TypedResults.BadRequest();
-
-            return TypedResults.Ok(order);
+            OrderDTO orderDTO= new OrderDTO(order);
+            return TypedResults.Ok(orderDTO);
         }
 
         public static async Task<IResult> getAllUserOrders([FromServices] IOrderRepository orderRepository, string UserId)

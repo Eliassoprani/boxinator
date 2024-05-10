@@ -33,7 +33,7 @@ namespace backend.Repositories
             User? user = await _userRepository.GetUserById(payload.UserId);
             if (user == null) return null;
             //konvertera country string till int?
-            Country? country = await _countryRepository.getCountryByCountryName(payload.DestinationCountry);
+            Country? country = await _countryRepository.getCountryByCountryName(payload.SourceCountry);
             if(country == null){
                 return null; //country finns inte tillgängligt, kan inte skapa order
             }
@@ -46,7 +46,7 @@ namespace backend.Repositories
                 //CountryId = payload.Country,
                 Status = payload.OrderStatus,
                 //Cost = payload.Cost;  //Bör räknas ut i frontend så användare kan se vad det kostar
-
+                DestinationCounty = payload.DestinationCountry,
                 //Dummy värden för att testa databas
                 CountryId = country.Id,
                 UserId = payload.UserId,
