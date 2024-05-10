@@ -4,12 +4,13 @@ import('./ShipmentModal.css');
 import Modal from 'react-modal';
 Modal.setAppElement('#root'); // Set the root element for accessibility
 import PropTypes from 'prop-types';
+import emailjs from '@emailjs/browser';
 
 function ShipmentModal({ isOpen, closeModal }) {
     const { user } = useContext(UserContext);
 
     const initialState = {
-        userId: user.id,
+        userId: 'a1badc71-7697-49fe-9385-e92c7ef9973d',
         recieverName: "",
         weight: 0,
         boxColor: "",
@@ -35,6 +36,7 @@ function ShipmentModal({ isOpen, closeModal }) {
 
     const submitNewShipment = async (e) => {
 
+        //För att sidan ej ska ladda om när man klickar submit
         e.preventDefault();
 
         console.log(shipmentData);
@@ -45,19 +47,40 @@ function ShipmentModal({ isOpen, closeModal }) {
             body: JSON.stringify(shipmentData),
         });
 
-        // I objektet som returneras från posten finns order id som kan länka en guest till en order. Ska skickas med all annan info till guest's email
-
         if (!newShipmentResponse.ok) {
             throw new Error("Failed to create a new order");
         }
 
-        // Hämta all info och skicka mail till guest
+        // Retur objektet
         const responseData = await newShipmentResponse.json();
+
+        const toName = user.role === 'guest' ? 'guest' : user.firstName;
+
+        const serviceId = 'service_krhq75r';
+        const templateId = 'template_86k79yo';
+        const publicKey = 'llG6edCvnODXdraEf';
+        const templateParams = {
+            to_name: toName,
+            to_email: email,
+            message: `Order id: ${responseData.id} 
+            Receiver name: ${responseData.recieverName} 
+            Weight: ${responseData.weight}`
+        }
+
+        emailjs
+            .send(serviceId, templateId, templateParams, publicKey)
+            .then(
+                () => {
+                    console.log('SUCCESS!');
+                },
+                (error) => {
+                    console.log('FAILED...', error);
+                },
+            );
 
         // Close modal
         closeModal();
 
-        //todo: send email
         //todo: set up thank you note
     }
 
