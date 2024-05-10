@@ -11,7 +11,7 @@ namespace backend.DTOs
         public float Weight { get; set; }
         public string BoxColor { get; set; }
         public int CountryId { get; set; }  //Switch för att få country name och multiplier
-        public int Status { get; set; } //Switch på status för att få ut enum/string
+        public OrderStatus Status { get; set; } //Switch på status för att få ut enum/string
         public float Cost { get; set; }
 
         public OrderDTO(Order order)
