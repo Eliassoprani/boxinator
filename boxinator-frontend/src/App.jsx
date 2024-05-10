@@ -17,8 +17,14 @@ function App() {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
-      setUser(user);
-      setLoggedIn(true);
+      setUser(storedUser);
+    }
+  }, []);
+
+  useEffect(() => {
+    const storedLoggedIn = JSON.parse(localStorage.getItem('loggedIn'));
+    if (storedLoggedIn) {
+      setLoggedIn(storedLoggedIn);
     }
   }, []);
 
