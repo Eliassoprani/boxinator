@@ -75,6 +75,7 @@ function Login() {
 
         //Save to local storage in case user refreshes/closes window
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('loggedIn', JSON.stringify(true));
 
         setLoggedIn(true);
 
@@ -102,6 +103,7 @@ function Login() {
         });
 
         localStorage.setItem('user', JSON.stringify({ role: "guest" }));
+        localStorage.setItem('loggedIn', JSON.stringify(true));
 
         setLoggedIn(true);
     }
