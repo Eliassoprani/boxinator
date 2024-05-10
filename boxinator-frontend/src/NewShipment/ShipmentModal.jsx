@@ -11,14 +11,15 @@ function ShipmentModal({ isOpen, closeModal }) {
     const initialState = {
         userId: user.id,
         recieverName: "",
-        weight: 2,
+        weight: 0,
         boxColor: "",
         destinationCountry: "",
         orderStatus: 1,
-        //sourceCountry: "",
+        sourceCountry: user.countryOfResidence,
     }
 
     const [shipmentData, setShipmentData] = useState(initialState);
+    const [email, setEmail] = useState("");
 
     const handleChange = (event) => {
         const inputName = event.target.name;
@@ -29,7 +30,7 @@ function ShipmentModal({ isOpen, closeModal }) {
             [inputName]: inputValue,
         }));
         console.log("from handleChange " + inputValue);
-        console.log("user id" + shipmentData.userId)
+        console.log("user id " + shipmentData.userId);
     };
 
     const submitNewShipment = async (e) => {
@@ -38,7 +39,7 @@ function ShipmentModal({ isOpen, closeModal }) {
 
         console.log(shipmentData);
 
-        const newShipmentResponse = await fetch("http://localhost:5012/orders/createAnOrder", { 
+        const newShipmentResponse = await fetch("http://localhost:5012/orders/createAnOrder", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(shipmentData),
@@ -49,6 +50,9 @@ function ShipmentModal({ isOpen, closeModal }) {
         if (!newShipmentResponse.ok) {
             throw new Error("Failed to create a new order");
         }
+
+        // Hämta all info och skicka mail till guest
+        const responseData = await newShipmentResponse.json();
 
         // Close modal
         closeModal();
@@ -72,6 +76,7 @@ function ShipmentModal({ isOpen, closeModal }) {
 
                     <label>
                         Receiver name:
+                        <br />
                         <input
                             type="text"
                             name="recieverName"
@@ -82,6 +87,7 @@ function ShipmentModal({ isOpen, closeModal }) {
 
                     <label>
                         Weight:
+                        <br />
                         <input
                             type="number"
                             name="weight"
@@ -92,6 +98,7 @@ function ShipmentModal({ isOpen, closeModal }) {
 
                     <label>
                         Box colour:
+                        <br />
                         <input
                             type="color"
                             name="boxColor"
@@ -101,20 +108,9 @@ function ShipmentModal({ isOpen, closeModal }) {
                         <p className="picked-color">{shipmentData.boxColor}</p>
                     </label>
 
-                    {user.role === "guest" && (
-                        <label>
-                            Source country:
-                            <input
-                                type="text"
-                                name="sourceCountry"
-                                value={shipmentData.sourceCountry}
-                                onChange={handleChange}
-                            />
-                        </label>
-                    )}
-
                     <label>
                         Destination country:
+                        <br />
                         <input
                             type="text"
                             name="destinationCountry"
@@ -122,6 +118,32 @@ function ShipmentModal({ isOpen, closeModal }) {
                             onChange={handleChange}
                         />
                     </label>
+
+                    {user.role === "guest" && (
+                        <>
+                            <label>
+                                Source country:
+                                <br />
+                                <input
+                                    type="text"
+                                    name="sourceCountry"
+                                    value={shipmentData.sourceCountry}
+                                    onChange={handleChange}
+                                />
+                            </label>
+
+                            <label>
+                                Your email:
+                                <br />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </label>
+                        </>
+                    )}
 
                     <input
                         className="form-submit"
