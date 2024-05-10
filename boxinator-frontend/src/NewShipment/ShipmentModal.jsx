@@ -9,11 +9,13 @@ function ShipmentModal({ isOpen, closeModal }) {
     const { user } = useContext(UserContext);
 
     const initialState = {
-        receiverName: "",
-        weight: "",
-        boxColour: "",
+        userId: user.id,
+        recieverName: "",
+        weight: 2,
+        boxColor: "",
         destinationCountry: "",
-        sourceCountry: "",
+        orderStatus: 1,
+        //sourceCountry: "",
     }
 
     const [shipmentData, setShipmentData] = useState(initialState);
@@ -26,10 +28,27 @@ function ShipmentModal({ isOpen, closeModal }) {
             ...shipmentData,
             [inputName]: inputValue,
         }));
+        console.log("from handleChange " + inputValue);
+        console.log("user id" + shipmentData.userId)
     };
 
-    const submitNewShipment = async () => {
-        //todo: post to database
+    const submitNewShipment = async (e) => {
+
+        e.preventDefault();
+
+        console.log(shipmentData);
+
+        const newShipmentResponse = await fetch("http://localhost:5012/orders/createAnOrder", { 
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(shipmentData),
+        });
+
+        // I objektet som returneras från posten finns order id som kan länka en guest till en order. Ska skickas med all annan info till guest's email
+
+        if (!newShipmentResponse.ok) {
+            throw new Error("Failed to create a new order");
+        }
 
         // Close modal
         closeModal();
@@ -55,8 +74,8 @@ function ShipmentModal({ isOpen, closeModal }) {
                         Receiver name:
                         <input
                             type="text"
-                            name="receiverName"
-                            value={shipmentData.receiverName}
+                            name="recieverName"
+                            value={shipmentData.recieverName}
                             onChange={handleChange}
                         />
                     </label>
@@ -64,7 +83,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                     <label>
                         Weight:
                         <input
-                            type="text"
+                            type="number"
                             name="weight"
                             value={shipmentData.weight}
                             onChange={handleChange}
@@ -75,10 +94,11 @@ function ShipmentModal({ isOpen, closeModal }) {
                         Box colour:
                         <input
                             type="color"
-                            name="boxColour"
-                            value={shipmentData.boxColour}
+                            name="boxColor"
+                            value={shipmentData.boxColor}
                             onChange={handleChange}
                         />
+                        <p className="picked-color">{shipmentData.boxColor}</p>
                     </label>
 
                     {user.role === "guest" && (
@@ -86,7 +106,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                             Source country:
                             <input
                                 type="text"
-                                name="text"
+                                name="sourceCountry"
                                 value={shipmentData.sourceCountry}
                                 onChange={handleChange}
                             />
