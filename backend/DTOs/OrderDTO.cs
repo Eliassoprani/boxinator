@@ -14,6 +14,7 @@ namespace backend.DTOs
         public OrderStatus Status { get; set; } //Switch på status för att få ut enum/string
         public float Cost { get; set; }
         public string DestinationCountry {get; set;}
+        public string UserId {get; set;}
         public OrderDTO(Order order)
         {
             Id = order.Id;
@@ -24,6 +25,7 @@ namespace backend.DTOs
             Status = order.Status;
             Cost = order.Cost;
             DestinationCountry = order.DestinationCounty;
+            UserId = order.UserId;
         }
     }
 }

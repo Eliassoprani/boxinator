@@ -84,15 +84,12 @@ namespace backend.Repositories
             return order;
         }
 
-        public async Task<Order?> UpdateOrder(OrderPostPayload payload, int OrderId)
+        public async Task<Order?> UpdateOrder(OrderPutPayload payload, int OrderId)
         {
             //Hämta order 
             var order = await GetOrderById(OrderId);
 
             //Uppdatera order
-            order.RecieverName = payload.RecieverName;
-            order.Weight = payload.Weight;
-            order.BoxColor = payload.BoxColor;
             order.Status = payload.OrderStatus;
  
             //Spara i databas

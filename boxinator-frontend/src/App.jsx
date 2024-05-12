@@ -17,6 +17,7 @@ function App() {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
+      console.log(storedUser);
       setUser(storedUser);
     }
   }, []);
@@ -27,6 +28,9 @@ function App() {
       setLoggedIn(storedLoggedIn);
     }
   }, []);
+
+  useEffect(() => {console.log(user);}, [user])
+
 
   // Once a user has logged in, they are presented with a simple page which shows any 
   // shipments they have under way and recently completed shipments.

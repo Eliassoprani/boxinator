@@ -67,7 +67,7 @@ namespace backend.Controllers
             return TypedResults.Ok(orderDTO);
         }
 
-        public static async Task<IResult> updateOrder([FromServices] IOrderRepository orderRepository, OrderPostPayload payload, int OrderId)
+        public static async Task<IResult> updateOrder([FromServices] IOrderRepository orderRepository, OrderPutPayload payload, int OrderId)
         {
             //Hämta från IOrderRepository
             var order = await orderRepository.UpdateOrder(payload, OrderId);

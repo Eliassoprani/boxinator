@@ -1,5 +1,5 @@
 import './Login.css'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 
@@ -72,7 +72,7 @@ function Login() {
             role: role,
             token: token,
         });
-
+        console.log(user);
         //Save to local storage in case user refreshes/closes window
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('loggedIn', JSON.stringify(true));
@@ -82,6 +82,7 @@ function Login() {
         //Navigate maybe not needed?
         navigate("/");
     }
+
 
     const signup = async () => {
         const signUpResponse = await fetch("http://localhost:5012/signup", {
