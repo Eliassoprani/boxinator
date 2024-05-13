@@ -1,0 +1,11 @@
+.about-us div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;    /* Text i mitten av bild */
+    justify-content: center;    /* Text och bild i mitten av läsare */
+}
+
+.section img {
+    margin: 20px;
+    width: 40%;
+}
