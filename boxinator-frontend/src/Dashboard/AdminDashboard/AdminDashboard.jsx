@@ -16,25 +16,24 @@ function AdminDashboard() {
             headers: { "Content-Type": "application/json" },
             //body: '{"email": "abc@abc.com", "password": "ABCdef123"}'
         });
-        
 
-    if (!fetchOrdersResponse.ok) {
-        throw new Error("Failed to get orders from database");
+        if (!fetchOrdersResponse.ok) {
+            throw new Error("Failed to get orders from database");
+        }
+
+        let orders = await fetchOrdersResponse.json();
+
+        console.log(orders);
+
+        setOrders(orders)
     }
 
-    let orders = await fetchOrdersResponse.json()
-
-    console.log(orders);
-
-    setOrders(orders)
-}
-
-return (
-    <>
-        <button>Refresh shipments</button>
-        <OrderList orders={orders} />
-    </>
-)
+    return (
+        <>
+            <button onClick={fetchOrders}>Refresh shipments</button>
+            <OrderList orders={orders} />
+        </>
+    )
 }
 
 export default AdminDashboard
