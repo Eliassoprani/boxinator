@@ -24,13 +24,13 @@ function Nav() {
                 </div>
 
                 <div>
-                    <div onClick={() => navigate('/aboutus')}>About Us</div>
                     {loggedIn && (
                         <>
-                            <div onClick={() => navigate('/')}>Orders</div>
+                            <div onClick={() => navigate('/')}>Dashboard</div>
                             <div onClick={() => navigate('/newshipment')}>New Shipment</div>
                         </>
                     )}
+                    <div onClick={() => navigate('/aboutus')}>About Us</div>
                 </div>
 
                 <div className='nav-btn'>
