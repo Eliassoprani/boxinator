@@ -17,7 +17,6 @@ function App() {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
-      console.log(storedUser);
       setUser(storedUser);
     }
   }, []);
@@ -28,8 +27,6 @@ function App() {
       setLoggedIn(storedLoggedIn);
     }
   }, []);
-
-  useEffect(() => {console.log(user);}, [user])
 
 
   // Once a user has logged in, they are presented with a simple page which shows any 
@@ -63,7 +60,7 @@ function App() {
             </Routes>
           )}
 
-          {loggedIn && user.role !== 'guest' && (
+          {loggedIn && user.role !== 2 && (
             <Routes>
               <Route path="/profile" element={<Profile />} />
             </Routes>
