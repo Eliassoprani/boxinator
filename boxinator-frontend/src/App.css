@@ -16,13 +16,23 @@ All child components will be vertically stacked in a column */
   flex-direction: column;
 }
 
-.form {
+form {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
 }
 
-.form label {
+label {
   padding: 10px;
+}
+
+input {
+  padding: 10px;
+  margin-left: 10px;
+}
+
+/* Form submit buttons */
+.submit-input {
+  width: fit-content;
 }

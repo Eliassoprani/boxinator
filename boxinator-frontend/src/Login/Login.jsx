@@ -1,25 +1,13 @@
 import './Login.css'
 import { useState, useContext, useEffect } from 'react'
 import { UserContext } from "../App";
+import UserInfo from '../UserInfo/UserInfo';
 
 function Login() {
     const { user, setUser, setLoggedIn } = useContext(UserContext);
 
-    const initialState = {
-        id: "id",
-        firstName: "firstName",
-        lastName: "lastName",
-        email: "email",
-        dateOfBirth: "dateOfBirth",
-        phone: 0,
-        countryOfResidence: "countryOfResidence",
-        zipCode: -1,
-        role: 2,
-        token: "token",
-    };
-
     const [signUp, setSignUp] = useState(false);
-    const [userData, setUserData] = useState(initialState);
+    const [userData, setUserData] = useState({});
 
     const handleChange = (event) => {
         const inputName = event.target.name;
@@ -149,7 +137,7 @@ function Login() {
                             </label>
 
                             <input
-                                className="form-submit"
+                                className="submit-input"
                                 type="submit"
                                 value="Log in"
                                 onClick={login}
@@ -168,88 +156,10 @@ function Login() {
                         <form className="form">
                             <h2>Sign up Page</h2>
 
-                            <label>
-                                First Name:
-                                <input
-                                    type="text"
-                                    name="firstName"
-                                    value={userData.firstName}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Last Name:
-                                <input
-                                    type="text"
-                                    name="lastName"
-                                    value={userData.lastName}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Email:
-                                <input
-                                    type="text"
-                                    name="email"
-                                    value={userData.email}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Password:
-                                <input
-                                    type="password"
-                                    name="password"
-                                    value={userData.password}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Date of birth:
-                                <input
-                                    type="text"
-                                    name="dateOfBirth"
-                                    value={userData.dateOfBirth}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Country of residence:
-                                <input
-                                    type="text"
-                                    name="countryOfResidence"
-                                    value={userData.countryOfResidence}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Zip code:
-                                <input
-                                    type="text"
-                                    name="zipCode"
-                                    value={userData.zipCode}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Phone number:
-                                <input
-                                    type="text"
-                                    name="phone"
-                                    value={userData.phone}
-                                    onChange={handleChange}
-                                />
-                            </label>
+                            <UserInfo userData={userData} setUserData={setUserData} />
 
                             <input
-                                className="form-submit"
+                                className="submit-input"
                                 type="submit"
                                 value="Sign up"
                                 onClick={signup}
