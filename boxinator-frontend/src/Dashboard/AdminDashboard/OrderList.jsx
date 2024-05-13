@@ -24,6 +24,7 @@ function OrderList({ orders }) {
 
     return (
         <div style={{
+            color: "#000",
             backgroundColor: "#e8e9eb",
             padding: "10px",
             border: '1px',
