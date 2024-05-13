@@ -19,17 +19,17 @@ function Nav() {
     return (
         <>
             <div className='nav'>
-                <div className='title'>
+                <div className='title' onClick={() => navigate('/')}>
                     <h1>Boxinator</h1>
                 </div>
 
                 <div>
-                    <div>About Us</div>
+                    <div onClick={() => navigate('/aboutus')}>About Us</div>
                     {loggedIn && (
-                        <div onClick={() => navigate('/newshipment')}>New Shipment</div>
-                    )}
-                    {loggedIn && user.role !== 2 && (
-                        <div onClick={() => navigate('/profile')}>Profile</div>
+                        <>
+                            <div onClick={() => navigate('/')}>Orders</div>
+                            <div onClick={() => navigate('/newshipment')}>New Shipment</div>
+                        </>
                     )}
                 </div>
 
@@ -40,7 +40,7 @@ function Nav() {
 
                     {loggedIn && user.role !== 2 && (
                         <>
-                            <div>{user.firstName}</div>
+                            <div onClick={() => navigate('/profile')}>{user.firstName}</div>
                             <button onClick={logout}>Log out</button>
                         </>
                     )}
