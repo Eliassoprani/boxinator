@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Web.Http;
 using backend.DTOs;
 using backend.Enums;
@@ -8,7 +9,7 @@ using backend.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using backend.Helpers;
 namespace backend.Controllers
 {
     public static class OrderApi
@@ -24,8 +25,15 @@ namespace backend.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public static async Task<IResult> getAllOrders([FromServices] IOrderRepository orderRepository)
+        public static async Task<IResult> getAllOrders([FromServices] IOrderRepository orderRepository, ClaimsPrincipal user)
         {
+            string? userId = user.UserId();
+            UserRoles? role = user.Role();
+            if (userId == null || role != UserRoles.Admin)
+            {
+                return TypedResults.Unauthorized();
+            }
+
             //Hämta från IOrderRepository
             var orders = await orderRepository.GetAllOrders();
 
@@ -34,6 +42,7 @@ namespace backend.Controllers
 
             return TypedResults.Ok(orderDTOs);
         }
+
 
         public static async Task<IResult> createAnOrder([FromServices] IOrderRepository orderRepository, OrderPostPayload payload)
         {
@@ -44,11 +53,17 @@ namespace backend.Controllers
             OrderDTO orderDTO= new OrderDTO(order);
             return TypedResults.Ok(orderDTO);
         }
-
-        public static async Task<IResult> getAllUserOrders([FromServices] IOrderRepository orderRepository, string UserId)
+        [Authorize()]
+        public static async Task<IResult> getAllUserOrders([FromServices] IOrderRepository orderRepository, ClaimsPrincipal user)
         {
+            string? userId = user.UserId();
+
+            if (userId == null)
+            {
+                return TypedResults.Unauthorized();
+            }
             //Hämta från IOrderRepository
-            var orders = await orderRepository.GetAllUserOrders(UserId);
+            var orders = await orderRepository.GetAllUserOrders(userId);
 
             //Gör om till DTOs
             var orderDTOs =  orders.Select(order => new OrderDTO(order)).ToList();
@@ -67,6 +82,7 @@ namespace backend.Controllers
             return TypedResults.Ok(orderDTO);
         }
 
+        [Authorize(Roles = "Admin")]
         public static async Task<IResult> updateOrder([FromServices] IOrderRepository orderRepository, OrderPutPayload payload, int OrderId)
         {
             //Hämta från IOrderRepository
@@ -77,8 +93,8 @@ namespace backend.Controllers
             return TypedResults.Ok(order);
         }
 
-
-        public static async Task<IResult> deleteOrder([FromServices] IOrderRepository orderRepository, int OrderId)
+        [Authorize()]
+        public static async Task<IResult> deleteOrder([FromServices] IOrderRepository orderRepository, int OrderId, ClaimsPrincipal user)
         {
             var order = await orderRepository.DeleteOrder(OrderId);
 

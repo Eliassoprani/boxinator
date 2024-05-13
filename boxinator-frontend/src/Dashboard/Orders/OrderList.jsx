@@ -1,7 +1,7 @@
 import { useState } from "react";
 import OrderModal from "./OrderModal";
 
-function OrderList({ orders }) {
+function OrderList({ orders, user }) {
     const STATUS = Object.freeze({ 
         0: "Created", 
         1: "Received",
@@ -44,7 +44,7 @@ function OrderList({ orders }) {
                         <p>Weight: {order.weight}</p>
                         <p>Country ID: {order.countryId}</p>
                         <p>Status: {STATUS[order.status]}</p>
-                        <button onClick={() => handleOpenModal(order)}>Change Status</button>
+                        {user.role == 0 && <button onClick={() => handleOpenModal(order)}>Change Status</button>}
                     </div>
                 );
             })}
