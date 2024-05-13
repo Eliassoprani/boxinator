@@ -1,22 +1,21 @@
 import './Login.css'
 import { useState, useContext, useEffect } from 'react'
-import { useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 
 function Login() {
-    const navigate = useNavigate();
-
     const { user, setUser, setLoggedIn } = useContext(UserContext);
 
     const initialState = {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        dateOfBirth: "",
-        phone: "",
-        countryOfResidence: "",
-        zipCode: "",
+        id: "id",
+        firstName: "firstName",
+        lastName: "lastName",
+        email: "email",
+        dateOfBirth: "dateOfBirth",
+        phone: 0,
+        countryOfResidence: "countryOfResidence",
+        zipCode: -1,
+        role: 2,
+        token: "token",
     };
 
     const [signUp, setSignUp] = useState(false);
@@ -46,7 +45,6 @@ function Login() {
         if (!logInResponse.ok) {
             throw new Error("Failed to log in");
         }
-        console.log(logInResponse);
 
         const {
             id,
@@ -72,17 +70,25 @@ function Login() {
             role: role,
             token: token,
         });
-        console.log(user);
+
         //Save to local storage in case user refreshes/closes window
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify({
+            id: id,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            dateOfBirth: dateOfBirth,
+            phone: phone,
+            countryOfResidence: countryOfResidence,
+            zipCode: zipCode,
+            role: role,
+            token: token
+        }));
+
         localStorage.setItem('loggedIn', JSON.stringify(true));
 
         setLoggedIn(true);
-
-        //Navigate maybe not needed?
-        navigate("/");
     }
-
 
     const signup = async () => {
         const signUpResponse = await fetch("http://localhost:5012/signup", {
@@ -100,10 +106,10 @@ function Login() {
 
     const guestLogin = () => {
         setUser({
-            role: "guest",
+            role: 2,
         });
 
-        localStorage.setItem('user', JSON.stringify({ role: "guest" }));
+        localStorage.setItem('user', JSON.stringify({ role: 2 }));
         localStorage.setItem('loggedIn', JSON.stringify(true));
 
         setLoggedIn(true);
