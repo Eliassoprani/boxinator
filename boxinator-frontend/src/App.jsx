@@ -7,6 +7,7 @@ import Login from './Login/Login';
 import Footer from './Footer/Footer';
 import Profile from './Profile/Profile';
 import NewShipment from './NewShipment/NewShipment';
+import AboutUs from './AboutUs/AboutUs';
 
 const UserContext = createContext();
 
@@ -46,6 +47,10 @@ function App() {
       <UserContext.Provider value={{ user, setUser, loggedIn, setLoggedIn }}>
         <div className='app'>
           <Nav />
+
+          <Routes>
+            <Route path="/aboutus" element={<AboutUs />} />
+          </Routes>
 
           {!loggedIn && (
             <Routes>
