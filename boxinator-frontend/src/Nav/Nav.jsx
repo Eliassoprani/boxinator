@@ -23,25 +23,28 @@ function Nav() {
                     <h1>Boxinator</h1>
                 </div>
 
-                <div className='menu'>
+                <div>
                     <div>About Us</div>
                     {loggedIn && (
                         <div onClick={() => navigate('/newshipment')}>New Shipment</div>
                     )}
+                    {loggedIn && user.role !== 2 && (
+                        <div onClick={() => navigate('/profile')}>Profile</div>
+                    )}
                 </div>
 
-                {loggedIn && user.role === "guest" && (
-                    <button onClick={logout}>Log in / Sign up</button>
-                )}
+                <div className='nav-btn'>
+                    {loggedIn && user.role === 2 && (
+                        <button onClick={logout}>Log in / Sign up</button>
+                    )}
 
-                {loggedIn && user.role !== "guest" && (
-                    <>
-                        <div className='userLogo'>
-                            <p>{user.firstName}</p>
-                        </div>
-                        <button onClick={logout}>Log out</button>
-                    </>
-                )}
+                    {loggedIn && user.role !== 2 && (
+                        <>
+                            <div>{user.firstName}</div>
+                            <button onClick={logout}>Log out</button>
+                        </>
+                    )}
+                </div>
             </div>
         </>
     )
