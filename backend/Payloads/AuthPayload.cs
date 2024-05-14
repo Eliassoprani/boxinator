@@ -8,6 +8,7 @@ namespace backend.Payloads
         public record LoginResPayload(string Token, string Email, string Id, UserRoles Role, string FirstName, string LastName, DateTime DateOfBirth, int Phone, string CountryOfResidence, int ZipCode);
 
         public record RegisterPayload(string Email, string Password, string FirstName, string LastName, DateTime DateOfBirth, int Phone, string CountryOfResidence, int ZipCode);
-        public record RegisterResPayload(string Email);
+        //public record RegisterResPayload(string Email);
+        public record RegisterResPayload(string Id);
     }
 }

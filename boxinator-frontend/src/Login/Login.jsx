@@ -3,12 +3,21 @@ import { useState, useContext, useEffect } from 'react'
 import { UserContext } from "../App";
 import UserInfo from '../UserInfo/UserInfo';
 import emailjs from '@emailjs/browser';
+import { useParams } from "react-router-dom";
 
 function Login() {
     const { user, setUser, setLoggedIn } = useContext(UserContext);
 
     const [signUp, setSignUp] = useState(false);
     const [userData, setUserData] = useState({});
+
+    //Hämta order id från parametrar om det är en guest som valt att registrera sig
+    const { orderId } = useParams();
+    //Logga ut får att kunna registrera sig samt gå direkt till sign up
+    if(orderId) {
+        localStorage.clear();
+        //setSignUp(true);
+    }
 
     const handleChange = (event) => {
         const inputName = event.target.name;
@@ -22,13 +31,11 @@ function Login() {
 
     const login = async (e) => {
         e.preventDefault();
-        //A confirmation e-mail should be sent before an account becomes activated. (https://sendgrid.com/)
 
         const logInResponse = await fetch("http://localhost:5012/authentication/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: userData.email, password: userData.password }),
-            //body: '{"email": "abc@abc.com", "password": "ABCdef123"}'
         });
 
         if (!logInResponse.ok) {
@@ -89,7 +96,7 @@ function Login() {
         const templateParams = {
             to_name: userData.firstName,
             to_email: userData.email,
-            message: `Visit us at http://localhost:5012/`
+            message: `Visit us at http://localhost:5173/`
         }
 
         emailjs
@@ -113,6 +120,22 @@ function Login() {
 
         if (!signUpResponse.ok) {
             throw new Error("Failed to sign up");
+        }
+
+        // Retur objektet från sign up
+        const signUpResponseData = await signUpResponse.json();
+        const guestUserId = signUpResponseData.id;  //Korrekt id
+        
+        //Uppdatera order med user_id = guestUserId
+        const updateShipmentResponse = await fetch("http://localhost:5012/orders/updateOrdersUser", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ UserId: guestUserId, OrderId: orderId }),    //OrderId kommer ej med till BE
+        });
+
+        if (!updateShipmentResponse.ok) {
+            console.log("Log: " + JSON.stringify(signUpResponseData));
+            throw new Error("Failed to update order's user id");
         }
 
         login();

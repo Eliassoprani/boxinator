@@ -30,18 +30,6 @@ function App() {
   }, []);
 
 
-  // Once a user has logged in, they are presented with a simple page which shows any 
-  // shipments they have under way and recently completed shipments.
-
-  // Once an administrator has logged in they are able to view all current shipments and
-  // their respective status’. From here the administrator has the ability to mark a shipment
-  // as complete.
-
-  // A guest user must not have access to an account page.
-  // A guest user must be able to send a shipment by filling out the needed delivery information 
-  // and providing an e-mail only for receipt purposes (this must be clearly communicated to the user), 
-  // and not stored by the system in any way
-
   return (
     <>
       <UserContext.Provider value={{ user, setUser, loggedIn, setLoggedIn }}>
@@ -55,6 +43,7 @@ function App() {
           {!loggedIn && (
             <Routes>
               <Route path="/" element={<Login />}></Route>
+              <Route path="/:orderId" element={<Login />}></Route>
             </Routes>
           )}
 

@@ -53,7 +53,7 @@ namespace backend.Controllers
             RegisterResPayload? response = await userRepository.CreateAUser(payload);
             if (response != null)
             {
-                return TypedResults.Ok();
+                return TypedResults.Ok(response);   //Returnera user id
             }
             return TypedResults.BadRequest();
         }
