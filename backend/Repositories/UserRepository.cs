@@ -44,8 +44,11 @@ namespace backend.Repositories
             );
 
             if (result.Succeeded)
-            {
-                return new RegisterResPayload(payload.Email);
+            {   
+                //Hämta user id och returnera. Get user by email metod?
+                Console.WriteLine("In user repo email: " + payload.Email);
+                var user = await _userManager.FindByEmailAsync(payload.Email);
+                return new RegisterResPayload(user.Id);   //Ny retur typ
             }
             else
             {
@@ -83,6 +86,7 @@ namespace backend.Repositories
             var user = await _userManager.FindByIdAsync(Userid);
 
             if (user == null) return null;
+
             return user;
         }
 

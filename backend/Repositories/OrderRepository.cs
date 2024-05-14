@@ -10,9 +10,13 @@ namespace backend.Repositories
         private DatabaseContext _databaseContext;
         private readonly ICountryRepository _countryRepository;
 
-                private readonly IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
-        public OrderRepository(DatabaseContext db, ICountryRepository countryRepository, IUserRepository userRepository)
+        public OrderRepository(
+            DatabaseContext db,
+            ICountryRepository countryRepository,
+            IUserRepository userRepository
+        )
         {
             _databaseContext = db;
             _countryRepository = countryRepository;
@@ -31,10 +35,14 @@ namespace backend.Repositories
         {
             //Checka så inga fält är null
             User? user = await _userRepository.GetUserById(payload.UserId);
-            if (user == null) return null;
+            if (user == null)
+                return null;
             //konvertera country string till int?
-            Country? country = await _countryRepository.getCountryByCountryName(payload.SourceCountry);
-            if(country == null){
+            Country? country = await _countryRepository.getCountryByCountryName(
+                payload.SourceCountry
+            );
+            if (country == null)
+            {
                 return null; //country finns inte tillgängligt, kan inte skapa order
             }
             //Lägg till user id
@@ -86,12 +94,30 @@ namespace backend.Repositories
 
         public async Task<Order?> UpdateOrder(OrderPutPayload payload, int OrderId)
         {
-            //Hämta order 
+            //Hämta order
             var order = await GetOrderById(OrderId);
 
             //Uppdatera order
             order.Status = payload.OrderStatus;
- 
+
+            //Spara i databas
+            await _databaseContext.SaveChangesAsync();
+
+            return order;
+        }
+
+        //För guest som claimat sitt konto
+        public async Task<Order?> UpdateOrdersUser(OrderPutUserPayload payload)
+        {
+            //Konvertera till int
+            int orderIdInt = int.Parse(payload.OrderId);
+
+            //Hämta order
+            var order = await GetOrderById(orderIdInt);
+
+            //Uppdatera order
+            order.UserId = payload.UserId;
+
             //Spara i databas
             await _databaseContext.SaveChangesAsync();
 

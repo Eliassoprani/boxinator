@@ -33,9 +33,12 @@ function ShipmentModal({ isOpen, closeModal }) {
     };
 
     const submitNewShipment = async (e) => {
-
         //För att sidan ej ska ladda om när man klickar submit
         e.preventDefault();
+
+        if (user.role === 2) {
+            shipmentData.userId = "e4344390-99a7-4d82-998f-64863e9b6c67";
+        }
 
         console.log(shipmentData);
 
@@ -54,6 +57,12 @@ function ShipmentModal({ isOpen, closeModal }) {
 
         const toName = user.role === 2 ? 'guest' : user.firstName;
         const toEmail = user.role === 2 ? email : user.email;
+        const message = `Order id: ${responseData.id} 
+        Receiver name: ${responseData.recieverName} 
+        Weight: ${responseData.weight}
+        Box colour: ${responseData.boxColor}
+        Destination: ${responseData.countryId}
+        Register and claim your shipment at http://localhost:5173/${responseData.id}`;
 
         const serviceId = 'service_krhq75r';
         const templateId = 'template_86k79yo';
@@ -61,9 +70,7 @@ function ShipmentModal({ isOpen, closeModal }) {
         const templateParams = {
             to_name: toName,
             to_email: toEmail,
-            message: `Order id: ${responseData.id} 
-            Receiver name: ${responseData.recieverName} 
-            Weight: ${responseData.weight}`
+            message: message
         }
 
         emailjs
@@ -77,8 +84,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                 },
             );
 
-        // Close modal
-        closeModal();
+        closeModal
 
         //todo: set up thank you note
     }
@@ -141,7 +147,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                         />
                     </label>
 
-                    {user.role === "guest" && (
+                    {user.role === 2 && (
                         <>
                             <label>
                                 Source country:

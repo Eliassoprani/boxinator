@@ -21,6 +21,7 @@ namespace backend.Controllers
             authGroup.MapPost("/createAnOrder", createAnOrder);
             authGroup.MapGet("/getAllUserOrders", getAllUserOrders);
             authGroup.MapPut("/updateOrder", updateOrder);
+            authGroup.MapPut("/updateOrdersUser", updateOrdersUser);
             authGroup.MapDelete("/deleteOrder", deleteOrder);
         }
 
@@ -43,7 +44,6 @@ namespace backend.Controllers
             return TypedResults.Ok(orderDTOs);
         }
 
-
         public static async Task<IResult> createAnOrder([FromServices] IOrderRepository orderRepository, OrderPostPayload payload)
         {
             //Hämta från IOrderRepository
@@ -53,6 +53,7 @@ namespace backend.Controllers
             OrderDTO orderDTO= new OrderDTO(order);
             return TypedResults.Ok(orderDTO);
         }
+
         [Authorize()]
         public static async Task<IResult> getAllUserOrders([FromServices] IOrderRepository orderRepository, ClaimsPrincipal user)
         {
@@ -82,7 +83,7 @@ namespace backend.Controllers
             return TypedResults.Ok(orderDTO);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public static async Task<IResult> updateOrder([FromServices] IOrderRepository orderRepository, OrderPutPayload payload, int OrderId)
         {
             //Hämta från IOrderRepository
@@ -91,6 +92,20 @@ namespace backend.Controllers
             if(order == null) return TypedResults.BadRequest();
 
             return TypedResults.Ok(order);
+        }
+
+        //Om en guest claimat ett konto ska deras order få deras user id
+        public static async Task<IResult> updateOrdersUser([FromServices] IOrderRepository orderRepository, OrderPutUserPayload payload)
+        {
+            //Hämta från IOrderRepository
+            var order = await orderRepository.UpdateOrdersUser(payload);
+
+            if(order == null) return TypedResults.BadRequest();
+
+            //Gör om till DTO
+            var orderDTO = new OrderDTO(order);
+
+            return TypedResults.Ok(orderDTO);
         }
 
         [Authorize()]

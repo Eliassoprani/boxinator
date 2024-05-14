@@ -48,8 +48,8 @@ namespace backend.Controllers
             RegisterResPayload? response = await userRepository.CreateAUser(payload);
             if (response != null)
             {
-
-                return TypedResults.Ok();
+                Console.WriteLine("In user controller: " + response);
+                return TypedResults.Ok(response);   //Returnera user id
             }
             return TypedResults.BadRequest();
         }
