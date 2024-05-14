@@ -2,6 +2,7 @@ import './Login.css'
 import { useState, useContext, useEffect } from 'react'
 import { UserContext } from "../App";
 import UserInfo from '../UserInfo/UserInfo';
+import emailjs from '@emailjs/browser';
 
 function Login() {
     const { user, setUser, setLoggedIn } = useContext(UserContext);
@@ -78,7 +79,30 @@ function Login() {
         setLoggedIn(true);
     }
 
-    const signup = async () => {
+    const signup = async (e) => {
+        e.preventDefault();
+
+        //Send email before activating account
+        const serviceId = 'service_krhq75r';
+        const templateId = 'template_7v9fupt';
+        const publicKey = 'llG6edCvnODXdraEf';
+        const templateParams = {
+            to_name: userData.firstName,
+            to_email: userData.email,
+            message: `Visit us at http://localhost:5012/`
+        }
+
+        emailjs
+            .send(serviceId, templateId, templateParams, publicKey)
+            .then(
+                () => {
+                    console.log('SUCCESS!');
+                },
+                (error) => {
+                    console.log('FAILED...', error);
+                },
+            );
+
         const signUpResponse = await fetch("http://localhost:5012/authentication/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
