@@ -26,8 +26,9 @@ namespace backend.Repositories
         public async Task<IEnumerable<Order>> GetAllOrders()
         {
             // Retrieve orders from the database
-            var orders = await _databaseContext.Orders.ToListAsync();
-
+            var orders = await _databaseContext.Orders
+                .Include(order => order.SourceCountry)
+                .ToListAsync();
             return orders;
         }
 
@@ -78,6 +79,7 @@ namespace backend.Repositories
             //Filtrera ut och returnera endast de ordrar som har rätt user
             List<Order> userOrders = await _databaseContext
                 .Orders.Where(order => order.UserId == UserId)
+                .Include(order => order.SourceCountry)
                 .ToListAsync();
 
             return userOrders;

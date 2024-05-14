@@ -42,7 +42,7 @@ function OrderList({ orders, user }) {
                         <p>ID: {order.id}</p>
                         <p>Recipient: {order.recieverName}</p>
                         <p>Weight: {order.weight}</p>
-                        <p>Country ID: {order.countryId}</p>
+                        <p>Country ID: {order.sourceCountry}</p>
                         <p>Status: {STATUS[order.status]}</p>
                         {user.role == 0 && <button onClick={() => handleOpenModal(order)}>Change Status</button>}
                     </div>
