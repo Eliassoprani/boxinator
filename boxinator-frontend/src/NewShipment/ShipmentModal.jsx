@@ -57,12 +57,22 @@ function ShipmentModal({ isOpen, closeModal }) {
 
         const toName = user.role === 2 ? 'guest' : user.firstName;
         const toEmail = user.role === 2 ? email : user.email;
-        const message = `Order id: ${responseData.id} 
-        Receiver name: ${responseData.recieverName} 
-        Weight: ${responseData.weight}
-        Box colour: ${responseData.boxColor}
-        Destination: ${responseData.countryId}
-        Register and claim your shipment at http://localhost:5173/${responseData.id}`;
+        var message = "";
+        if (user.role === 2) {
+            message = `Order id: ${responseData.id} 
+            Receiver name: ${responseData.recieverName} 
+            Weight: ${responseData.weight}
+            Box colour: ${responseData.boxColor}
+            Destination: ${responseData.countryId}
+            Register and claim your shipment at http://localhost:5173/${responseData.id}`;
+        }
+        else {
+            message = `Order id: ${responseData.id} 
+            Receiver name: ${responseData.recieverName} 
+            Weight: ${responseData.weight}
+            Box colour: ${responseData.boxColor}
+            Destination: ${responseData.countryId}`;
+        }
 
         const serviceId = 'service_krhq75r';
         const templateId = 'template_86k79yo';
@@ -84,17 +94,16 @@ function ShipmentModal({ isOpen, closeModal }) {
                 },
             );
 
-        closeModal
+        //onClose
 
         //todo: set up thank you note
     }
 
     return (
         <Modal
-            className="modal"
-            isOpen={isOpen}
-            onRequestClose={closeModal}
-            contentLabel="New Shipment Prompt"
+        className="modal"
+        isOpen={isOpen}
+        onRequestClose={closeModal}
         >
             <div className="new-shipment">
                 <form className="form">
@@ -128,12 +137,18 @@ function ShipmentModal({ isOpen, closeModal }) {
                         Box colour:
                         <br />
                         <input
+                            style={{
+                                backgroundColor: shipmentData.boxColor,
+                                cursor: "pointer",
+                                outline: "none",
+                                width: "70px",
+                                height: "70px",
+                            }}
                             type="color"
                             name="boxColor"
                             value={shipmentData.boxColor}
                             onChange={handleChange}
                         />
-                        <p className="picked-color">{shipmentData.boxColor}</p>
                     </label>
 
                     <label>
