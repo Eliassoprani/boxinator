@@ -1,9 +1,9 @@
 
-function UserInfo({ userData, setUserData }) {
+function UserInfo({ userData, setUserData, update }) {
     const handleChange = (event) => {
         const inputName = event.target.name;
         const inputValue = event.target.value;
-    
+
         if (inputName && inputValue !== undefined) {
             setUserData((prevUserData) => ({
                 ...prevUserData,
@@ -11,7 +11,7 @@ function UserInfo({ userData, setUserData }) {
             }));
         }
     };
-    
+
 
     return (
         <>
@@ -45,15 +45,17 @@ function UserInfo({ userData, setUserData }) {
                 />
             </label>
 
-            <label>
-                Password:
-                <input
-                    type="password"
-                    name="password"
-                    value={userData.password}
-                    onChange={handleChange}
-                />
-            </label>
+            {!update && (
+                <label>
+                    Password:
+                    <input
+                        type="password"
+                        name="password"
+                        value={userData.password}
+                        onChange={handleChange}
+                    />
+                </label>
+            )}
 
             <label>
                 Date of birth:
