@@ -103,6 +103,8 @@ function Login() {
                 },
             );
 
+            userData.dateOfBirth = userData.dateOfBirth + "T08:59:07.200Z"
+
         const signUpResponse = await fetch("http://localhost:5012/authentication/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },

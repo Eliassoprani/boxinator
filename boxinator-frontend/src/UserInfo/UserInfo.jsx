@@ -3,12 +3,15 @@ function UserInfo({ userData, setUserData }) {
     const handleChange = (event) => {
         const inputName = event.target.name;
         const inputValue = event.target.value;
-
-        setUserData((userData) => ({
-            ...userData,
-            [inputName]: inputValue,
-        }));
+    
+        if (inputName && inputValue !== undefined) {
+            setUserData((prevUserData) => ({
+                ...prevUserData,
+                [inputName]: inputValue,
+            }));
+        }
     };
+    
 
     return (
         <>
@@ -55,7 +58,7 @@ function UserInfo({ userData, setUserData }) {
             <label>
                 Date of birth:
                 <input
-                    type="text"
+                    type="date"
                     name="dateOfBirth"
                     value={userData.dateOfBirth}
                     onChange={handleChange}
