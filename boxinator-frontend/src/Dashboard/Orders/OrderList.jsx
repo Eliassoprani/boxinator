@@ -2,13 +2,13 @@ import { useState } from "react";
 import OrderModal from "./OrderModal";
 
 function OrderList({ orders, user }) {
-    const STATUS = Object.freeze({ 
-        0: "Created", 
+    const STATUS = Object.freeze({
+        0: "Created",
         1: "Received",
         2: "InTransit",
         3: "Completed",
         4: "Cancelled"
-    }); 
+    });
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState({});
@@ -31,9 +31,31 @@ function OrderList({ orders, user }) {
             borderRadius: '10px'
         }}>
             {orders.map((order, index) => {
+                let backgroundColor;
+                //Status på ordrar 0=CREATED 1=RECIEVED 2=INTRANSIT 3=COMPLETED 4=CANCELLED
+                switch (order.status) {
+                    case 0:
+                        backgroundColor = '#C7E5EF';
+                        break;
+                    case 1:
+                        backgroundColor = '#C7C7C7';
+                        break;
+                    case 2:
+                        backgroundColor = '#EFE9C4';
+                        break;
+                    case 3:
+                        backgroundColor = '#BCED88';
+                        break;
+                    case 4:
+                        backgroundColor = '#E6D0C2';
+                        break;
+                    default:
+                        backgroundColor = '#FFF';
+                        break;
+                }
                 return (
                     <div key={index} style={{
-                        backgroundColor: "white",
+                        backgroundColor: backgroundColor,   //Byt ut
                         padding: "10px",
                         margin: "10px",
                         border: '1px',
