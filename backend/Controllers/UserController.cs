@@ -8,6 +8,9 @@ using backend.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static backend.Payloads.AuthPayload;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
+using backend.Helpers;
 namespace backend.Controllers
 {
     public static class UserApi
@@ -17,6 +20,7 @@ namespace backend.Controllers
             var authGroup = app.MapGroup("authentication");
             authGroup.MapPost("/login", Login);
             authGroup.MapPost("/signup", Register);
+            authGroup.MapPut("/update", updateUser);
         }
 
 
@@ -30,7 +34,8 @@ namespace backend.Controllers
         public static async Task<IResult> Login(IUserRepository userRepository, LoginPayload payload)
         {
             LoginResPayload? response = await userRepository.Login(payload);
-            if(response != null){
+            if (response != null)
+            {
                 return TypedResults.Ok(response);
             }
 
@@ -48,7 +53,6 @@ namespace backend.Controllers
             RegisterResPayload? response = await userRepository.CreateAUser(payload);
             if (response != null)
             {
-                Console.WriteLine("In user controller: " + response);
                 return TypedResults.Ok(response);   //Returnera user id
             }
             return TypedResults.BadRequest();
@@ -71,6 +75,23 @@ namespace backend.Controllers
                 return TypedResults.Ok("user has been deleted");
             }
             return TypedResults.BadRequest();
+        }
+
+        [Authorize()]
+        public static async Task<IResult> updateUser([FromServices] IUserRepository userRepository, ClaimsPrincipal user, UserPutPayload payload)
+        {
+            string? userId = user.UserId();
+
+            if (userId == null)
+            {
+                return TypedResults.Unauthorized();
+            }
+            //Hämta från IOrderRepository
+            User? updatedUser = await userRepository.UpdateUser(userId, payload);
+            if(updatedUser== null){
+                return TypedResults.BadRequest();
+            }
+            return TypedResults.Ok(new UserDTO(updatedUser));
         }
     }
 }

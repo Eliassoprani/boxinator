@@ -9,7 +9,7 @@ namespace backend.Repositories
 {
     public class UserRepository : IUserRepository
     {
-         private readonly DatabaseContext _databaseContext;
+        private readonly DatabaseContext _databaseContext;
         private readonly UserManager<User> _userManager;
         private readonly TokenService _tokenService;
 
@@ -90,18 +90,45 @@ namespace backend.Repositories
             return user;
         }
 
-        public async Task<User?> UpdateUser(string Userid, string FirstName, string LastName, string Email, int Phone)
+        public async Task<User?> UpdateUser(string userId, UserPutPayload payload)
         {
-            User? user = await GetUserById(Userid);
+            User? user = await GetUserById(userId);
             if (user == null) return null;
-           
-            user.FirstName = FirstName;
-            user.LastName = LastName;
-            user.Email = Email;
-            user.Phone = Phone;
 
-            return user;
+            // Update the user properties with the payload values if they are not null
+            if (payload.FirstName != null)
+                user.FirstName = payload.FirstName;
+            if (payload.LastName != null)
+                user.LastName = payload.LastName;
+            if (payload.Password != null)
+                user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, payload.Password);
+            if (payload.DateOfBirth != null)
+                user.DateOfBirth = payload.DateOfBirth.Value; // Access the underlying value of DateTime?
+            if (payload.Phone != null)
+                user.Phone = payload.Phone.Value; // Access the underlying value of int?
+            if (payload.CountryOfResidence != null)
+                user.CountryOfResidence = payload.CountryOfResidence;
+            if (payload.ZipCode != null)
+                user.ZipCode = payload.ZipCode.Value; // Access the underlying value of int?
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return user;
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    // Log or handle each error message
+                    Console.WriteLine($"Error: {error.Description}");
+                }
+                return null;
+            }
         }
+
+
 
         public async Task<LoginResPayload?> Login(LoginPayload payload)
         {
