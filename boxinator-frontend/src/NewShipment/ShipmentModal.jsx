@@ -10,12 +10,12 @@ function ShipmentModal({ isOpen, closeModal }) {
     const { user } = useContext(UserContext);
 
     const initialState = {
-        userId: 'a1badc71-7697-49fe-9385-e92c7ef9973d',
+        userId: user.id,
         recieverName: "",
         weight: 0,
         boxColor: "",
         destinationCountry: "",
-        orderStatus: 1,
+        orderStatus: 0,
         sourceCountry: user.countryOfResidence,
     }
 
@@ -30,8 +30,6 @@ function ShipmentModal({ isOpen, closeModal }) {
             ...shipmentData,
             [inputName]: inputValue,
         }));
-        console.log("from handleChange " + inputValue);
-        console.log("user id " + shipmentData.userId);
     };
 
     const submitNewShipment = async (e) => {
@@ -54,14 +52,15 @@ function ShipmentModal({ isOpen, closeModal }) {
         // Retur objektet
         const responseData = await newShipmentResponse.json();
 
-        const toName = user.role === 'guest' ? 'guest' : user.firstName;
+        const toName = user.role === 2 ? 'guest' : user.firstName;
+        const toEmail = user.role === 2 ? email : user.email;
 
         const serviceId = 'service_krhq75r';
         const templateId = 'template_86k79yo';
         const publicKey = 'llG6edCvnODXdraEf';
         const templateParams = {
             to_name: toName,
-            to_email: email,
+            to_email: toEmail,
             message: `Order id: ${responseData.id} 
             Receiver name: ${responseData.recieverName} 
             Weight: ${responseData.weight}`

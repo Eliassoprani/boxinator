@@ -79,7 +79,7 @@ function Login() {
     }
 
     const signup = async () => {
-        const signUpResponse = await fetch("http://localhost:5012/signup", {
+        const signUpResponse = await fetch("http://localhost:5012/authentication/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userData),
