@@ -5,6 +5,7 @@ import UserInfo from '../UserInfo/UserInfo';
 
 function Profile() {
     const { user } = useContext(UserContext);
+    const update = true;
     /*
     ----UPDATING A SINGLE VALUE EXAMPLE----------
         {
@@ -53,7 +54,7 @@ function Profile() {
             <form className="profile">
                 <h2>Profile Page</h2>
 
-                <UserInfo userData={userData} setUserData={setUserData} />
+                <UserInfo userData={userData} setUserData={setUserData} update={update}/>
 
                 <input
                     className="submit-input"
