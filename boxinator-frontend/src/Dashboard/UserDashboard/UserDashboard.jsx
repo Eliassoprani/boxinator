@@ -28,6 +28,7 @@ function UserDashboard() {
 
         const orders = await fetchOrdersResponse.json();
         setOrders(orders);
+        console.log(orders);
     }
 
     return (
