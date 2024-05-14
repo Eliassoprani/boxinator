@@ -14,10 +14,13 @@ function Login() {
     //Hämta order id från parametrar om det är en guest som valt att registrera sig
     const { orderId } = useParams();
     //Logga ut får att kunna registrera sig samt gå direkt till sign up
-    if(orderId) {
-        localStorage.clear();
-        //setSignUp(true);
-    }
+    useEffect(() => {
+        if (orderId) {
+            localStorage.clear();
+            setSignUp(true);
+        }
+    }, []);
+
 
     const handleChange = (event) => {
         const inputName = event.target.name;
@@ -110,7 +113,7 @@ function Login() {
                 },
             );
 
-            userData.dateOfBirth = userData.dateOfBirth + "T08:59:07.200Z"
+        userData.dateOfBirth = userData.dateOfBirth + "T08:59:07.200Z"
 
         const signUpResponse = await fetch("http://localhost:5012/authentication/signup", {
             method: "POST",
@@ -125,7 +128,7 @@ function Login() {
         // Retur objektet från sign up
         const signUpResponseData = await signUpResponse.json();
         const guestUserId = signUpResponseData.id;  //Korrekt id
-        
+
         //Uppdatera order med user_id = guestUserId
         const updateShipmentResponse = await fetch("http://localhost:5012/orders/updateOrdersUser", {
             method: "PUT",
