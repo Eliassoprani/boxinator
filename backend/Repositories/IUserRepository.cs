@@ -8,7 +8,7 @@ namespace backend.Repositories
         public Task<IEnumerable<User>> GetAllUsers();
         public Task<RegisterResPayload?> CreateAUser(RegisterPayload payload);
 
-        public Task<User?> UpdateUser(string Userid, string FirstName, string LastName, string Email, int Phone);
+        public Task<User?> UpdateUser(string userId, UserPutPayload payload);
 
         public Task<User?> GetUserById(string Userid);
 
