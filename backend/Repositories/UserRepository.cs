@@ -102,7 +102,7 @@ namespace backend.Repositories
             if (payload.Password != null)
                 user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, payload.Password);
             if (payload.DateOfBirth != null)
-                user.DateOfBirth = payload.DateOfBirth.Value; // Access the underlying value of DateTime?
+                user.DateOfBirth = payload.DateOfBirth; // Ändrat till string
             if (payload.Phone != null)
                 user.Phone = payload.Phone.Value; // Access the underlying value of int?
             if (payload.CountryOfResidence != null)

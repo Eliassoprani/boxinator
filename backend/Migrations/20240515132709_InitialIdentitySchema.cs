@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class initmigration : Migration
+    public partial class InitialIdentitySchema : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,7 +35,7 @@ namespace backend.Migrations
                     Id = table.Column<string>(type: "text", nullable: false),
                     first_name = table.Column<string>(type: "text", nullable: false),
                     last_name = table.Column<string>(type: "text", nullable: false),
-                    date_of_birth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    date_of_birth = table.Column<string>(type: "text", nullable: false),
                     phone = table.Column<int>(type: "integer", nullable: false),
                     country_of_residence = table.Column<string>(type: "text", nullable: false),
                     role = table.Column<int>(type: "integer", nullable: false),
@@ -72,6 +72,7 @@ namespace backend.Migrations
                     weight = table.Column<float>(type: "real", nullable: false),
                     box_color = table.Column<string>(type: "text", nullable: false),
                     country_id = table.Column<int>(type: "integer", nullable: false),
+                    DestinationCountry = table.Column<string>(type: "text", nullable: false),
                     cost = table.Column<float>(type: "real", nullable: false),
                     user_id = table.Column<string>(type: "text", nullable: false),
                     status = table.Column<int>(type: "integer", nullable: false)
@@ -106,12 +107,12 @@ namespace backend.Migrations
             migrationBuilder.InsertData(
                 table: "users",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "country_of_residence", "created_at", "date_of_birth", "Email", "EmailConfirmed", "first_name", "last_name", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "phone", "PhoneNumber", "PhoneNumberConfirmed", "role", "SecurityStamp", "TwoFactorEnabled", "updated_at", "UserName", "zip_code" },
-                values: new object[] { "2f5814a7-d3f6-47bf-b98c-bc578bc7abfa", 0, "65e21792-32ed-4132-ae7f-1026af843c70", "sweden", new DateTime(2024, 5, 8, 9, 41, 2, 570, DateTimeKind.Utc).AddTicks(155), new DateTime(2024, 5, 8, 9, 41, 2, 570, DateTimeKind.Utc).AddTicks(153), "admin@admin.com", false, "admin", "admin", false, null, null, null, "3b612c75a7b5048a435fb6ec81e52ff92d6d795a8b5a9c17070f6a63c97a53b2", 555123123, null, false, 0, "adbd6ec6-8000-4977-81ac-ac2eb57081d8", false, new DateTime(2024, 5, 8, 9, 41, 2, 570, DateTimeKind.Utc).AddTicks(155), "admin", 123 });
+                values: new object[] { "147ab5dd-e09b-4eb9-9d4e-4dab868557f3", 0, "6d610b36-9e14-4a9c-bbf9-76afcace0d16", "sweden", new DateTime(2024, 5, 15, 13, 27, 9, 338, DateTimeKind.Utc).AddTicks(9513), "20000101", "admin@admin.com", false, "admin", "admin", false, null, null, null, "3b612c75a7b5048a435fb6ec81e52ff92d6d795a8b5a9c17070f6a63c97a53b2", 555123123, null, false, 0, "960bd2f3-56cf-4d0d-97e4-981ab856f8e4", false, new DateTime(2024, 5, 15, 13, 27, 9, 338, DateTimeKind.Utc).AddTicks(9517), "admin", 123 });
 
             migrationBuilder.InsertData(
                 table: "orders",
-                columns: new[] { "id", "box_color", "cost", "country_id", "reciever_name", "status", "user_id", "weight" },
-                values: new object[] { 1, "Red", 10f, 1, "Admin", 0, "2f5814a7-d3f6-47bf-b98c-bc578bc7abfa", 10f });
+                columns: new[] { "id", "box_color", "cost", "country_id", "DestinationCountry", "reciever_name", "status", "user_id", "weight" },
+                values: new object[] { 1, "Red", 10f, 1, "Italien", "Admin", 0, "147ab5dd-e09b-4eb9-9d4e-4dab868557f3", 10f });
 
             migrationBuilder.CreateIndex(
                 name: "IX_orders_country_id",

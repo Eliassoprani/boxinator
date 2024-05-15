@@ -128,7 +128,7 @@ namespace backend.Migrations
                             DestinationCounty = "Italien",
                             RecieverName = "Admin",
                             Status = 0,
-                            UserId = "9b9fcbee-85b4-4b57-9aba-41c0fdaddb3a",
+                            UserId = "147ab5dd-e09b-4eb9-9d4e-4dab868557f3",
                             Weight = 10f
                         });
                 });
@@ -153,8 +153,9 @@ namespace backend.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<string>("DateOfBirth")
+                        .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("date_of_birth");
 
                     b.Property<string>("Email")
@@ -226,12 +227,12 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9b9fcbee-85b4-4b57-9aba-41c0fdaddb3a",
+                            Id = "147ab5dd-e09b-4eb9-9d4e-4dab868557f3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "45f21c53-081c-41d6-8477-412727539d3d",
+                            ConcurrencyStamp = "6d610b36-9e14-4a9c-bbf9-76afcace0d16",
                             CountryOfResidence = "sweden",
-                            CreatedAt = new DateTime(2024, 5, 10, 9, 44, 57, 960, DateTimeKind.Utc).AddTicks(692),
-                            DateOfBirth = new DateTime(2024, 5, 10, 9, 44, 57, 960, DateTimeKind.Utc).AddTicks(689),
+                            CreatedAt = new DateTime(2024, 5, 15, 13, 27, 9, 338, DateTimeKind.Utc).AddTicks(9513),
+                            DateOfBirth = "20000101",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "admin",
@@ -241,9 +242,9 @@ namespace backend.Migrations
                             Phone = 555123123,
                             PhoneNumberConfirmed = false,
                             Role = 0,
-                            SecurityStamp = "535608cd-bb4c-43e8-9f9f-c5f68564bacc",
+                            SecurityStamp = "960bd2f3-56cf-4d0d-97e4-981ab856f8e4",
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2024, 5, 10, 9, 44, 57, 960, DateTimeKind.Utc).AddTicks(692),
+                            UpdatedAt = new DateTime(2024, 5, 15, 13, 27, 9, 338, DateTimeKind.Utc).AddTicks(9517),
                             UserName = "admin",
                             ZipCode = 123
                         });

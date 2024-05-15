@@ -10,7 +10,7 @@ function UserInfo({ userData, setUserData, update }) {
                 [inputName]: inputValue,
             }));
         }
-    };
+    }
 
 
     return (
@@ -60,7 +60,7 @@ function UserInfo({ userData, setUserData, update }) {
             <label>
                 Date of birth:
                 <input
-                    type="date"
+                    type="text"
                     name="dateOfBirth"
                     value={userData.dateOfBirth}
                     onChange={handleChange}

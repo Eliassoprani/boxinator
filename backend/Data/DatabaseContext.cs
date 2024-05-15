@@ -37,7 +37,7 @@ namespace backend.Data
                 Email = "admin@admin.com",
                 FirstName = "admin",
                 LastName = "admin",
-                DateOfBirth = DateTime.UtcNow,
+                DateOfBirth = "20000101",
                 Phone = 555123123,
                 CountryOfResidence = "sweden",
                 ZipCode = 123,
