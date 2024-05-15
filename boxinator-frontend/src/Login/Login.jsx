@@ -14,14 +14,15 @@ function Login() {
 
     //Hämta order id från parametrar om det är en guest som valt att registrera sig
     const { orderId } = useParams();
+
     //Logga ut får att kunna registrera sig samt gå direkt till sign up
     useEffect(() => {
         if (orderId) {
+            console.log("Order id: " + orderId);
             localStorage.clear();
             setSignUp(true);
         }
     }, []);
-
 
     const handleChange = (event) => {
         const inputName = event.target.name;
@@ -93,8 +94,6 @@ function Login() {
                 },
             );
 
-        userData.dateOfBirth = userData.dateOfBirth + "T08:59:07.200Z"
-
         const signUpResponse = await fetch(`${urlBackendBasePath}/authentication/signup`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -105,22 +104,24 @@ function Login() {
             throw new Error("Failed to sign up");
         }
 
-        // Retur objektet från sign up
-        const signUpResponseData = await signUpResponse.json();
-        const guestUserId = signUpResponseData.id;
+        if (orderId) {
+            // Retur objektet från sign up
+            const signUpResponseData = await signUpResponse.json();
+            const guestUserId = signUpResponseData.id;
 
-        //Uppdatera order med user_id = guestUserId
-        const updateShipmentResponse = await fetch(`${urlBackendBasePath}/orders/updateOrdersUser`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ UserId: guestUserId, OrderId: orderId }),
-        });
+            //Uppdatera order med user_id = guestUserId
+            const updateShipmentResponse = await fetch(`${urlBackendBasePath}/orders/updateOrdersUser`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ UserId: guestUserId, OrderId: orderId }),
+            });
 
-        if (!updateShipmentResponse.ok) {
-            throw new Error("Failed to update order's user id");
+            if (!updateShipmentResponse.ok) {
+                throw new Error("Failed to update order's user id");
+            }
         }
 
-        login();
+        setSignUp(false);
     }
 
     const guestLogin = () => {

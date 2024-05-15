@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import { UserContext } from "../App";
 import "./Profile.css"
 import UserInfo from '../UserInfo/UserInfo';
+import { urlBackendBasePath } from '../assets/strings';
 
 function Profile() {
     const { user } = useContext(UserContext);
@@ -32,14 +33,16 @@ function Profile() {
 
     const updateUser = async (e) => {
         e.preventDefault();
-        userData.dateOfBirth = userData.dateOfBirth + "T08:59:07.200Z"
-        const token = user.token; // Get the token from the user object
+
+        const token = localStorage.getItem('token');
+        
         console.log(token, userData);
-        const updateUserResponse = await fetch("http://localhost:5012/authentication/update", {
+
+        const updateUserResponse = await fetch(`${urlBackendBasePath}/authentication/update`, {
             method: "PUT",
-            headers: { 
+            headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}` // Include the token in the Authorization header
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify(userData),
         });
@@ -54,7 +57,7 @@ function Profile() {
             <form className="profile">
                 <h2>Profile Page</h2>
 
-                <UserInfo userData={userData} setUserData={setUserData} update={update}/>
+                <UserInfo userData={userData} setUserData={setUserData} update={update} />
 
                 <input
                     className="submit-input"

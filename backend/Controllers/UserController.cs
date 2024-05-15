@@ -102,18 +102,14 @@ namespace backend.Controllers
 
             if (userId == null)
             {
-                Console.WriteLine("In getUser method- User id: " + userId);
                 return TypedResults.Unauthorized();
             }
-            Console.WriteLine("In getUser method. Userid: " + userId);
 
             User? userToBeReturned = await userRepository.GetUserById(userId);
 
             if(userToBeReturned== null){
                 return TypedResults.BadRequest();
             }
-
-            Console.WriteLine("In getUser method. User object: " + userToBeReturned);
 
             return TypedResults.Ok(new UserDTO(userToBeReturned));
         }
