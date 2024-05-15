@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { UserContext } from "../../App";
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
+import { urlBackendBasePath } from '../../assets/strings.js'
 
 function OrderModal({ isOpen, closeModal, orderObj }) {
     const { user } = useContext(UserContext);
@@ -21,7 +22,7 @@ function OrderModal({ isOpen, closeModal, orderObj }) {
         };
 
         try {
-            const response = await fetch(`http://localhost:5012/orders/updateOrder?OrderId=${orderObj.id}`, {
+            const response = await fetch(`${urlBackendBasePath}/orders/updateOrder?OrderId=${orderObj.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

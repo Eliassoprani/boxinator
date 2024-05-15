@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root'); // Set the root element for accessibility
 import PropTypes from 'prop-types';
 import emailjs from '@emailjs/browser';
+import { urlBackendBasePath, urlFrontendBasePath } from '../assets/strings.js'
 
 function ShipmentModal({ isOpen, closeModal }) {
     const { user } = useContext(UserContext);
@@ -42,7 +43,7 @@ function ShipmentModal({ isOpen, closeModal }) {
 
         console.log(shipmentData);
 
-        const newShipmentResponse = await fetch("http://localhost:5012/orders/createAnOrder", {
+        const newShipmentResponse = await fetch(`${urlBackendBasePath}/orders/createAnOrder`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(shipmentData),
@@ -64,7 +65,7 @@ function ShipmentModal({ isOpen, closeModal }) {
             Weight: ${responseData.weight}
             Box colour: ${responseData.boxColor}
             Destination: ${responseData.countryId}
-            Register and claim your shipment at http://localhost:5173/${responseData.id}`;
+            Register and claim your shipment at ${urlFrontendBasePath}/${responseData.id}`;
         }
         else {
             message = `Order id: ${responseData.id} 

@@ -4,6 +4,7 @@ import { UserContext } from "../App";
 import UserInfo from '../UserInfo/UserInfo';
 import emailjs from '@emailjs/browser';
 import { useParams } from "react-router-dom";
+import { urlBackendBasePath, urlFrontendBasePath } from '../assets/strings.js'
 
 function Login() {
     const { user, setUser, setLoggedIn } = useContext(UserContext);
@@ -35,7 +36,7 @@ function Login() {
     const login = async (e) => {
         e.preventDefault();
 
-        const logInResponse = await fetch("http://localhost:5012/authentication/login", {
+        const logInResponse = await fetch(`${urlBackendBasePath}/authentication/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: userData.email, password: userData.password }),
@@ -99,7 +100,7 @@ function Login() {
         const templateParams = {
             to_name: userData.firstName,
             to_email: userData.email,
-            message: `Visit us at http://localhost:5173/`
+            message: `Visit us at ${urlFrontendBasePath}`
         }
 
         emailjs
@@ -115,7 +116,7 @@ function Login() {
 
         userData.dateOfBirth = userData.dateOfBirth + "T08:59:07.200Z"
 
-        const signUpResponse = await fetch("http://localhost:5012/authentication/signup", {
+        const signUpResponse = await fetch(`${urlBackendBasePath}/authentication/signup`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userData),
@@ -127,17 +128,16 @@ function Login() {
 
         // Retur objektet från sign up
         const signUpResponseData = await signUpResponse.json();
-        const guestUserId = signUpResponseData.id;  //Korrekt id
+        const guestUserId = signUpResponseData.id;
 
         //Uppdatera order med user_id = guestUserId
-        const updateShipmentResponse = await fetch("http://localhost:5012/orders/updateOrdersUser", {
+        const updateShipmentResponse = await fetch(`${urlBackendBasePath}/orders/updateOrdersUser`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ UserId: guestUserId, OrderId: orderId }),    //OrderId kommer ej med till BE
+            body: JSON.stringify({ UserId: guestUserId, OrderId: orderId }),
         });
 
         if (!updateShipmentResponse.ok) {
-            console.log("Log: " + JSON.stringify(signUpResponseData));
             throw new Error("Failed to update order's user id");
         }
 

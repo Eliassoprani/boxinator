@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from "../../App";
 import OrderList from '../Orders/OrderList';
+import { urlBackendBasePath } from '../../assets/strings.js'
 
 function AdminDashboard() {
     const { user } = useContext(UserContext);
@@ -17,7 +18,7 @@ function AdminDashboard() {
             "Authorization": `Bearer ${token}` // Include the token in the Authorization header
         };
 
-        const fetchOrdersResponse = await fetch("http://localhost:5012/orders/getAllOrders", {
+        const fetchOrdersResponse = await fetch(`${urlBackendBasePath}/orders/getAllOrders`, {
             method: "GET",
             headers: headers // Pass the headers object
         });
