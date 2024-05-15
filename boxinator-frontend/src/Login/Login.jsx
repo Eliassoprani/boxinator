@@ -46,44 +46,23 @@ function Login() {
             throw new Error("Failed to log in");
         }
 
-        const {
-            id,
-            firstName,
-            lastName,
-            email,
-            dateOfBirth,
-            phone,
-            countryOfResidence,
-            zipCode,
-            role,
-            token } = await logInResponse.json();
+        const logInResponseData = await logInResponse.json();
 
         setUser({
-            id: id,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            dateOfBirth: dateOfBirth,
-            phone: phone,
-            countryOfResidence: countryOfResidence,
-            zipCode: zipCode,
-            role: role,
-            token: token,
+            id: logInResponseData.id,
+            firstName: logInResponseData.firstName,
+            lastName: logInResponseData.lastName,
+            email: logInResponseData.email,
+            dateOfBirth: logInResponseData.dateOfBirth,
+            phone: logInResponseData.phone,
+            countryOfResidence: logInResponseData.countryOfResidence,
+            zipCode: logInResponseData.zipCode,
+            role: logInResponseData.role,
+            token: logInResponseData.token,
         });
 
         //Save to local storage in case user refreshes/closes window
-        localStorage.setItem('user', JSON.stringify({
-            id: id,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            dateOfBirth: dateOfBirth,
-            phone: phone,
-            countryOfResidence: countryOfResidence,
-            zipCode: zipCode,
-            role: role,
-            token: token
-        }));
+        localStorage.setItem('token', logInResponseData.token);
 
         localStorage.setItem('loggedIn', JSON.stringify(true));
 
@@ -107,10 +86,10 @@ function Login() {
             .send(serviceId, templateId, templateParams, publicKey)
             .then(
                 () => {
-                    console.log('SUCCESS!');
+                    console.log('Account activation email sent');
                 },
                 (error) => {
-                    console.log('FAILED...', error);
+                    console.log('Account activation email failed: ', error);
                 },
             );
 
@@ -149,7 +128,7 @@ function Login() {
             role: 2,
         });
 
-        localStorage.setItem('user', JSON.stringify({ role: 2 }));
+        localStorage.setItem('user', JSON.stringify({ role: 2 }));  //Ta bort. Checka loggedIn !& user.role
         localStorage.setItem('loggedIn', JSON.stringify(true));
 
         setLoggedIn(true);

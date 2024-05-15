@@ -83,7 +83,7 @@ namespace backend.Controllers
             return TypedResults.Ok(orderDTO);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public static async Task<IResult> updateOrder([FromServices] IOrderRepository orderRepository, OrderPutPayload payload, int OrderId)
         {
             //Hämta från IOrderRepository

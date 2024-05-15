@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root'); // Set the root element for accessibility
 import PropTypes from 'prop-types';
 import emailjs from '@emailjs/browser';
-import { urlBackendBasePath, urlFrontendBasePath } from '../assets/strings.js'
+import { urlBackendBasePath, urlFrontendBasePath, guestUserId } from '../assets/strings.js'
 
 function ShipmentModal({ isOpen, closeModal }) {
     const { user } = useContext(UserContext);
@@ -37,8 +37,9 @@ function ShipmentModal({ isOpen, closeModal }) {
         //För att sidan ej ska ladda om när man klickar submit
         e.preventDefault();
 
+        //Basic user id för alla guests
         if (user.role === 2) {
-            shipmentData.userId = "e4344390-99a7-4d82-998f-64863e9b6c67";
+            shipmentData.userId = guestUserId;
         }
 
         console.log(shipmentData);
@@ -88,10 +89,10 @@ function ShipmentModal({ isOpen, closeModal }) {
             .send(serviceId, templateId, templateParams, publicKey)
             .then(
                 () => {
-                    console.log('SUCCESS!');
+                    console.log('Order confirmation email sent');
                 },
                 (error) => {
-                    console.log('FAILED...', error);
+                    console.log('Order confirmation email failed: ', error);
                 },
             );
 
