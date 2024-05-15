@@ -12,7 +12,7 @@ function UserDashboard() {
     }, [])
 
     async function fetchOrders() {
-        const token = user.token; // Get the token from the user object
+        const token = localStorage.getItem('token');
         const headers = {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}` // Include the token in the Authorization header

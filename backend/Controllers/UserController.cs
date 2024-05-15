@@ -21,6 +21,7 @@ namespace backend.Controllers
             authGroup.MapPost("/login", Login);
             authGroup.MapPost("/signup", Register);
             authGroup.MapPut("/update", updateUser);
+            authGroup.MapGet("/getUser", getUser);
         }
 
 
@@ -86,12 +87,35 @@ namespace backend.Controllers
             {
                 return TypedResults.Unauthorized();
             }
-            //Hämta från IOrderRepository
+
             User? updatedUser = await userRepository.UpdateUser(userId, payload);
             if(updatedUser== null){
                 return TypedResults.BadRequest();
             }
             return TypedResults.Ok(new UserDTO(updatedUser));
+        }
+
+        [Authorize()]   //Kollar om jwt finns och är giltig
+        public static async Task<IResult> getUser([FromServices] IUserRepository userRepository, ClaimsPrincipal user)
+        {
+            string? userId = user.UserId();
+
+            if (userId == null)
+            {
+                Console.WriteLine("In getUser method- User id: " + userId);
+                return TypedResults.Unauthorized();
+            }
+            Console.WriteLine("In getUser method. Userid: " + userId);
+
+            User? userToBeReturned = await userRepository.GetUserById(userId);
+
+            if(userToBeReturned== null){
+                return TypedResults.BadRequest();
+            }
+
+            Console.WriteLine("In getUser method. User object: " + userToBeReturned);
+
+            return TypedResults.Ok(new UserDTO(userToBeReturned));
         }
     }
 }

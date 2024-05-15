@@ -19,6 +19,7 @@ namespace backend.Repositories
             _userManager = userManager;
             _tokenService = tokenService;
         }
+        
         public async Task<RegisterResPayload?> CreateAUser(RegisterPayload payload)
         {
             if (payload.Email == null) return null;
@@ -45,8 +46,6 @@ namespace backend.Repositories
 
             if (result.Succeeded)
             {   
-                //Hämta user id och returnera. Get user by email metod?
-                Console.WriteLine("In user repo email: " + payload.Email);
                 var user = await _userManager.FindByEmailAsync(payload.Email);
                 return new RegisterResPayload(user.Id);   //Ny retur typ
             }
