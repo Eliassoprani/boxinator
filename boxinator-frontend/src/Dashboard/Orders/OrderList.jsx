@@ -12,6 +12,7 @@ function OrderList({ orders, user }) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState({});
+    const [selectedStatus, setSelectedStatus] = useState(null); // State to store selected status filter
 
     const handleOpenModal = (order) => {
         setSelectedOrder(order);
@@ -22,6 +23,15 @@ function OrderList({ orders, user }) {
         setIsModalOpen(false);
     };
 
+    const filteredOrders = selectedStatus !== null
+        ? orders.filter(order => order.status === selectedStatus)
+        : orders; // If selectedStatus is null, show all orders
+
+    const handleStatusChange = (e) => {
+        const status = parseInt(e.target.value);
+        setSelectedStatus(status !== -1 ? status : null); // Set selectedStatus to null for "All statuses" option
+    };
+
     return (
         <div style={{
             color: "#000",
@@ -30,9 +40,16 @@ function OrderList({ orders, user }) {
             border: '1px',
             borderRadius: '10px'
         }}>
-            {orders.map((order, index) => {
+            {/* Status filter dropdown */}
+            <select value={selectedStatus !== null ? selectedStatus.toString() : '-1'} onChange={handleStatusChange}>
+                <option value="-1">All statuses</option>
+                {Object.keys(STATUS).map(statusKey => (
+                    <option key={statusKey} value={parseInt(statusKey)}>{STATUS[statusKey]}</option>
+                ))}
+            </select>
+            
+            {filteredOrders.map((order, index) => {
                 let backgroundColor;
-                //Status på ordrar 0=CREATED 1=RECIEVED 2=INTRANSIT 3=COMPLETED 4=CANCELLED
                 switch (order.status) {
                     case 0:
                         backgroundColor = '#C7E5EF';
@@ -55,7 +72,7 @@ function OrderList({ orders, user }) {
                 }
                 return (
                     <div key={index} style={{
-                        backgroundColor: backgroundColor,   //Byt ut
+                        backgroundColor: backgroundColor,
                         padding: "10px",
                         margin: "10px",
                         border: '1px',
@@ -66,7 +83,7 @@ function OrderList({ orders, user }) {
                         <p>Weight: {order.weight}</p>
                         <p>Country ID: {order.sourceCountry}</p>
                         <p>Status: {STATUS[order.status]}</p>
-                        {user.role == 0 && <button onClick={() => handleOpenModal(order)}>Change Status</button>}
+                        {user.role === 0 && <button onClick={() => handleOpenModal(order)}>Change Status</button>}
                     </div>
                 );
             })}
