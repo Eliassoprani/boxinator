@@ -25,16 +25,9 @@ namespace backend.Controllers
             authGroup.MapDelete("/deleteOrder", deleteOrder);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]    //Behöver ej checka claims när Roles = "Admin" är definierad här
         public static async Task<IResult> getAllOrders([FromServices] IOrderRepository orderRepository, ClaimsPrincipal user)
         {
-            string? userId = user.UserId();
-            UserRoles? role = user.Role();
-            if (userId == null || role != UserRoles.Admin)
-            {
-                return TypedResults.Unauthorized();
-            }
-
             var orders = await orderRepository.GetAllOrders();
 
             var orderDTOs =  orders.Select(order => new OrderDTO(order)).ToList();
@@ -51,7 +44,7 @@ namespace backend.Controllers
             return TypedResults.Ok(orderDTO);
         }
 
-        [Authorize()]
+        [Authorize]
         public static async Task<IResult> getAllUserOrders([FromServices] IOrderRepository orderRepository, ClaimsPrincipal user)
         {
             string? userId = user.UserId();
@@ -88,6 +81,7 @@ namespace backend.Controllers
         }
 
         //Om en guest claimat ett konto ska deras order få deras user id
+        [Authorize]
         public static async Task<IResult> updateOrdersUser([FromServices] IOrderRepository orderRepository, OrderPutUserPayload payload)
         {
             //Hämta från IOrderRepository
@@ -101,7 +95,7 @@ namespace backend.Controllers
             return TypedResults.Ok(orderDTO);
         }
 
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public static async Task<IResult> deleteOrder([FromServices] IOrderRepository orderRepository, int OrderId, ClaimsPrincipal user)
         {
             var order = await orderRepository.DeleteOrder(OrderId);
