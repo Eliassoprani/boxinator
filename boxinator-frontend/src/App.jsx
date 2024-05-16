@@ -22,19 +22,23 @@ function App() {
     if (storedToken) {
       setToken(storedToken);
 
-      //Obs getUser körs innan setToken är klar. (Obs2 Körs endast om man refreshar när man är i Dashboard component)
-      getUser(storedToken);
+      getAndSetUser(storedToken);
 
       setLoggedIn(true);
     }
+
+    const storedLoggedIn = JSON.parse(localStorage.getItem('loggedIn'));
+    if (storedLoggedIn) {
+      setLoggedIn(storedLoggedIn);
+    }
   }, []);
 
-  const getUser = async (storedToken) => {
+  const getAndSetUser = async (storedToken) => {
     const headers = {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${storedToken}`
     };
-    
+
     const fetchUserResponse = await fetch(`${urlBackendBasePath}/authentication/getUser`, {
       method: "GET",
       headers: headers
@@ -49,13 +53,6 @@ function App() {
     setUser(returnedUser);
   }
 
-  useEffect(() => {
-    const storedLoggedIn = JSON.parse(localStorage.getItem('loggedIn'));
-    if (storedLoggedIn) {
-      setLoggedIn(storedLoggedIn);
-    }
-  }, []);
-
 
   return (
     <>
@@ -63,20 +60,17 @@ function App() {
         <div className='app'>
           <Nav />
 
-          <Routes>
-            <Route path="/aboutus" element={<AboutUs />} />
-          </Routes>
-
           {!loggedIn && (
             <Routes>
               <Route path="/" element={<Login />}></Route>
-              <Route path="/:orderId" element={<Login />}></Route>
+              <Route path="/:email/:orderId" element={<Login />}></Route>
             </Routes>
           )}
 
           {loggedIn && (
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/aboutus" element={<AboutUs />} />
               <Route path="/newshipment" element={<NewShipment />} />
             </Routes>
           )}

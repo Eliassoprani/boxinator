@@ -1,5 +1,6 @@
 import './Login.css'
 import { useState, useContext, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import UserInfo from '../UserInfo/UserInfo';
 import { useParams } from "react-router-dom";
@@ -7,6 +8,7 @@ import { urlBackendBasePath } from '../assets/strings.js'
 import { accountActivationEmail } from '../Email/AccountActivation.js';
 
 function Login() {
+    const navigate = useNavigate();
     const { user, setUser, setLoggedIn } = useContext(UserContext);
 
     const [signUp, setSignUp] = useState(false);
@@ -56,6 +58,8 @@ function Login() {
         localStorage.setItem('loggedIn', JSON.stringify(true));
 
         setLoggedIn(true);
+
+        navigate("/dashboard");
     }
 
     const signup = async (e) => {
@@ -97,6 +101,7 @@ function Login() {
     const guestLogin = () => {
         localStorage.setItem('loggedIn', JSON.stringify(true));
         setLoggedIn(true);
+        navigate("/dashboard");
     }
 
     return (
