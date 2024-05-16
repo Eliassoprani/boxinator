@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { urlBackendBasePath } from '../../assets/strings.js'
 
 function OrderModal({ isOpen, closeModal, orderObj }) {
-    const { user } = useContext(UserContext);
+    const { user, token } = useContext(UserContext);
     const [selectedStatus, setSelectedStatus] = useState(0);
 
     const STATUS = Object.freeze({
@@ -22,11 +22,14 @@ function OrderModal({ isOpen, closeModal, orderObj }) {
         };
 
         try {
-            const response = await fetch(`${urlBackendBasePath}/orders/updateOrder?OrderId=${orderObj.id}`, {
+            const headers = {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+              };
+
+            const response = await fetch(`${urlBackendBasePath}/orders/updateOrder?OrderId=${orderObj.id}`, {   //Fel input?
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: headers,
                 body: JSON.stringify(data)
             });
 

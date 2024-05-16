@@ -8,7 +8,7 @@ import { urlBackendBasePath, guestUserId } from '../assets/strings.js'
 import { orderConfirmationEmail } from "../Email/OrderConfirmation.js";
 
 function ShipmentModal({ isOpen, closeModal }) {
-    const { user } = useContext(UserContext);
+    const { user, token } = useContext(UserContext);
 
     const initialState = {
         userId: user.id,
@@ -43,10 +43,16 @@ function ShipmentModal({ isOpen, closeModal }) {
         }
 
         console.log(shipmentData);
+        console.log("token: " + token);
+
+        const headers = {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          };
 
         const newShipmentResponse = await fetch(`${urlBackendBasePath}/orders/createAnOrder`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: headers,
             body: JSON.stringify(shipmentData),
         });
 
