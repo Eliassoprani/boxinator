@@ -4,8 +4,8 @@ import('./ShipmentModal.css');
 import Modal from 'react-modal';
 Modal.setAppElement('#root'); // Set the root element for accessibility
 import PropTypes from 'prop-types';
-import emailjs from '@emailjs/browser';
-import { urlBackendBasePath, urlFrontendBasePath, guestUserId } from '../assets/strings.js'
+import { urlBackendBasePath, guestUserId } from '../assets/strings.js'
+import { orderConfirmation } from "../Email/OrderConfirmation.js";
 
 function ShipmentModal({ isOpen, closeModal }) {
     const { user } = useContext(UserContext);
@@ -57,44 +57,9 @@ function ShipmentModal({ isOpen, closeModal }) {
         // Retur objektet
         const responseData = await newShipmentResponse.json();
 
-        const toName = user.role === 2 ? 'guest' : user.firstName;
-        const toEmail = user.role === 2 ? email : user.email;
-        var message = "";
-        if (user.role === 2) {
-            message = `Order id: ${responseData.id} 
-            Receiver name: ${responseData.recieverName} 
-            Weight: ${responseData.weight}
-            Box colour: ${responseData.boxColor}
-            Destination: ${responseData.countryId}
-            Register and claim your shipment at ${urlFrontendBasePath}/${responseData.id}`;
-        }
-        else {
-            message = `Order id: ${responseData.id} 
-            Receiver name: ${responseData.recieverName} 
-            Weight: ${responseData.weight}
-            Box colour: ${responseData.boxColor}
-            Destination: ${responseData.countryId}`;
-        }
-
-        const serviceId = 'service_krhq75r';
-        const templateId = 'template_86k79yo';
-        const publicKey = 'llG6edCvnODXdraEf';
-        const templateParams = {
-            to_name: toName,
-            to_email: toEmail,
-            message: message
-        }
-
-        emailjs
-            .send(serviceId, templateId, templateParams, publicKey)
-            .then(
-                () => {
-                    console.log('Order confirmation email sent');
-                },
-                (error) => {
-                    console.log('Order confirmation email failed: ', error);
-                },
-            );
+        
+        //Skicka email
+        orderConfirmation(user, email, responseData);
 
         //onClose
 

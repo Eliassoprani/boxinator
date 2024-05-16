@@ -2,9 +2,9 @@ import './Login.css'
 import { useState, useContext, useEffect } from 'react'
 import { UserContext } from "../App";
 import UserInfo from '../UserInfo/UserInfo';
-import emailjs from '@emailjs/browser';
 import { useParams } from "react-router-dom";
-import { urlBackendBasePath, urlFrontendBasePath } from '../assets/strings.js'
+import { urlBackendBasePath } from '../assets/strings.js'
+import { accountActivation } from '../Email/AccountActivation.js';
 
 function Login() {
     const { user, setUser, setLoggedIn } = useContext(UserContext);
@@ -63,25 +63,7 @@ function Login() {
         e.preventDefault();
 
         //Send email before activating account
-        const serviceId = 'service_krhq75r';
-        const templateId = 'template_7v9fupt';
-        const publicKey = 'llG6edCvnODXdraEf';
-        const templateParams = {
-            to_name: userData.firstName,
-            to_email: userData.email,
-            message: `Visit us at ${urlFrontendBasePath}`
-        }
-
-        emailjs
-            .send(serviceId, templateId, templateParams, publicKey)
-            .then(
-                () => {
-                    console.log('Account activation email sent');
-                },
-                (error) => {
-                    console.log('Account activation email failed: ', error);
-                },
-            );
+        accountActivation(userData.firstName, userData.email);
 
         const signUpResponse = await fetch(`${urlBackendBasePath}/authentication/signup`, {
             method: "POST",
