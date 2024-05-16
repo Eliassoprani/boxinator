@@ -35,10 +35,8 @@ namespace backend.Controllers
                 return TypedResults.Unauthorized();
             }
 
-            //Hämta från IOrderRepository
             var orders = await orderRepository.GetAllOrders();
 
-            //Gör om till DTOs
             var orderDTOs =  orders.Select(order => new OrderDTO(order)).ToList();
 
             return TypedResults.Ok(orderDTOs);
@@ -46,7 +44,6 @@ namespace backend.Controllers
 
         public static async Task<IResult> createAnOrder([FromServices] IOrderRepository orderRepository, OrderPostPayload payload)
         {
-            //Hämta från IOrderRepository
             var order = await orderRepository.CreateAnOrder(payload);
 
             if(order == null) return TypedResults.BadRequest();
@@ -63,10 +60,9 @@ namespace backend.Controllers
             {
                 return TypedResults.Unauthorized();
             }
-            //Hämta från IOrderRepository
+
             var orders = await orderRepository.GetAllUserOrders(userId);
 
-            //Gör om till DTOs
             var orderDTOs =  orders.Select(order => new OrderDTO(order)).ToList();
 
             return TypedResults.Ok(orderDTOs);
@@ -74,10 +70,8 @@ namespace backend.Controllers
 
         public static async Task<IResult> getOrderById([FromServices] IOrderRepository orderRepository, int OrderId)
         {
-            //Hämta från IOrderRepository
             var order = await orderRepository.GetOrderById(OrderId);
 
-            //Gör om till DTO
             var orderDTO = new OrderDTO(order);
 
             return TypedResults.Ok(orderDTO);
@@ -86,7 +80,6 @@ namespace backend.Controllers
         [Authorize(Roles = "Admin")]
         public static async Task<IResult> updateOrder([FromServices] IOrderRepository orderRepository, OrderPutPayload payload, int OrderId)
         {
-            //Hämta från IOrderRepository
             var order = await orderRepository.UpdateOrder(payload, OrderId);
 
             if(order == null) return TypedResults.BadRequest();

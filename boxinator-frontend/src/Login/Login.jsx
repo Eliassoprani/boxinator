@@ -39,6 +39,8 @@ function Login() {
     const login = async (e) => {
         e.preventDefault();
 
+        console.log("email: " + userData.email + " password: " + userData.password)
+
         const logInResponse = await fetch(`${urlBackendBasePath}/authentication/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
