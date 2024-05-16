@@ -4,7 +4,7 @@ import { UserContext } from "../App";
 import UserInfo from '../UserInfo/UserInfo';
 import { useParams } from "react-router-dom";
 import { urlBackendBasePath } from '../assets/strings.js'
-import { accountActivation } from '../Email/AccountActivation.js';
+import { accountActivationEmail } from '../Email/AccountActivation.js';
 
 function Login() {
     const { user, setUser, setLoggedIn } = useContext(UserContext);
@@ -53,7 +53,6 @@ function Login() {
 
         //Save to local storage in case user refreshes/closes window
         localStorage.setItem('token', logInResponseData.token);
-
         localStorage.setItem('loggedIn', JSON.stringify(true));
 
         setLoggedIn(true);
@@ -63,7 +62,7 @@ function Login() {
         e.preventDefault();
 
         //Send email before activating account
-        accountActivation(userData.firstName, userData.email);
+        accountActivationEmail(userData.firstName, userData.email);
 
         const signUpResponse = await fetch(`${urlBackendBasePath}/authentication/signup`, {
             method: "POST",
@@ -96,13 +95,7 @@ function Login() {
     }
 
     const guestLogin = () => {
-        setUser({
-            role: 2,
-        });
-
-        localStorage.setItem('user', JSON.stringify({ role: 2 }));  //Ta bort. Checka loggedIn !& user.role
         localStorage.setItem('loggedIn', JSON.stringify(true));
-
         setLoggedIn(true);
     }
 

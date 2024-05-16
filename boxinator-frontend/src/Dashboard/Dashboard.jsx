@@ -21,7 +21,7 @@ function Dashboard() {
                     <UserDashboard />
                 )}
 
-                {user.role === 2 && (
+                {!user.role && (
                     <GuestDashboard />
                 )}
 

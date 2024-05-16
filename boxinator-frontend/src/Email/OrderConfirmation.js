@@ -1,7 +1,7 @@
 import emailjs from "@emailjs/browser";
 import { urlFrontendBasePath } from "../assets/strings.js";
 
-export function orderConfirmation(user, email, responseData) {
+export function orderConfirmationEmail(user, email, responseData) {
 
   const toName = user.role === 2 ? "guest" : user.firstName;
   const toEmail = user.role === 2 ? email : user.email;

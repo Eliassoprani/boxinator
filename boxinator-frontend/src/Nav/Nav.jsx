@@ -34,15 +34,12 @@ function Nav() {
                 </div>
 
                 <div className='nav-btn'>
-                    {loggedIn && user.role === 2 && (
-                        <button onClick={logout}>Log in / Sign up</button>
+                    {loggedIn && (user.role === 0 || user.role === 1) && (
+                        <div onClick={() => navigate('/profile')}>{user.firstName}</div>
                     )}
 
-                    {loggedIn && user.role !== 2 && (
-                        <>
-                            <div onClick={() => navigate('/profile')}>{user.firstName}</div>
-                            <button onClick={logout}>Log out</button>
-                        </>
+                    {loggedIn && (
+                        <button onClick={logout}>{(user.role === 0 || user.role === 1) ? "Log out" : "Log in / Sign up"}</button>
                     )}
                 </div>
             </div>
