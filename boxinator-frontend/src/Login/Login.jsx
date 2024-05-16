@@ -49,18 +49,7 @@ function Login() {
 
         const logInResponseData = await logInResponse.json();
 
-        setUser({
-            id: logInResponseData.id,
-            firstName: logInResponseData.firstName,
-            lastName: logInResponseData.lastName,
-            email: logInResponseData.email,
-            dateOfBirth: logInResponseData.dateOfBirth,
-            phone: logInResponseData.phone,
-            countryOfResidence: logInResponseData.countryOfResidence,
-            zipCode: logInResponseData.zipCode,
-            role: logInResponseData.role,
-            token: logInResponseData.token,
-        });
+        setUser(logInResponseData);
 
         //Save to local storage in case user refreshes/closes window
         localStorage.setItem('token', logInResponseData.token);
