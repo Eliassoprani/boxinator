@@ -27,7 +27,7 @@ function OrderModal({ isOpen, closeModal, orderObj }) {
                 "Authorization": `Bearer ${token}`
               };
 
-            const response = await fetch(`${urlBackendBasePath}/orders/updateOrder?OrderId=${orderObj.id}`, {   //Fel input?
+            const response = await fetch(`${urlBackendBasePath}/orders/updateOrder?OrderId=${orderObj.id}`, {   //Fungerar
                 method: 'PUT',
                 headers: headers,
                 body: JSON.stringify(data)

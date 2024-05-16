@@ -4,7 +4,7 @@ import OrderList from '../Orders/OrderList';
 import { urlBackendBasePath } from '../../assets/strings.js'
 
 function AdminDashboard() {
-    const { user } = useContext(UserContext);
+    const { user, token } = useContext(UserContext);
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
@@ -12,7 +12,6 @@ function AdminDashboard() {
     }, [])
 
     async function fetchOrders() {
-        const token = user.token; // Get the token from the user object
         const headers = {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}` // Include the token in the Authorization header
@@ -24,7 +23,7 @@ function AdminDashboard() {
         });
 
         if (!fetchOrdersResponse.ok) {
-            throw new Error("Failed to get orders from the database");
+            throw new Error("Failed to get orders from the database");  //Problem
         }
 
         const orders = await fetchOrdersResponse.json();
