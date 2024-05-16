@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root'); // Set the root element for accessibility
 import PropTypes from 'prop-types';
 import { urlBackendBasePath, guestUserId } from '../assets/strings.js'
-import { orderConfirmation } from "../Email/OrderConfirmation.js";
+import { orderConfirmationEmail } from "../Email/OrderConfirmation.js";
 
 function ShipmentModal({ isOpen, closeModal }) {
     const { user } = useContext(UserContext);
@@ -38,7 +38,7 @@ function ShipmentModal({ isOpen, closeModal }) {
         e.preventDefault();
 
         //Basic user id för alla guests
-        if (user.role === 2) {
+        if (!user.role) {
             shipmentData.userId = guestUserId;
         }
 
@@ -59,7 +59,7 @@ function ShipmentModal({ isOpen, closeModal }) {
 
         
         //Skicka email
-        orderConfirmation(user, email, responseData);
+        orderConfirmationEmail(user, email, responseData);
 
         //onClose
 
@@ -129,7 +129,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                         />
                     </label>
 
-                    {user.role === 2 && (
+                    {!user.role && (
                         <>
                             <label>
                                 Source country:

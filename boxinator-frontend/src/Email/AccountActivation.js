@@ -1,7 +1,7 @@
 import emailjs from "@emailjs/browser";
 import { urlFrontendBasePath } from "../assets/strings.js";
 
-export function accountActivation(firstName, email) {
+export function accountActivationEmail(firstName, email) {
 
   const serviceId = "service_krhq75r";
   const templateId = "template_7v9fupt";
