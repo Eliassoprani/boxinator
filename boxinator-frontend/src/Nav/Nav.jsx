@@ -19,18 +19,18 @@ function Nav() {
     return (
         <>
             <div className='nav'>
-                <div className='title' onClick={() => navigate('/')}>
+                <div className='title' onClick={() => navigate('/dashboard')}>
                     <h1>Boxinator</h1>
                 </div>
 
                 <div>
                     {loggedIn && (
                         <>
-                            <div onClick={() => navigate('/')}>Dashboard</div>
+                            <div onClick={() => navigate('/dashboard')}>Dashboard</div>
                             <div onClick={() => navigate('/newshipment')}>New Shipment</div>
+                            <div onClick={() => navigate('/aboutus')}>About Us</div>
                         </>
                     )}
-                    <div onClick={() => navigate('/aboutus')}>About Us</div>
                 </div>
 
                 <div className='nav-btn'>
