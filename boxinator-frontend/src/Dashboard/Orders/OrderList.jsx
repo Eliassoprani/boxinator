@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import OrderModal from "./OrderModal";
+import PropTypes from 'prop-types';
+import { UserContext } from "../../App";
 
-function OrderList({ orders, user }) {
+function OrderList({ orders, setOrders }) {
+    const { user } = useContext(UserContext);
+
     const STATUS = Object.freeze({
         0: "Created",
         1: "Received",
@@ -87,9 +91,14 @@ function OrderList({ orders, user }) {
                     </div>
                 );
             })}
-            <OrderModal isOpen={isModalOpen} closeModal={closeModal} orderObj={selectedOrder} />
+            <OrderModal isOpen={isModalOpen} closeModal={closeModal} orderObj={selectedOrder} orders={orders} setOrders={setOrders} />
         </div>
     )
 }
+
+OrderList.propTypes = {
+    orders: PropTypes.array,
+    setOrders: PropTypes.func,
+};
 
 export default OrderList;

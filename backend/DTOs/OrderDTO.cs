@@ -10,8 +10,8 @@ namespace backend.DTOs
         public string RecieverName { get; set; }
         public float Weight { get; set; }
         public string BoxColor { get; set; }
-        public string SourceCountry { get; set; }  //Switch för att få country name och multiplier
-        public OrderStatus Status { get; set; } //Switch på status för att få ut enum/string
+        public string SourceCountry { get; set; }
+        public OrderStatus Status { get; set; }
         public float Cost { get; set; }
         public string DestinationCountry {get; set;}
         public string UserId {get; set;}
