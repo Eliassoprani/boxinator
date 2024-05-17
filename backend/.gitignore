@@ -1,6 +1,6 @@
 # Ignore compiled binaries (dll, exe, cache osv...)
-bin/*
-obj/*
+ ../backend/bin/*
+ ../backend/obj/*
 
 # Ignore user-specific files
 *.userprefs
