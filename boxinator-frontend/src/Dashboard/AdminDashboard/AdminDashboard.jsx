@@ -14,7 +14,7 @@ function AdminDashboard() {
     async function fetchOrders() {
         const headers = {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}` // Include the token in the Authorization header
+            "Authorization": `Bearer ${token}`
         };
 
         const fetchOrdersResponse = await fetch(`${urlBackendBasePath}/orders/getAllOrders`, {
@@ -23,7 +23,7 @@ function AdminDashboard() {
         });
 
         if (!fetchOrdersResponse.ok) {
-            throw new Error("Failed to get orders from the database");  //Problem
+            throw new Error("Failed to get orders from the database");
         }
 
         const orders = await fetchOrdersResponse.json();

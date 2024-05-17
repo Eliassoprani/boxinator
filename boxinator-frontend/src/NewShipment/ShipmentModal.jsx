@@ -63,7 +63,7 @@ function ShipmentModal({ isOpen, closeModal }) {
         // Retur objektet
         const responseData = await newShipmentResponse.json();
 
-        
+        console.log("Email: " + email);
         //Skicka email
         orderConfirmationEmail(user, email, responseData);
 

@@ -9,6 +9,7 @@ import Profile from './Profile/Profile';
 import NewShipment from './NewShipment/NewShipment';
 import AboutUs from './AboutUs/AboutUs';
 import { urlBackendBasePath } from './assets/strings';
+import ClaimOrder from './ClaimOrder/ClaimOrder';
 
 const UserContext = createContext();
 
@@ -39,7 +40,7 @@ function App() {
       "Authorization": `Bearer ${storedToken}`
     };
 
-    const fetchUserResponse = await fetch(`${urlBackendBasePath}/authentication/getUser`, {
+    const fetchUserResponse = await fetch(`${urlBackendBasePath}/authentication/getUserByToken`, {
       method: "GET",
       headers: headers
     });
@@ -62,8 +63,9 @@ function App() {
 
           {!loggedIn && (
             <Routes>
-              <Route path="/" element={<Login />}></Route>
-              <Route path="/:email/:orderId" element={<Login />}></Route>
+              <Route path="/" element={<Login />}/>
+              <Route path="/:orderId" element={<Login />}/>
+              <Route path="/claimorder/:email/:orderId" element={<ClaimOrder />}/>
             </Routes>
           )}
 

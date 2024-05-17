@@ -47,7 +47,7 @@ namespace backend.Repositories
             if (result.Succeeded)
             {   
                 var user = await _userManager.FindByEmailAsync(payload.Email);
-                return new RegisterResPayload(user.Id);   //Ny retur typ
+                return new RegisterResPayload(user.Id);
             }
             else
             {
@@ -89,6 +89,15 @@ namespace backend.Repositories
             return user;
         }
 
+        public async Task<User?> GetUserByEmail(string Email)
+        {
+            var user = await _userManager.FindByEmailAsync(Email);
+
+            if (user == null) return null;
+
+            return user;    //Behöver endast id returnerat
+        }
+
         public async Task<User?> UpdateUser(string userId, UserPutPayload payload)
         {
             User? user = await GetUserById(userId);
@@ -126,8 +135,6 @@ namespace backend.Repositories
                 return null;
             }
         }
-
-
 
         public async Task<LoginResPayload?> Login(LoginPayload payload)
         {
