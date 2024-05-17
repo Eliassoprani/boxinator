@@ -3,23 +3,33 @@ import { urlFrontendBasePath } from "../assets/strings.js";
 
 export function orderConfirmationEmail(user, email, responseData) {
 
-  const toName = user.role === 2 ? "guest" : user.firstName;
-  const toEmail = user.role === 2 ? email : user.email;
+  var toName = "";
+  var toEmail = "";
   var message = "";
 
-  if (user.role === 2) {
-    message = `Order id: ${responseData.id} 
-            Receiver name: ${responseData.recieverName} 
-            Weight: ${responseData.weight}
-            Box colour: ${responseData.boxColor}
-            Destination: ${responseData.countryId}
-            Register and claim your shipment at ${urlFrontendBasePath}/${responseData.id}`;
-  } else {
+  if(user.role === 0 || user.role === 1) {
+    toName = user.firstName;
+    toEmail = user.email;
+  }
+  else {
+    console.log("In email: " + email)
+    toName = "Guest";
+    toEmail = email;
+  }
+
+  if (user.role === 0 || user.role === 1) {
     message = `Order id: ${responseData.id} 
             Receiver name: ${responseData.recieverName} 
             Weight: ${responseData.weight}
             Box colour: ${responseData.boxColor}
             Destination: ${responseData.countryId}`;
+  } else {
+    message = `Order id: ${responseData.id} 
+            Receiver name: ${responseData.recieverName} 
+            Weight: ${responseData.weight}
+            Box colour: ${responseData.boxColor}
+            Destination: ${responseData.countryId}
+            Register and claim your shipment at ${urlFrontendBasePath}/${toEmail}/${responseData.id}`;
   }
 
   const serviceId = "service_krhq75r";

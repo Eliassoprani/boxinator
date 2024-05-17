@@ -1,30 +1,23 @@
 import './Login.css'
 import { useState, useContext, useEffect } from 'react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../App";
 import UserInfo from '../UserInfo/UserInfo';
-import { useParams } from "react-router-dom";
 import { urlBackendBasePath } from '../assets/strings.js'
 import { accountActivationEmail } from '../Email/AccountActivation.js';
+import { updateOrder } from '../ClaimOrder/UpdateOrder.js';
 
 function Login() {
     const navigate = useNavigate();
+    const { orderId } = useParams();
     const { user, setUser, setLoggedIn } = useContext(UserContext);
-
     const [signUp, setSignUp] = useState(false);
     const [userData, setUserData] = useState({});
 
-    //Hämta order id från parametrar om det är en guest som valt att registrera sig
-    const { orderId } = useParams();
-
-    //Logga ut får att kunna registrera sig samt gå direkt till sign up
-    useEffect(() => {
-        if (orderId) {
-            console.log("Order id: " + orderId);
-            localStorage.clear();
-            setSignUp(true);
-        }
-    }, []);
+    if(Object.keys(orderId).length !== 0) { //If there is an orderId param
+        //setSignUp(true);  //För många re-renders
+        console.log("Order id: " + orderId);
+    }
 
     const handleChange = (event) => {
         const inputName = event.target.name;
@@ -38,8 +31,6 @@ function Login() {
 
     const login = async (e) => {
         e.preventDefault();
-
-        console.log("email: " + userData.email + " password: " + userData.password)
 
         const logInResponse = await fetch(`${urlBackendBasePath}/authentication/login`, {
             method: "POST",
@@ -55,7 +46,6 @@ function Login() {
 
         setUser(logInResponseData);
 
-        //Save to local storage in case user refreshes/closes window
         localStorage.setItem('token', logInResponseData.token);
         localStorage.setItem('loggedIn', JSON.stringify(true));
 
@@ -80,21 +70,11 @@ function Login() {
             throw new Error("Failed to sign up");
         }
 
-        if (orderId) {
-            // Retur objektet från sign up
-            const signUpResponseData = await signUpResponse.json();
-            const guestUserId = signUpResponseData.id;
+        const signUpResponseData = await signUpResponse.json();
+        const userId = signUpResponseData.id;
 
-            //Uppdatera order med user_id = guestUserId
-            const updateShipmentResponse = await fetch(`${urlBackendBasePath}/orders/updateOrdersUser`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ UserId: guestUserId, OrderId: orderId }),
-            });
-
-            if (!updateShipmentResponse.ok) {
-                throw new Error("Failed to update order's user id");
-            }
+        if(Object.keys(orderId).length !== 0) {
+            updateOrder(userId, orderId);
         }
 
         setSignUp(false);

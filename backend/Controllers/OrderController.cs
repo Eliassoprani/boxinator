@@ -37,6 +37,7 @@ namespace backend.Controllers
 
         public static async Task<IResult> createAnOrder([FromServices] IOrderRepository orderRepository, OrderPostPayload payload)
         {
+            Console.WriteLine("In BE create an order: " + payload);
             var order = await orderRepository.CreateAnOrder(payload);
 
             if(order == null) return TypedResults.BadRequest();
@@ -84,15 +85,14 @@ namespace backend.Controllers
         [Authorize]
         public static async Task<IResult> updateOrdersUser([FromServices] IOrderRepository orderRepository, OrderPutUserPayload payload)
         {
-            //Hämta från IOrderRepository
             var order = await orderRepository.UpdateOrdersUser(payload);
 
             if(order == null) return TypedResults.BadRequest();
 
             //Gör om till DTO
-            var orderDTO = new OrderDTO(order);
+            //var orderDTO = new OrderDTO(order);
 
-            return TypedResults.Ok(orderDTO);
+            return TypedResults.Ok();
         }
 
         [Authorize(Roles = "Admin")]

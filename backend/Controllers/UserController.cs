@@ -22,7 +22,8 @@ namespace backend.Controllers
             authGroup.MapPost("/login", Login);
             authGroup.MapPost("/signup", Register);
             authGroup.MapPut("/update", updateUser);
-            authGroup.MapGet("/getUser", getUser);
+            authGroup.MapGet("/getUserByToken", getUserByToken);
+            authGroup.MapGet("/getUserByEmail/{email}", getUserByEmail);
         }
 
         /// <summary>
@@ -86,12 +87,8 @@ namespace backend.Controllers
             return TypedResults.BadRequest();
         }
 
-        [Authorize()]
-        public static async Task<IResult> updateUser(
-            [FromServices] IUserRepository userRepository,
-            ClaimsPrincipal user,
-            UserPutPayload payload
-        )
+        [Authorize] //Kollar om jwt finns och är giltig
+        public static async Task<IResult> updateUser([FromServices] IUserRepository userRepository, ClaimsPrincipal user, UserPutPayload payload)
         {
             string? userId = user.UserId();
 
@@ -110,11 +107,8 @@ namespace backend.Controllers
             return TypedResults.Ok(new UserDTO(updatedUser));
         }
 
-        [Authorize] //Kollar om jwt finns och är giltig
-        public static async Task<IResult> getUser(
-            [FromServices] IUserRepository userRepository,
-            ClaimsPrincipal user
-        )
+        //Get user by token
+        public static async Task<IResult> getUserByToken([FromServices] IUserRepository userRepository, ClaimsPrincipal user)
         {
             string? userId = user.UserId();
 
@@ -131,6 +125,23 @@ namespace backend.Controllers
             }
 
             return TypedResults.Ok(new UserDTO(userToBeReturned));
+        }
+
+        //Get user by email
+        public static async Task<IResult> getUserByEmail([FromServices] IUserRepository userRepository, string email)
+        {
+            User? userToBeReturned = await userRepository.GetUserByEmail(email);
+
+            var id = "";
+
+            if (userToBeReturned == null)
+            {
+                return TypedResults.Ok("notRegistered");
+            }
+
+            id = userToBeReturned.Id;
+
+            return TypedResults.Ok(id);
         }
     }
 }
