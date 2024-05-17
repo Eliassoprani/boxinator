@@ -14,10 +14,10 @@ function Login() {
     const [signUp, setSignUp] = useState(false);
     const [userData, setUserData] = useState({});
 
-    if(Object.keys(orderId).length !== 0) { //If there is an orderId param
-        //setSignUp(true);  //För många re-renders
-        console.log("Order id: " + orderId);
-    }
+    // if(Object.keys(orderId).length !== 0) { //If there is an orderId param
+    //     //setSignUp(true);  //För många re-renders
+    //     console.log("Order id: " + orderId);
+    // }
 
     const handleChange = (event) => {
         const inputName = event.target.name;
