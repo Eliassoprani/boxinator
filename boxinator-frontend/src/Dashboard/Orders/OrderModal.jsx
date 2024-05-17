@@ -4,8 +4,8 @@ import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import { urlBackendBasePath } from '../../assets/strings.js'
 
-function OrderModal({ isOpen, closeModal, orderObj }) {
-    const { user, token } = useContext(UserContext);
+function OrderModal({ isOpen, closeModal, orderObj, orders, setOrders }) {
+    const { token } = useContext(UserContext);
     const [selectedStatus, setSelectedStatus] = useState(0);
 
     const STATUS = Object.freeze({
@@ -25,9 +25,9 @@ function OrderModal({ isOpen, closeModal, orderObj }) {
             const headers = {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
-              };
+            };
 
-            const response = await fetch(`${urlBackendBasePath}/orders/updateOrder?OrderId=${orderObj.id}`, {   //Fungerar
+            const response = await fetch(`${urlBackendBasePath}/orders/updateOrder?OrderId=${orderObj.id}`, {
                 method: 'PUT',
                 headers: headers,
                 body: JSON.stringify(data)
@@ -37,7 +37,22 @@ function OrderModal({ isOpen, closeModal, orderObj }) {
                 throw new Error('Failed to update order status');
             }
 
-            closeModal();
+            //Kopiera listan orders
+            const updatedOrders = [...orders];
+
+            //Hitta order objektets index
+            const orderIndex = updatedOrders.findIndex(order => order.id === orderObj.id);
+
+            if (orderIndex !== -1) {
+                orderObj.status = selectedStatus;
+
+                // Ersätt gamla objektet med det nya uppdaterade
+                updatedOrders[orderIndex] = { ...updatedOrders[orderIndex], orderObj: orderObj };
+
+                setOrders(updatedOrders);
+
+                closeModal();
+            }
         } catch (error) {
             console.error('Error updating order status:', error);
         }
@@ -64,7 +79,9 @@ function OrderModal({ isOpen, closeModal, orderObj }) {
 OrderModal.propTypes = {
     isOpen: PropTypes.bool,
     closeModal: PropTypes.func,
-    orderId: PropTypes.string,
+    orderObj: PropTypes.object,
+    orders: PropTypes.array,
+    setOrders: PropTypes.func,
 };
 
 export default OrderModal;

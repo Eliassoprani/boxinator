@@ -19,7 +19,7 @@ function AdminDashboard() {
 
         const fetchOrdersResponse = await fetch(`${urlBackendBasePath}/orders/getAllOrders`, {
             method: "GET",
-            headers: headers // Pass the headers object
+            headers: headers
         });
 
         if (!fetchOrdersResponse.ok) {
@@ -33,7 +33,7 @@ function AdminDashboard() {
     return (
         <>
             <button onClick={fetchOrders}>Refresh shipments</button>
-            <OrderList orders={orders} user={user} />
+            <OrderList orders={orders} setOrders={setOrders} />
         </>
     )
 }
