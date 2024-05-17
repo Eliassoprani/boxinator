@@ -8,8 +8,8 @@ import Footer from './Footer/Footer';
 import Profile from './Profile/Profile';
 import NewShipment from './NewShipment/NewShipment';
 import AboutUs from './AboutUs/AboutUs';
-import { urlBackendBasePath } from './assets/strings';
 import ClaimOrder from './ClaimOrder/ClaimOrder';
+import { restoreUser } from './RestoreUser/RestoreUser';
 
 const UserContext = createContext();
 
@@ -23,7 +23,7 @@ function App() {
     if (storedToken) {
       setToken(storedToken);
 
-      getAndSetUser(storedToken);
+      restoreUser(storedToken, setUser);
 
       setLoggedIn(true);
     }
@@ -33,26 +33,6 @@ function App() {
       setLoggedIn(storedLoggedIn);
     }
   }, []);
-
-  const getAndSetUser = async (storedToken) => {
-    const headers = {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${storedToken}`
-    };
-
-    const fetchUserResponse = await fetch(`${urlBackendBasePath}/authentication/getUserByToken`, {
-      method: "GET",
-      headers: headers
-    });
-
-    if (!fetchUserResponse.ok) {
-      throw new Error("Failed to get user from the database");
-    }
-
-    const returnedUser = await fetchUserResponse.json();
-
-    setUser(returnedUser);
-  }
 
 
   return (

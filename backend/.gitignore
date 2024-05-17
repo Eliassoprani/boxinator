@@ -1,9 +1,9 @@
 # Ignore compiled binaries (dll, exe, cache osv...)
-bin/
-obj/
+bin/*
+obj/*
 
 # Ignore user-specific files
 *.userprefs
 
 # Database credentials
-appsettings.json
+# appsettings.json
