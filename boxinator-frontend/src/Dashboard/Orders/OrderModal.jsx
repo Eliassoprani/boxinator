@@ -62,9 +62,9 @@ function OrderModal({ isOpen, closeModal, orderObj }) {
 }
 
 OrderModal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    closeModal: PropTypes.func.isRequired,
-    orderId: PropTypes.string.isRequired,
+    isOpen: PropTypes.bool,
+    closeModal: PropTypes.func,
+    orderId: PropTypes.string,
 };
 
 export default OrderModal;

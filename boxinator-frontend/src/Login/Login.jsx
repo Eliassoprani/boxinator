@@ -12,7 +12,7 @@ function Login() {
     const { orderId } = useParams();
     const { user, setUser, setLoggedIn } = useContext(UserContext);
     const [signUp, setSignUp] = useState(false);
-    const [userData, setUserData] = useState({});
+    const [userData, setUserData] = useState({email: "", password: ""});
 
     // if(Object.keys(orderId).length !== 0) { //If there is an orderId param
     //     //setSignUp(true);  //För många re-renders
