@@ -174,8 +174,8 @@ function ShipmentModal({ isOpen, closeModal }) {
 }
 
 ShipmentModal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    closeModal: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool,
+    closeModal: PropTypes.func,
 };
 
 export default ShipmentModal
