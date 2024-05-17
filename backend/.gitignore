@@ -4,3 +4,6 @@ obj/
 
 # Ignore user-specific files
 *.userprefs
+
+# Database credentials
+appsettings.json
