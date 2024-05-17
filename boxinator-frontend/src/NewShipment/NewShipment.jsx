@@ -8,8 +8,7 @@ function NewShipment() {
         setIsModalOpen(true);
     };
 
-    const closeModal = (e) => {
-        e.preventDefault();
+    const closeModal = () => {
         setIsModalOpen(false);
     };
 

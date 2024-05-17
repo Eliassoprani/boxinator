@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../App";
 import('./ShipmentModal.css');
 import Modal from 'react-modal';
@@ -12,6 +12,7 @@ function ShipmentModal({ isOpen, closeModal }) {
 
     const initialState = {
         userId: user.id,
+        email: user.email,
         recieverName: "",
         weight: 0,
         boxColor: "",
@@ -33,22 +34,21 @@ function ShipmentModal({ isOpen, closeModal }) {
         }));
     };
 
-    const submitNewShipment = async (e) => {
-        //För att sidan ej ska ladda om när man klickar submit
-        e.preventDefault();
-
+    useEffect(() => {
         //Basic user id för alla guests
-        if (!user.role) {
-            shipmentData.userId = guestUserId;
+        if (!user.hasOwnProperty('role')) {
+            setShipmentData({ ...shipmentData, userId: guestUserId });
         }
-
+    }, [user]);
+    
+    const submitNewShipment = async () => {
         console.log(shipmentData);
         console.log("token: " + token);
 
         const headers = {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
-          };
+        };
 
         const newShipmentResponse = await fetch(`${urlBackendBasePath}/orders/createAnOrder`, {
             method: "POST",
@@ -63,20 +63,19 @@ function ShipmentModal({ isOpen, closeModal }) {
         // Retur objektet
         const responseData = await newShipmentResponse.json();
 
-        console.log("Email: " + email);
         //Skicka email
-        orderConfirmationEmail(user, email, responseData);
+        orderConfirmationEmail(user, shipmentData.email, responseData);
 
-        //onClose
+        closeModal();
 
         //todo: set up thank you note
     }
 
     return (
         <Modal
-        className="modal"
-        isOpen={isOpen}
-        onRequestClose={closeModal}
+            className="modal"
+            isOpen={isOpen}
+            onRequestClose={closeModal}
         >
             <div className="new-shipment">
                 <form className="form">
@@ -135,7 +134,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                         />
                     </label>
 
-                    {!user.role && (
+                    {!user.hasOwnProperty('role') && (
                         <>
                             <label>
                                 Source country:
