@@ -1,8 +1,8 @@
 .nav {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
     align-items: center;
+    justify-content: space-around;
     padding: 30px;
 }
 
@@ -10,4 +10,9 @@
     display: flex;
     flex-direction: row;
     padding: 20px;
+    cursor: pointer;
+}
+
+.nav-link:hover {
+    color: #FFF;
 }

@@ -26,10 +26,10 @@ function App() {
 
       restoreUser(storedToken, setUser);
 
-      //setLoggedIn(true);
+      setLoggedIn(true);
     }
 
-    const storedLoggedIn = JSON.parse(localStorage.getItem('loggedIn'));
+    const storedLoggedIn = localStorage.getItem('loggedIn');
     if (storedLoggedIn) {
       setLoggedIn(storedLoggedIn);
     }

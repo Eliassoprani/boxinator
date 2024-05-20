@@ -42,7 +42,8 @@ function OrderList({ orders, setOrders }) {
             backgroundColor: "#e8e9eb",
             padding: "10px",
             border: '1px',
-            borderRadius: '10px'
+            borderRadius: '10px',
+            width: '80vw'
         }}>
             {/* Status filter dropdown */}
             <select value={selectedStatus !== null ? selectedStatus.toString() : '-1'} onChange={handleStatusChange}>
