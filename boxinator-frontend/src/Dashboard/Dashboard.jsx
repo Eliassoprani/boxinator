@@ -1,9 +1,7 @@
 import './Dashboard.css'
 import { useContext } from 'react'
 import { UserContext } from "../App";
-import UserDashboard from './UserDashboard/UserDashboard';
-import AdminDashboard from './AdminDashboard/AdminDashboard';
-import GuestDashboard from './GuestDashboard/GuestDashboard';
+import RoleDashboard from './RoleDashboard/RoleDashboard';
 
 function Dashboard() {
     const { user } = useContext(UserContext);
@@ -13,16 +11,16 @@ function Dashboard() {
             <div className="dashboard">
                 <h2>Dashboard</h2>
 
-                {user.role === 0 && (
-                    <AdminDashboard />
+                {user && user.role === 0 && (
+                    <RoleDashboard pathEnd={"getAllOrders"}/>
                 )}
 
-                {user.role === 1 && (
-                    <UserDashboard />
+                {user && user.role === 1 && (
+                    <RoleDashboard pathEnd={"getAllUserOrders"}/>
                 )}
 
-                {(user.role !== 0 && user.role !== 1) &&(
-                    <GuestDashboard />
+                {(user.role !== 0 && user.role !== 1) && (
+                    <p>As a guest, you are not logged in but you can still make an order.</p>
                 )}
 
             </div>

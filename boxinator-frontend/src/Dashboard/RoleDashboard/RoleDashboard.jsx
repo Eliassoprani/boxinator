@@ -3,7 +3,7 @@ import { UserContext } from "../../App";
 import OrderList from '../Orders/OrderList';
 import { urlBackendBasePath } from '../../assets/strings.js'
 
-function AdminDashboard() {
+function RoleDashboard({ pathEnd }) {
     const { token } = useContext(UserContext);
     const [orders, setOrders] = useState([]);
 
@@ -17,7 +17,7 @@ function AdminDashboard() {
             "Authorization": `Bearer ${token}`
         };
 
-        const fetchOrdersResponse = await fetch(`${urlBackendBasePath}/orders/getAllOrders`, {
+        const fetchOrdersResponse = await fetch(`${urlBackendBasePath}/orders/${pathEnd}`, {
             method: "GET",
             headers: headers
         });
@@ -35,4 +35,4 @@ function AdminDashboard() {
     )
 }
 
-export default AdminDashboard
+export default RoleDashboard

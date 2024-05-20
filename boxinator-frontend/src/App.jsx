@@ -17,7 +17,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [token, setToken] = useState("");
-  const [order, setOrder] = useState("");
+  const [order, setOrder] = useState(""); //For guest claiming order
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
