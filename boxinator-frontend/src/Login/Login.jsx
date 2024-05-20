@@ -11,7 +11,8 @@ function Login() {
     const navigate = useNavigate();
     const { user, setUser, setLoggedIn, order, setOrder } = useContext(UserContext);
     const [signUp, setSignUp] = useState(false);
-    const [userData, setUserData] = useState({email: "", password: ""});
+    const [userData, setUserData] = useState({ email: "", password: "" });
+    const [addedOrder, setAddedOrder] = useState(false);
 
     //Om order finns är det en re-direct från Claim Order
     useEffect(() => {
@@ -74,8 +75,9 @@ function Login() {
         const signUpResponseData = await signUpResponse.json();
         const userId = signUpResponseData.id;
 
-        if(order !== "") {
+        if (order !== "") {
             updateOrder(userId, order);
+            setAddedOrder(true);
         }
 
         setSignUp(false);
@@ -101,6 +103,10 @@ function Login() {
                     <>
                         <form className="form">
                             <h2>Log in Page</h2>
+
+                            {addedOrder && (
+                                <div>Your order was added successfully!</div>
+                            )}
 
                             <label>
                                 Email:

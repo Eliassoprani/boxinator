@@ -15,9 +15,7 @@ function NewShipment() {
     return (
         <>
             <button onClick={handleOpenModal}>Create new shipment</button>
-            <ShipmentModal
-                isOpen={isModalOpen}
-                onClose={closeModal} />
+            <ShipmentModal isOpen={isModalOpen} onClose={closeModal} />
         </>
     )
 }

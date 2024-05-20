@@ -9,6 +9,7 @@ import { orderConfirmationEmail } from "../Email/OrderConfirmation.js";
 
 function ShipmentModal({ isOpen, closeModal }) {
     const { user, token } = useContext(UserContext);
+    const [thankYouNote, setThankYouNote] = useState(false);
 
     const initialState = {
         userId: guestUserId,
@@ -22,7 +23,6 @@ function ShipmentModal({ isOpen, closeModal }) {
     }
 
     const [shipmentData, setShipmentData] = useState(initialState);
-    const [email, setEmail] = useState("");
 
     const handleChange = (event) => {
         const inputName = event.target.name;
@@ -38,13 +38,13 @@ function ShipmentModal({ isOpen, closeModal }) {
 
     useEffect(() => {
         //Basic user id för alla guests
-        if (user.hasOwnProperty('role')) {  //user.role
+        if (user.hasOwnProperty('role')) {
             console.log("in own property");
             setShipmentData({ ...shipmentData, userId: user.id });
             setShipmentData({ ...shipmentData, email: user.email });
         }
     }, []);
-    
+
     const submitNewShipment = async (e) => {
         e.preventDefault();
         console.log(shipmentData);
@@ -68,14 +68,12 @@ function ShipmentModal({ isOpen, closeModal }) {
         // Retur objektet
         const responseData = await newShipmentResponse.json();
 
-        console.log("user email: " + shipmentData.email);
-
         //Skicka email
-        orderConfirmationEmail(user, shipmentData.email, responseData);
+        //orderConfirmationEmail(user, shipmentData.email, responseData);
+
+        setThankYouNote(true);
 
         closeModal();
-
-        //todo: set up thank you note
     }
 
     return (
@@ -88,91 +86,99 @@ function ShipmentModal({ isOpen, closeModal }) {
                 <form className="form">
                     <button className="close-button" onClick={closeModal}>X</button>
 
-                    <h2>New Shipment</h2>
-
-                    <label>
-                        Receiver name:
-                        <br />
-                        <input
-                            type="text"
-                            name="recieverName"
-                            value={shipmentData.recieverName}
-                            onChange={handleChange}
-                        />
-                    </label>
-
-                    <label>
-                        Weight:
-                        <br />
-                        <input
-                            type="number"
-                            name="weight"
-                            value={shipmentData.weight}
-                            onChange={handleChange}
-                        />
-                    </label>
-
-                    <label>
-                        Box colour:
-                        <br />
-                        <input
-                            style={{
-                                backgroundColor: shipmentData.boxColor,
-                                cursor: "pointer",
-                                outline: "none",
-                                width: "70px",
-                                height: "70px",
-                            }}
-                            type="color"
-                            name="boxColor"
-                            value={shipmentData.boxColor}
-                            onChange={handleChange}
-                        />
-                    </label>
-
-                    <label>
-                        Destination country:
-                        <br />
-                        <input
-                            type="text"
-                            name="destinationCountry"
-                            value={shipmentData.destinationCountry}
-                            onChange={handleChange}
-                        />
-                    </label>
-
-                    {!user.hasOwnProperty('role') && (
+                    {!thankYouNote && (
                         <>
+                            <h2>New Shipment</h2>
+
                             <label>
-                                Source country:
+                                Receiver name:
                                 <br />
                                 <input
                                     type="text"
-                                    name="sourceCountry"
-                                    value={shipmentData.sourceCountry}
+                                    name="recieverName"
+                                    value={shipmentData.recieverName}
                                     onChange={handleChange}
                                 />
                             </label>
 
                             <label>
-                                Your email:
+                                Weight:
                                 <br />
                                 <input
-                                    type="email"
-                                    name="email"
-                                    value={shipmentData.email}
+                                    type="number"
+                                    name="weight"
+                                    value={shipmentData.weight}
                                     onChange={handleChange}
                                 />
                             </label>
+
+                            <label>
+                                Box colour:
+                                <br />
+                                <input
+                                    style={{
+                                        backgroundColor: shipmentData.boxColor,
+                                        cursor: "pointer",
+                                        outline: "none",
+                                        width: "70px",
+                                        height: "70px",
+                                    }}
+                                    type="color"
+                                    name="boxColor"
+                                    value={shipmentData.boxColor}
+                                    onChange={handleChange}
+                                />
+                            </label>
+
+                            <label>
+                                Destination country:
+                                <br />
+                                <input
+                                    type="text"
+                                    name="destinationCountry"
+                                    value={shipmentData.destinationCountry}
+                                    onChange={handleChange}
+                                />
+                            </label>
+
+                            {!user.hasOwnProperty('role') && (
+                                <>
+                                    <label>
+                                        Source country:
+                                        <br />
+                                        <input
+                                            type="text"
+                                            name="sourceCountry"
+                                            value={shipmentData.sourceCountry}
+                                            onChange={handleChange}
+                                        />
+                                    </label>
+
+                                    <label>
+                                        Your email:
+                                        <br />
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value={shipmentData.email}
+                                            onChange={handleChange}
+                                        />
+                                    </label>
+                                </>
+
+                            )}
+
+                            <input
+                                className="form-submit"
+                                type="submit"
+                                value="submit"
+                                onClick={submitNewShipment}
+                            />
                         </>
                     )}
-
-                    <input
-                        className="form-submit"
-                        type="submit"
-                        value="submit"
-                        onClick={submitNewShipment}
-                    />
+                    {thankYouNote && (
+                        <div>Thank you for your order!</div>
+                    )}
                 </form>
             </div>
         </Modal>
@@ -181,7 +187,7 @@ function ShipmentModal({ isOpen, closeModal }) {
 
 ShipmentModal.propTypes = {
     isOpen: PropTypes.bool,
-    closeModal: PropTypes.func,
+    closeModal: PropTypes.func
 };
 
 export default ShipmentModal
