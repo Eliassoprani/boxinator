@@ -4,7 +4,7 @@ import OrderList from '../Orders/OrderList';
 import { urlBackendBasePath } from '../../assets/strings.js'
 
 function AdminDashboard() {
-    const { user, token } = useContext(UserContext);
+    const { token } = useContext(UserContext);
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
@@ -31,10 +31,7 @@ function AdminDashboard() {
     }
 
     return (
-        <>
-            <button onClick={fetchOrders}>Refresh shipments</button>
-            <OrderList orders={orders} setOrders={setOrders} />
-        </>
+        <OrderList orders={orders} setOrders={setOrders} />
     )
 }
 

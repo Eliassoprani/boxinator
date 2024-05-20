@@ -11,6 +11,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --dark-turquoise: rgb(38, 99, 99);
 }
 
 a {
@@ -52,6 +54,15 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+input {
+  width: 220px;
+}
+
+form {
+  display: flex;
+  align-items: flex-end;
 }
 
 @media (prefers-color-scheme: light) {

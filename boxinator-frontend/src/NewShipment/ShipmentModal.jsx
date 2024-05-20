@@ -82,17 +82,17 @@ function ShipmentModal({ isOpen, closeModal }) {
             isOpen={isOpen}
             onRequestClose={closeModal}
         >
-            <div className="new-shipment">
-                <form className="form">
-                    <button className="close-button" onClick={closeModal}>X</button>
+            <div className="user-input">
+                <form>
+                    <div className="modal-title">
+                        <h2>New Shipment</h2>
+                        <button className="close-button" onClick={closeModal}>X</button>
+                    </div>
 
                     {!thankYouNote && (
                         <>
-                            <h2>New Shipment</h2>
-
                             <label>
                                 Receiver name:
-                                <br />
                                 <input
                                     type="text"
                                     name="recieverName"
@@ -103,7 +103,6 @@ function ShipmentModal({ isOpen, closeModal }) {
 
                             <label>
                                 Weight:
-                                <br />
                                 <input
                                     type="number"
                                     name="weight"
@@ -114,7 +113,6 @@ function ShipmentModal({ isOpen, closeModal }) {
 
                             <label>
                                 Box colour:
-                                <br />
                                 <input
                                     style={{
                                         backgroundColor: shipmentData.boxColor,
@@ -132,7 +130,6 @@ function ShipmentModal({ isOpen, closeModal }) {
 
                             <label>
                                 Destination country:
-                                <br />
                                 <input
                                     type="text"
                                     name="destinationCountry"
@@ -145,7 +142,6 @@ function ShipmentModal({ isOpen, closeModal }) {
                                 <>
                                     <label>
                                         Source country:
-                                        <br />
                                         <input
                                             type="text"
                                             name="sourceCountry"
@@ -156,7 +152,6 @@ function ShipmentModal({ isOpen, closeModal }) {
 
                                     <label>
                                         Your email:
-                                        <br />
                                         <input
                                             type="email"
                                             name="email"
@@ -171,7 +166,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                             <input
                                 className="form-submit"
                                 type="submit"
-                                value="submit"
+                                value="Submit"
                                 onClick={submitNewShipment}
                             />
                         </>

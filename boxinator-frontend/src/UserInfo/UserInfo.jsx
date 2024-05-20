@@ -45,6 +45,7 @@ function UserInfo({ userData, setUserData, update }) {
                 />
             </label>
 
+            {/* Om komponent används i Profile page ska password ej finnas med */}
             {!update && (
                 <label>
                     Password:
@@ -95,7 +96,8 @@ function UserInfo({ userData, setUserData, update }) {
                     value={userData.phone}
                     onChange={handleChange}
                 />
-            </label></>
+            </label>
+        </>
     )
 }
 

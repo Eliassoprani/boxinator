@@ -1,24 +1,13 @@
 import { useContext, useState } from 'react'
 import { UserContext } from "../App";
-import "./Profile.css"
+import "../Login/Login.css"
 import UserInfo from '../UserInfo/UserInfo';
 import { urlBackendBasePath } from '../assets/strings';
 
 function Profile() {
     const { user } = useContext(UserContext);
     const update = true;
-    /*
-    ----UPDATING A SINGLE VALUE EXAMPLE----------
-        {
-            "firstName": "asd",
-            "lastName": null,
-            "password": null,
-            "dateOfBirth": null,
-            "phone": null,
-            "countryOfResidence": null,
-            "zipCode": null
-        }
-    */
+
     const initialState = {
         firstName: user.firstName,
         lastName: user.lastName,
@@ -35,7 +24,7 @@ function Profile() {
         e.preventDefault();
 
         const token = localStorage.getItem('token');
-        
+
         console.log(token, userData);
 
         const updateUserResponse = await fetch(`${urlBackendBasePath}/authentication/update`, {
@@ -54,18 +43,21 @@ function Profile() {
 
     return (
         <>
-            <form className="profile">
+            <div className='user-input'>
+
                 <h2>Profile Page</h2>
+                
+                <form>
+                    <UserInfo userData={userData} setUserData={setUserData} update={update} />
 
-                <UserInfo userData={userData} setUserData={setUserData} update={update} />
-
-                <input
-                    className="submit-input"
-                    type="submit"
-                    value="Update"
-                    onClick={updateUser}
-                />
-            </form>
+                    <input
+                        className="submit-input"
+                        type="submit"
+                        value="Update"
+                        onClick={updateUser}
+                    />
+                </form>
+            </div>
         </>
     )
 }

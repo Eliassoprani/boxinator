@@ -1,23 +1,39 @@
 .modal {
-    background-color: rgba(138, 169, 209);
-    border: 1px solid #ccc;
-    padding: 20px;
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 10%;
-  }
-  
-  .modal input {
-    color: black; /* Black color for input text */
-    background-color: white; /* White background for input field */
-    padding: 8px;
-    border-radius: 4px;
-  }
-  
-  .close-button {
-    margin-left: auto;
-  }
+  background-color: rgba(138, 169, 209);
+  border: 1px solid #ccc;
+  padding: 20px;
+  max-width: fit-content;
+  max-height: 70vh; /* Om skärmhöjd är för kort så skapas scrollbar */
+  overflow-y: auto;
+  margin: 0 auto;
+  margin-top: 10%;
+}
 
-  .picked-color {
-    color: aqua;
-  }
+.modal input {
+  color: black; /* Black color for input text */
+  background-color: white; /* White background for input field */
+}
+
+.close-button {
+  margin-left: auto;
+}
+
+.modal-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.modal-title h2 {
+  margin-right: 120px;
+}
+
+.form-submit {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 20px;
+}
+
+.form-submit:hover {
+  cursor: pointer;
+}

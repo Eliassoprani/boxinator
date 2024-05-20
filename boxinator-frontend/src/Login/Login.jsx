@@ -9,7 +9,7 @@ import { updateOrder } from '../ClaimOrder/UpdateOrder.js';
 
 function Login() {
     const navigate = useNavigate();
-    const { user, setUser, setLoggedIn, order, setOrder } = useContext(UserContext);
+    const { setUser, setLoggedIn, order, setOrder } = useContext(UserContext);
     const [signUp, setSignUp] = useState(false);
     const [userData, setUserData] = useState({ email: "", password: "" });
     const [addedOrder, setAddedOrder] = useState(false);
@@ -49,7 +49,7 @@ function Login() {
         setUser(logInResponseData);
 
         localStorage.setItem('token', logInResponseData.token);
-        localStorage.setItem('loggedIn', JSON.stringify(true));
+        localStorage.setItem('loggedIn', true);
 
         setLoggedIn(true);
 
@@ -86,28 +86,24 @@ function Login() {
     }
 
     const guestLogin = () => {
-        localStorage.setItem('loggedIn', JSON.stringify(true));
+        localStorage.setItem('loggedIn', true);
         setLoggedIn(true);
         navigate("/dashboard");
     }
 
     return (
         <>
-            <div className="login">
-
-                <div className="guest-login">
-                    <button onClick={guestLogin}>Continue as guest</button>
-                </div>
+            <div className="user-input">
 
                 {!signUp && (
                     <>
-                        <form className="form">
-                            <h2>Log in Page</h2>
+                        <h2>Log in Page</h2>
 
-                            {addedOrder && (
-                                <div>Your order was added successfully!</div>
-                            )}
+                        {addedOrder && (
+                            <div>Your order was added successfully! Log in to track the shipment.</div>
+                        )}
 
+                        <form>
                             <label>
                                 Email:
                                 <input
@@ -145,9 +141,9 @@ function Login() {
 
                 {signUp && (
                     <>
-                        <form className="form">
-                            <h2>Sign up Page</h2>
+                        <h2>Sign up Page</h2>
 
+                        <form>
                             <UserInfo userData={userData} setUserData={setUserData} />
 
                             <input
@@ -164,6 +160,10 @@ function Login() {
                         </div>
                     </>
                 )}
+
+                <div className="guest-login">
+                    <button onClick={guestLogin}>Continue as guest</button>
+                </div>
 
             </div>
         </>

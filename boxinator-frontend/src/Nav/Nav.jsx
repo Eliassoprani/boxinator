@@ -10,7 +10,7 @@ function Nav() {
 
     const logout = () => {
         setUser({});
-        //Remove user credentials from storage
+        //Remove token and loggedIn from storage
         localStorage.clear();
         setLoggedIn(false);
         navigate("/");
@@ -19,29 +19,27 @@ function Nav() {
     return (
         <>
             <div className='nav'>
-                <div className='title' onClick={() => navigate('/dashboard')}>
+                <div className='title' onClick={loggedIn ? () => navigate('/dashboard') : undefined}>
                     <h1>Boxinator</h1>
                 </div>
 
-                <div>
-                    {loggedIn && (
-                        <>
-                            <div onClick={() => navigate('/dashboard')}>Dashboard</div>
-                            <div onClick={() => navigate('/newshipment')}>New Shipment</div>
-                            <div onClick={() => navigate('/aboutus')}>About Us</div>
-                        </>
-                    )}
-                </div>
+                {loggedIn && (
+                    <>
+                        <div>
+                            <div className="nav-link" onClick={() => navigate('/dashboard')}>Dashboard</div>
+                            <div className="nav-link" onClick={() => navigate('/newshipment')}>New Shipment</div>
+                            <div className="nav-link" onClick={() => navigate('/aboutus')}>About Us</div>
+                        </div>
 
-                <div className='nav-btn'>
-                    {loggedIn && (user.role === 0 || user.role === 1) && (
-                        <div onClick={() => navigate('/profile')}>{user.firstName}</div>
-                    )}
+                        <div>
+                            {(user.role === 0 || user.role === 1) && (
+                                <div className="nav-link" onClick={() => navigate('/profile')}>{user.firstName}</div>
+                            )}
 
-                    {loggedIn && (
-                        <button onClick={logout}>{(user.role === 0 || user.role === 1) ? "Log out" : "Log in / Sign up"}</button>
-                    )}
-                </div>
+                            <button onClick={logout}>{(user.role === 0 || user.role === 1) ? "Log out" : "Log in / Sign up"}</button>
+                        </div>
+                    </>
+                )}
             </div>
         </>
     )
