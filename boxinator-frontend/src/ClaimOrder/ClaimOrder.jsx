@@ -1,16 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { urlBackendBasePath } from "../assets/strings";
 import { useNavigate } from "react-router-dom";
 import { updateOrder } from "./UpdateOrder";
+import { UserContext } from "../App";
 
 function ClaimOrder() {
     const navigate = useNavigate();
     const { email, orderId } = useParams();
+    const { order, setOrder } = useContext(UserContext);
 
     //Logga ut får att kunna registrera sig samt gå direkt till sign up
-    console.log("Order id: " + orderId);
-    console.log("Guest email: " + email);
     localStorage.clear();
 
     useEffect(() => {
@@ -34,21 +34,23 @@ function ClaimOrder() {
         if (userId === "notRegistered") {
             console.log("User is not in database");
 
-            //Go to sign up
-            navigate(`/${orderId}`);
+            setOrder(orderId);
+            console.log("Order set to " + orderId);
         }
         //Om email finns
         else {
             //Uppdatera order
             updateOrder(userId, orderId);
 
-            //Gå till log in
-            navigate("/");
+            //User feedback, modal
         }
+
+        //Gå till log in / sign up
+        navigate("/");
     }
 
     return (
-        <>Please hold</>
+        <>Verifying email and order id...</>
     )
 }
 

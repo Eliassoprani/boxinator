@@ -11,8 +11,8 @@ function ShipmentModal({ isOpen, closeModal }) {
     const { user, token } = useContext(UserContext);
 
     const initialState = {
-        userId: user.id,
-        email: user.email,
+        userId: guestUserId,
+        email: "",
         recieverName: "",
         weight: 0,
         boxColor: "",
@@ -32,16 +32,21 @@ function ShipmentModal({ isOpen, closeModal }) {
             ...shipmentData,
             [inputName]: inputValue,
         }));
+
+        console.log(inputName + " " + inputValue);
     };
 
     useEffect(() => {
         //Basic user id för alla guests
-        if (!user.hasOwnProperty('role')) {
-            setShipmentData({ ...shipmentData, userId: guestUserId });
+        if (user.hasOwnProperty('role')) {  //user.role
+            console.log("in own property");
+            setShipmentData({ ...shipmentData, userId: user.id });
+            setShipmentData({ ...shipmentData, email: user.email });
         }
-    }, [user]);
+    }, []);
     
-    const submitNewShipment = async () => {
+    const submitNewShipment = async (e) => {
+        e.preventDefault();
         console.log(shipmentData);
         console.log("token: " + token);
 
@@ -62,6 +67,8 @@ function ShipmentModal({ isOpen, closeModal }) {
 
         // Retur objektet
         const responseData = await newShipmentResponse.json();
+
+        console.log("user email: " + shipmentData.email);
 
         //Skicka email
         orderConfirmationEmail(user, shipmentData.email, responseData);
@@ -153,8 +160,8 @@ function ShipmentModal({ isOpen, closeModal }) {
                                 <input
                                     type="email"
                                     name="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={shipmentData.email}
+                                    onChange={handleChange}
                                 />
                             </label>
                         </>

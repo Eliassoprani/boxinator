@@ -17,6 +17,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [token, setToken] = useState("");
+  const [order, setOrder] = useState("");
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -25,7 +26,7 @@ function App() {
 
       restoreUser(storedToken, setUser);
 
-      setLoggedIn(true);
+      //setLoggedIn(true);
     }
 
     const storedLoggedIn = JSON.parse(localStorage.getItem('loggedIn'));
@@ -37,14 +38,13 @@ function App() {
 
   return (
     <>
-      <UserContext.Provider value={{ user, setUser, loggedIn, setLoggedIn, token, setToken }}>
+      <UserContext.Provider value={{ user, setUser, loggedIn, setLoggedIn, token, setToken, order, setOrder }}>
         <div className='app'>
           <Nav />
 
           {!loggedIn && (
             <Routes>
               <Route path="/" element={<Login />}/>
-              <Route path="/:orderId" element={<Login />}/>
               <Route path="/claimorder/:email/:orderId" element={<ClaimOrder />}/>
             </Routes>
           )}

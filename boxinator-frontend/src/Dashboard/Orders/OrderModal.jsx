@@ -46,7 +46,7 @@ function OrderModal({ isOpen, closeModal, orderObj, orders, setOrders }) {
             if (orderIndex !== -1) {
                 orderObj.status = selectedStatus;
 
-                // Ersätt gamla objektet med det nya uppdaterade
+                // Ersätt gamla objektet 'updatedOrders[orderIndex]' med det nya uppdaterade objektet 'orderObj'
                 updatedOrders[orderIndex] = { ...updatedOrders[orderIndex], orderObj: orderObj };
 
                 setOrders(updatedOrders);

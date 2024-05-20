@@ -1,6 +1,6 @@
 import './Login.css'
 import { useState, useContext, useEffect } from 'react'
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import UserInfo from '../UserInfo/UserInfo';
 import { urlBackendBasePath } from '../assets/strings.js'
@@ -9,15 +9,16 @@ import { updateOrder } from '../ClaimOrder/UpdateOrder.js';
 
 function Login() {
     const navigate = useNavigate();
-    const { orderId } = useParams();
-    const { user, setUser, setLoggedIn } = useContext(UserContext);
+    const { user, setUser, setLoggedIn, order, setOrder } = useContext(UserContext);
     const [signUp, setSignUp] = useState(false);
     const [userData, setUserData] = useState({email: "", password: ""});
 
-    // if(Object.keys(orderId).length !== 0) { //If there is an orderId param
-    //     //setSignUp(true);  //För många re-renders
-    //     console.log("Order id: " + orderId);
-    // }
+    //Om order finns är det en re-direct från Claim Order
+    useEffect(() => {
+        if (order !== "") {
+            setSignUp(true);
+        }
+    }, [order]); // Only run the effect when the value of 'order' changes
 
     const handleChange = (event) => {
         const inputName = event.target.name;
@@ -58,7 +59,7 @@ function Login() {
         e.preventDefault();
 
         //Send email before activating account
-        accountActivationEmail(userData.firstName, userData.email);
+        //accountActivationEmail(userData.firstName, userData.email);
 
         const signUpResponse = await fetch(`${urlBackendBasePath}/authentication/signup`, {
             method: "POST",
@@ -73,11 +74,13 @@ function Login() {
         const signUpResponseData = await signUpResponse.json();
         const userId = signUpResponseData.id;
 
-        if(Object.keys(orderId).length !== 0) {
-            updateOrder(userId, orderId);
+        if(order !== "") {
+            updateOrder(userId, order);
         }
 
         setSignUp(false);
+
+        setOrder("");
     }
 
     const guestLogin = () => {
