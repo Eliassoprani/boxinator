@@ -1,8 +1,14 @@
+.about-us {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .about-us div {
     display: flex;
     flex-direction: row;
-    align-items: center;    /* Text i mitten av bild */
-    justify-content: center;    /* Text och bild i mitten av läsare */
+    align-items: center;
 }
 
 .section img {

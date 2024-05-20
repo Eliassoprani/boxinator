@@ -92,81 +92,79 @@ function Login() {
     }
 
     return (
-        <>
-            <div className="user-input">
+        <div className="user-input">
 
-                {!signUp && (
-                    <>
-                        <h2>Log in Page</h2>
+            {!signUp && (
+                <>
+                    <h2>Log in Page</h2>
 
-                        {addedOrder && (
-                            <div>Your order was added successfully! Log in to track the shipment.</div>
-                        )}
+                    {addedOrder && (
+                        <div>Your order was added successfully! Log in to track the shipment.</div>
+                    )}
 
-                        <form>
-                            <label>
-                                Email:
-                                <input
-                                    type="text"
-                                    name="email"
-                                    value={userData.email}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Password:
-                                <input
-                                    type="password"
-                                    name="password"
-                                    value={userData.password}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
+                    <form>
+                        <label>
+                            Email:
                             <input
-                                className="submit-input"
-                                type="submit"
-                                value="Log in"
-                                onClick={login}
+                                type="text"
+                                name="email"
+                                value={userData.email}
+                                onChange={handleChange}
                             />
-                        </form>
+                        </label>
 
-                        <div className="switch">
-                            <p>Not already a user?</p>
-                            <button onClick={() => setSignUp(true)}>Sign up</button>
-                        </div>
-                    </>
-                )}
-
-                {signUp && (
-                    <>
-                        <h2>Sign up Page</h2>
-
-                        <form>
-                            <UserInfo userData={userData} setUserData={setUserData} />
-
+                        <label>
+                            Password:
                             <input
-                                className="submit-input"
-                                type="submit"
-                                value="Sign up"
-                                onClick={signup}
+                                type="password"
+                                name="password"
+                                value={userData.password}
+                                onChange={handleChange}
                             />
-                        </form>
+                        </label>
 
-                        <div className="switch">
-                            <p>Already a user?</p>
-                            <button onClick={() => setSignUp(false)}>Log in</button>
-                        </div>
-                    </>
-                )}
+                        <input
+                            className="submit-input"
+                            type="submit"
+                            value="Log in"
+                            onClick={login}
+                        />
+                    </form>
 
-                <div className="guest-login">
-                    <button onClick={guestLogin}>Continue as guest</button>
-                </div>
+                    <div className="switch">
+                        <p>Not already a user?</p>
+                        <button onClick={() => setSignUp(true)}>Sign up</button>
+                    </div>
+                </>
+            )}
 
+            {signUp && (
+                <>
+                    <h2>Sign up Page</h2>
+
+                    <form>
+                        <UserInfo userData={userData} setUserData={setUserData} />
+
+                        <input
+                            className="submit-input"
+                            type="submit"
+                            value="Sign up"
+                            onClick={signup}
+                        />
+                    </form>
+
+                    <div className="switch">
+                        <p>Already a user?</p>
+                        <button onClick={() => setSignUp(false)}>Log in</button>
+                    </div>
+                </>
+            )}
+
+            <div className="guest-login">
+                <button onClick={guestLogin}>Continue as guest</button>
             </div>
-        </>
+
+        </div>
     )
 }
 

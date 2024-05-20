@@ -6,13 +6,13 @@ function AboutUs() {
 
     return (
         <div className="about-us">
-            <div className='title'><h2>About us</h2></div>
+            <h2>About us</h2>
 
-            <div className='section'>
+            <div>
                 <p>StoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStory</p>
                 <img src={dogPackageImage} alt="dog package" />
             </div>
-            <div className='section'>
+            <div>
                 <img src={dogPackageImage2} alt="dog package 2" />
                 <p>StoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStoryStory</p>
             </div>
