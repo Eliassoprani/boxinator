@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -33,8 +34,9 @@ namespace backend.tests
             // Arrange
             var expectedCountries = new List<Country>
             {
-                new Country { Id = 1, CountryName = "Country1", Multiplier = 1.0f },
-                new Country { Id = 2, CountryName = "Country2", Multiplier = 2.0f },
+                new Country { Id = 1, CountryName = "Sweden", Multiplier = 1 },
+                new Country { Id = 2, CountryName = "Norway", Multiplier = 1.5f },
+                new Country { Id = 3, CountryName = "Denmark", Multiplier = 2.5f }
             };
 
             // Act
@@ -42,11 +44,18 @@ namespace backend.tests
             response.EnsureSuccessStatusCode(); // Throw if not a success code
 
             var responseData = await response.Content.ReadAsStringAsync();
-            var actualCountries = JsonConvert.DeserializeObject<IEnumerable<Country>>(responseData);
+            var actualCountries = JsonConvert.DeserializeObject<List<Country>>(responseData);
 
             // Assert
             Assert.AreEqual(System.Net.HttpStatusCode.OK, response.StatusCode);
-            CollectionAssert.AreEqual(expectedCountries, actualCountries);
+            Assert.AreEqual(expectedCountries.Count, actualCountries.Count, "Country count does not match");
+
+            for (int i = 0; i < expectedCountries.Count; i++)
+            {
+                Assert.AreEqual(expectedCountries[i].Id, actualCountries[i].Id, $"Country Id at index {i} does not match");
+                Assert.AreEqual(expectedCountries[i].CountryName, actualCountries[i].CountryName, $"CountryName at index {i} does not match");
+                Assert.AreEqual(expectedCountries[i].Multiplier, actualCountries[i].Multiplier, $"Multiplier at index {i} does not match");
+            }
         }
     }
 }
