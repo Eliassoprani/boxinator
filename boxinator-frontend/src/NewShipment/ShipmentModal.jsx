@@ -6,11 +6,9 @@ Modal.setAppElement('#root'); // Set the root element for accessibility
 import PropTypes from 'prop-types';
 import { urlBackendBasePath, guestUserId } from '../assets/strings.js'
 import { orderConfirmationEmail } from "../Email/OrderConfirmation.js";
+import { fetchCountries } from "./FetchCountries.js";
 
 function ShipmentModal({ isOpen, closeModal }) {
-    const { user, token } = useContext(UserContext);
-    const [thankYouNote, setThankYouNote] = useState(false);
-
     const initialState = {
         userId: guestUserId,
         email: "",
@@ -19,10 +17,16 @@ function ShipmentModal({ isOpen, closeModal }) {
         boxColor: "",
         destinationCountry: "",
         orderStatus: 0,
-        sourceCountry: user.countryOfResidence,
+        sourceCountry: "",
+        cost: 0
     }
 
     const [shipmentData, setShipmentData] = useState(initialState);
+    const { user } = useContext(UserContext);
+    const [thankYouNote, setThankYouNote] = useState(false);
+    const [countries, setCountries] = useState([]);
+    const [country, setCountry] = useState({});
+    const [submitDisabled, setSubmitDisabled] = useState(true);
 
     const handleChange = (event) => {
         const inputName = event.target.name;
@@ -33,31 +37,59 @@ function ShipmentModal({ isOpen, closeModal }) {
             [inputName]: inputValue,
         }));
 
-        console.log(inputName + " " + inputValue);
-    };
+        if (inputName === "sourceCountry") {
+            var countryInList = countries.find(country => country.countryName === inputValue);
+            if (countryInList === undefined) {
+                console.log("wrong source country");
+            }
+            else {
+                setCountry(countryInList);
+            }
+        }
+
+        setSubmitDisabled(true);
+    }
+
+    const calculateCost = (e) => {
+        e.preventDefault();
+
+        //Kolla så alla fält är ifyllda
+        if (shipmentData.weight === 0 || shipmentData.sourceCountry === "" || shipmentData.destinationCountry === "" || shipmentData.email === "") {
+            console.log("wrong fields");
+            return;
+        }
+
+        if (shipmentData.destinationCountry === "Sweden" || shipmentData.destinationCountry === "Norway" || shipmentData.destinationCountry === "Denmark") {
+            //Flat rate
+            setShipmentData({ ...shipmentData, cost: 100 });
+        }
+        else {
+            var calculatedCost = country.multiplier * shipmentData.weight;
+            setShipmentData({ ...shipmentData, cost: calculatedCost });
+        }
+
+        setSubmitDisabled(false);
+    }
 
     useEffect(() => {
-        //Basic user id för alla guests
         if (user.hasOwnProperty('role')) {
-            console.log("in own property");
             setShipmentData({ ...shipmentData, userId: user.id });
             setShipmentData({ ...shipmentData, email: user.email });
+            setShipmentData({ ...shipmentData, countryOfResidence: user.countryOfResidence });
         }
+    }, []);
+
+    useEffect(() => {
+        fetchCountries(setCountries);
     }, []);
 
     const submitNewShipment = async (e) => {
         e.preventDefault();
         console.log(shipmentData);
-        console.log("token: " + token);
-
-        const headers = {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        };
 
         const newShipmentResponse = await fetch(`${urlBackendBasePath}/orders/createAnOrder`, {
             method: "POST",
-            headers: headers,
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(shipmentData),
         });
 
@@ -72,8 +104,6 @@ function ShipmentModal({ isOpen, closeModal }) {
         //orderConfirmationEmail(user, shipmentData.email, responseData);
 
         setThankYouNote(true);
-
-        closeModal();
     }
 
     return (
@@ -160,10 +190,14 @@ function ShipmentModal({ isOpen, closeModal }) {
                                         />
                                     </label>
                                 </>
-
                             )}
 
+                            <button onClick={calculateCost}>Calculate</button>
+
+                            <div>Cost is: {shipmentData.cost}</div>
+
                             <input
+                                disabled={submitDisabled}
                                 className="form-submit"
                                 type="submit"
                                 value="Submit"
@@ -172,7 +206,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                         </>
                     )}
                     {thankYouNote && (
-                        <div>Thank you for your order!</div>
+                        <p>Thank you for your order! Check your inbox for a confirmation email.</p>
                     )}
                 </form>
             </div>

@@ -38,6 +38,10 @@ namespace backend.Controllers
         public static async Task<IResult> createAnOrder([FromServices] IOrderRepository orderRepository, OrderPostPayload payload)
         {
             Console.WriteLine("In BE create an order: " + payload);
+
+            //Check cost
+            Console.WriteLine("Cost: " + payload.Cost);
+
             var order = await orderRepository.CreateAnOrder(payload);
 
             if(order == null) return TypedResults.BadRequest();
