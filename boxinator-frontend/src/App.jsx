@@ -42,28 +42,32 @@ function App() {
         <div className='app'>
           <Nav />
 
-          {!loggedIn && (
-            <Routes>
-              <Route path="/" element={<Login />}/>
-              <Route path="/claimorder/:email/:orderId" element={<ClaimOrder />}/>
-            </Routes>
-          )}
+          <div className='main'>
+            {!loggedIn && (
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/claimorder/:email/:orderId" element={<ClaimOrder />} />
+              </Routes>
+            )}
+
+            {loggedIn && (
+              <Routes>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/aboutus" element={<AboutUs />} />
+                <Route path="/newshipment" element={<NewShipment />} />
+              </Routes>
+            )}
+
+            {loggedIn && user.hasOwnProperty('role') && (
+              <Routes>
+                <Route path="/profile" element={<Profile />} />
+              </Routes>
+            )}
+          </div>
 
           {loggedIn && (
-            <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/aboutus" element={<AboutUs />} />
-              <Route path="/newshipment" element={<NewShipment />} />
-            </Routes>
+            <Footer />
           )}
-
-          {loggedIn && user.hasOwnProperty('role') && (
-            <Routes>
-              <Route path="/profile" element={<Profile />} />
-            </Routes>
-          )}
-
-          <Footer />
         </div>
       </UserContext.Provider>
     </>
