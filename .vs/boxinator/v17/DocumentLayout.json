@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\elias\\boxinator\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EA2E0E72-5658-4C38-8B26-9E48290FF9B2}|BackendTests\\BackendTests.csproj|c:\\users\\elias\\boxinator\\backendtests\\countrycontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA2E0E72-5658-4C38-8B26-9E48290FF9B2}|BackendTests\\BackendTests.csproj|solutionrelative:backendtests\\countrycontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E44C43C-0E1E-483F-95E7-5BD0359FF7EA}|backend\\backend.csproj|c:\\users\\elias\\boxinator\\backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1E44C43C-0E1E-483F-95E7-5BD0359FF7EA}|backend\\backend.csproj|solutionrelative:backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E44C43C-0E1E-483F-95E7-5BD0359FF7EA}|backend\\backend.csproj|c:\\users\\elias\\boxinator\\backend\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1E44C43C-0E1E-483F-95E7-5BD0359FF7EA}|backend\\backend.csproj|solutionrelative:backend\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E44C43C-0E1E-483F-95E7-5BD0359FF7EA}|backend\\backend.csproj|c:\\users\\elias\\boxinator\\backend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E44C43C-0E1E-483F-95E7-5BD0359FF7EA}|backend\\backend.csproj|solutionrelative:backend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E44C43C-0E1E-483F-95E7-5BD0359FF7EA}|backend\\backend.csproj|c:\\users\\elias\\boxinator\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E44C43C-0E1E-483F-95E7-5BD0359FF7EA}|backend\\backend.csproj|solutionrelative:backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E44C43C-0E1E-483F-95E7-5BD0359FF7EA}|backend\\backend.csproj|c:\\users\\elias\\boxinator\\backend\\controllers\\authapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E44C43C-0E1E-483F-95E7-5BD0359FF7EA}|backend\\backend.csproj|solutionrelative:backend\\controllers\\authapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CountryControllerTests.cs",
+              "DocumentMoniker": "C:\\Users\\elias\\boxinator\\BackendTests\\CountryControllerTests.cs",
+              "RelativeDocumentMoniker": "BackendTests\\CountryControllerTests.cs",
+              "ToolTip": "C:\\Users\\elias\\boxinator\\BackendTests\\CountryControllerTests.cs",
+              "RelativeToolTip": "BackendTests\\CountryControllerTests.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAswCsAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-20T18:13:06.856Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\elias\\boxinator\\backend\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "backend\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\elias\\boxinator\\backend\\appsettings.Development.json",
+              "RelativeToolTip": "backend\\appsettings.Development.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-05-20T17:40:49.182Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\elias\\boxinator\\backend\\appsettings.json",
+              "RelativeDocumentMoniker": "backend\\appsettings.json",
+              "ToolTip": "C:\\Users\\elias\\boxinator\\backend\\appsettings.json",
+              "RelativeToolTip": "backend\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-05-20T17:40:32.296Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\elias\\boxinator\\backend\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "backend\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\elias\\boxinator\\backend\\Controllers\\UserController.cs",
+              "RelativeToolTip": "backend\\Controllers\\UserController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-20T17:39:27.1Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\elias\\boxinator\\backend\\Program.cs",
+              "RelativeDocumentMoniker": "backend\\Program.cs",
+              "ToolTip": "C:\\Users\\elias\\boxinator\\backend\\Program.cs",
+              "RelativeToolTip": "backend\\Program.cs",
+              "ViewState": "AQIAAF0AAAAAAAAAAIBJwH8AAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-20T17:35:50.85Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AuthApi.cs",
+              "DocumentMoniker": "C:\\Users\\elias\\boxinator\\backend\\Controllers\\AuthApi.cs",
+              "RelativeDocumentMoniker": "backend\\Controllers\\AuthApi.cs",
+              "ToolTip": "C:\\Users\\elias\\boxinator\\backend\\Controllers\\AuthApi.cs",
+              "RelativeToolTip": "backend\\Controllers\\AuthApi.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-20T17:35:47.189Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
