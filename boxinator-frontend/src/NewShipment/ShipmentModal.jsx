@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { urlBackendBasePath, guestUserId } from '../assets/strings.js'
 import { orderConfirmationEmail } from "../Email/OrderConfirmation.js";
 import { fetchCountries } from "./FetchCountries.js";
+import { calculateCost } from "./CalculateCost.js";
 
 function ShipmentModal({ isOpen, closeModal }) {
     const initialState = {
@@ -41,6 +42,7 @@ function ShipmentModal({ isOpen, closeModal }) {
             var countryInList = countries.find(country => country.countryName === inputValue);
             if (countryInList === undefined) {
                 console.log("wrong source country");
+                setCountry(undefined);
             }
             else {
                 setCountry(countryInList);
@@ -48,27 +50,6 @@ function ShipmentModal({ isOpen, closeModal }) {
         }
 
         setSubmitDisabled(true);
-    }
-
-    const calculateCost = (e) => {
-        e.preventDefault();
-
-        //Kolla så alla fält är ifyllda
-        if (shipmentData.weight === 0 || shipmentData.sourceCountry === "" || shipmentData.destinationCountry === "" || shipmentData.email === "") {
-            console.log("wrong fields");
-            return;
-        }
-
-        if (shipmentData.destinationCountry === "Sweden" || shipmentData.destinationCountry === "Norway" || shipmentData.destinationCountry === "Denmark") {
-            //Flat rate
-            setShipmentData({ ...shipmentData, cost: 100 });
-        }
-        else {
-            var calculatedCost = country.multiplier * shipmentData.weight;
-            setShipmentData({ ...shipmentData, cost: calculatedCost });
-        }
-
-        setSubmitDisabled(false);
     }
 
     useEffect(() => {
@@ -97,13 +78,20 @@ function ShipmentModal({ isOpen, closeModal }) {
             throw new Error("Failed to create a new order");
         }
 
-        // Retur objektet
         const responseData = await newShipmentResponse.json();
 
         //Skicka email
         //orderConfirmationEmail(user, shipmentData.email, responseData);
 
         setThankYouNote(true);
+    }
+
+    const calculate = (e) => {
+        e.preventDefault();
+
+        if (country.countryName === "Sweden" || country.countryName === "Norway" || country.countryName === "Denmark") {
+            calculateCost(shipmentData, setShipmentData, country, setSubmitDisabled);
+        }
     }
 
     return (
@@ -192,7 +180,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                                 </>
                             )}
 
-                            <button onClick={calculateCost}>Calculate</button>
+                            <button onClick={calculate}>Calculate</button>
 
                             <div>Cost is: {shipmentData.cost}</div>
 
