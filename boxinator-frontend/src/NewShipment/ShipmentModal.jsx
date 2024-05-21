@@ -26,7 +26,7 @@ function ShipmentModal({ isOpen, closeModal }) {
     const { user } = useContext(UserContext);
     const [thankYouNote, setThankYouNote] = useState(false);
     const [countries, setCountries] = useState([]);
-    const [country, setCountry] = useState({});
+    const [multiplier, setMultiplier] = useState({});
     const [submitDisabled, setSubmitDisabled] = useState(true);
 
     const handleChange = (event) => {
@@ -38,15 +38,9 @@ function ShipmentModal({ isOpen, closeModal }) {
             [inputName]: inputValue,
         }));
 
-        if (inputName === "sourceCountry") {
-            var countryInList = countries.find(country => country.countryName === inputValue);
-            if (countryInList === undefined) {
-                console.log("wrong source country");
-                setCountry(undefined);
-            }
-            else {
-                setCountry(countryInList);
-            }
+        if(inputName === "sourceCountry") {
+            var country = countries.find(country => country.countryName === inputValue);
+            setMultiplier(country.multiplier);
         }
 
         setSubmitDisabled(true);
@@ -56,7 +50,7 @@ function ShipmentModal({ isOpen, closeModal }) {
         if (user.hasOwnProperty('role')) {
             setShipmentData({ ...shipmentData, userId: user.id });
             setShipmentData({ ...shipmentData, email: user.email });
-            setShipmentData({ ...shipmentData, countryOfResidence: user.countryOfResidence });
+            setShipmentData({ ...shipmentData, sourceCountry: user.countryOfResidence });
         }
     }, []);
 
@@ -89,9 +83,7 @@ function ShipmentModal({ isOpen, closeModal }) {
     const calculate = (e) => {
         e.preventDefault();
 
-        if (country.countryName === "Sweden" || country.countryName === "Norway" || country.countryName === "Denmark") {
-            calculateCost(shipmentData, setShipmentData, country, setSubmitDisabled);
-        }
+        calculateCost(shipmentData, setShipmentData, multiplier, setSubmitDisabled);
     }
 
     return (
@@ -160,12 +152,15 @@ function ShipmentModal({ isOpen, closeModal }) {
                                 <>
                                     <label>
                                         Source country:
-                                        <input
-                                            type="text"
+                                        <select
                                             name="sourceCountry"
                                             value={shipmentData.sourceCountry}
                                             onChange={handleChange}
-                                        />
+                                        >
+                                            <option value="Sweden">Sweden</option>
+                                            <option value="Norway">Norway</option>
+                                            <option value="Denmark">Denmark</option>
+                                        </select>
                                     </label>
 
                                     <label>

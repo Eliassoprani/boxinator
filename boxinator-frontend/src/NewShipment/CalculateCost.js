@@ -1,4 +1,4 @@
-export const calculateCost = (shipmentData, setShipmentData, country, setSubmitDisabled) => {
+export const calculateCost = (shipmentData, setShipmentData, multiplier, setSubmitDisabled) => {
   //Dessa fält måste vara ifyllda
   if (shipmentData.weight === 0 || shipmentData.sourceCountry === "" || shipmentData.destinationCountry === "" || shipmentData.email === "") {
     console.log("wrong fields");
@@ -11,7 +11,7 @@ export const calculateCost = (shipmentData, setShipmentData, country, setSubmitD
         setShipmentData({ ...shipmentData, cost: 100 });
     } 
     else {
-      var calculatedCost = country.multiplier * shipmentData.weight;
+      var calculatedCost = multiplier * shipmentData.weight;
       setShipmentData({ ...shipmentData, cost: calculatedCost });
     }
 
