@@ -59,6 +59,7 @@ namespace backend.Repositories
                 //Dummy värden för att testa databas
                 CountryId = country.Id,
                 UserId = payload.UserId,
+                Cost = payload.Cost,
             };
 
             //Lägg till manuellt i databas
