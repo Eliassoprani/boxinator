@@ -9,15 +9,9 @@ namespace backend.Repositories
     {
         private DatabaseContext _databaseContext;
         private readonly ICountryRepository _countryRepository;
-
         private readonly IUserRepository _userRepository;
 
-        public OrderRepository(
-            DatabaseContext db,
-            ICountryRepository countryRepository,
-            IUserRepository userRepository
-        )
-        {
+        public OrderRepository(DatabaseContext db, ICountryRepository countryRepository, IUserRepository userRepository){
             _databaseContext = db;
             _countryRepository = countryRepository;
             _userRepository = userRepository;
@@ -34,29 +28,21 @@ namespace backend.Repositories
 
         public async Task<Order?> CreateAnOrder(OrderPostPayload payload)
         {
-            //Checka så inga fält är null
-            User? user = await _userRepository.GetUserById(payload.UserId);
-            if (user == null)
-                return null;
-            //konvertera country string till int?
             Country? country = await _countryRepository.getCountryByCountryName(
                 payload.SourceCountry
             );
-            if (country == null)
-            {
-                return null; //country finns inte tillgängligt, kan inte skapa order
+
+            if (country == null) {
+                return null;
             }
-            //Lägg till user id
+
             var order = new Order
             {
                 RecieverName = payload.RecieverName,
                 Weight = payload.Weight,
                 BoxColor = payload.BoxColor,
-                //CountryId = payload.Country,
                 Status = payload.OrderStatus,
-                //Cost = payload.Cost;  //Bör räknas ut i frontend så användare kan se vad det kostar
                 DestinationCounty = payload.DestinationCountry,
-                //Dummy värden för att testa databas
                 CountryId = country.Id,
                 UserId = payload.UserId,
                 Cost = payload.Cost,
@@ -88,22 +74,17 @@ namespace backend.Repositories
 
         public async Task<Order?> GetOrderById(int OrderId)
         {
-            var order = await _databaseContext.Orders.FirstOrDefaultAsync(order =>
-                order.Id == OrderId
-            );
+            var order = await _databaseContext.Orders.FirstOrDefaultAsync(order => order.Id == OrderId);
 
             return order;
         }
 
         public async Task<Order?> UpdateOrder(OrderPutPayload payload, int OrderId)
         {
-            //Hämta order
             var order = await GetOrderById(OrderId);
 
-            //Uppdatera order
             order.Status = payload.OrderStatus;
 
-            //Spara i databas
             await _databaseContext.SaveChangesAsync();
 
             return order;
@@ -112,30 +93,12 @@ namespace backend.Repositories
         //För guest som claimat sitt konto
         public async Task<Order?> UpdateOrdersUser(OrderPutUserPayload payload)
         {
-            //Konvertera till int
             int orderIdInt = int.Parse(payload.OrderId);
 
-            //Hämta order
             var order = await GetOrderById(orderIdInt);
 
-            //Uppdatera order
             order.UserId = payload.UserId;
 
-            //Spara i databas
-            await _databaseContext.SaveChangesAsync();
-
-            return order;
-        }
-
-        public async Task<Order?> DeleteOrder(int OrderId)
-        {
-            //Hämta order
-            var order = await GetOrderById(OrderId);
-
-            //Radera order i databas kontext
-            _databaseContext.Orders.Remove(order);
-
-            //Spara ändring i databas
             await _databaseContext.SaveChangesAsync();
 
             return order;

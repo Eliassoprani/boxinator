@@ -17,24 +17,13 @@ namespace backend.Controllers
         {
             var authGroup = app.MapGroup("countries");
             authGroup.MapGet("/getAllCountries", getAllCountries);
-            authGroup.MapPost("/addCountry", addCountry);
         }
 
-        //[Authorize(Roles = "Admin")]
         public static async Task<IResult> getAllCountries([FromServices] ICountryRepository countryRepository)
         {
             IEnumerable<Country> countries = await countryRepository.getAllCountries();
 
             return TypedResults.Ok(countries);
-        }
-
-        public static async Task<IResult> addCountry([FromServices] ICountryRepository countryRepository, CountryPostPayload payload)
-        {
-            Country? country = await countryRepository.addCountry(payload);
-
-            if(country == null) return TypedResults.BadRequest();
-
-            return TypedResults.Ok(country);
         }
     }
 }

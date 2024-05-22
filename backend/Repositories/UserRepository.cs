@@ -60,21 +60,6 @@ namespace backend.Repositories
             }
         }
 
-        public async Task<bool> DeleteUser(string Userid)
-        {
-            var user = await _userManager.FindByIdAsync(Userid);
-
-            if (user == null) return false;
-
-            var result = await _userManager.DeleteAsync(user);
-            if (result.Succeeded)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         public async Task<IEnumerable<User>> GetAllUsers()
         {
             return null;
@@ -95,7 +80,7 @@ namespace backend.Repositories
 
             if (user == null) return null;
 
-            return user;    //Behöver endast id returnerat
+            return user;
         }
 
         public async Task<User?> UpdateUser(string userId, UserPutPayload payload)
@@ -111,13 +96,13 @@ namespace backend.Repositories
             if (payload.Password != null)
                 user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, payload.Password);
             if (payload.DateOfBirth != null)
-                user.DateOfBirth = payload.DateOfBirth; // Ändrat till string
+                user.DateOfBirth = payload.DateOfBirth;
             if (payload.Phone != null)
-                user.Phone = payload.Phone.Value; // Access the underlying value of int?
+                user.Phone = payload.Phone.Value; // Phone är int => .Value
             if (payload.CountryOfResidence != null)
                 user.CountryOfResidence = payload.CountryOfResidence;
             if (payload.ZipCode != null)
-                user.ZipCode = payload.ZipCode.Value; // Access the underlying value of int?
+                user.ZipCode = payload.ZipCode.Value;
 
             var result = await _userManager.UpdateAsync(user);
 
@@ -129,7 +114,6 @@ namespace backend.Repositories
             {
                 foreach (var error in result.Errors)
                 {
-                    // Log or handle each error message
                     Console.WriteLine($"Error: {error.Description}");
                 }
                 return null;
@@ -141,7 +125,6 @@ namespace backend.Repositories
             if (payload.Email == null || payload.Email.Length == 0) return null;
             if (payload.Password == null || payload.Password.Length == 0) return null;
 
-            // find by email
             var user = await _userManager.FindByEmailAsync(payload.Email);
             if (user == null) return null;
 
@@ -151,7 +134,6 @@ namespace backend.Repositories
             var token = _tokenService.CreateToken(user);
 
             return new LoginResPayload(token, user.Email, user.Id, user.Role, user.FirstName, user.LastName, user.DateOfBirth, user.Phone, user.CountryOfResidence, user.ZipCode);
-
         }
     }
 }

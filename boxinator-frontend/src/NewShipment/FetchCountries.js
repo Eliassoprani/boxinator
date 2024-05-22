@@ -12,7 +12,5 @@ export const fetchCountries = async (setCountries) => {
 
     const returnedCountries = await fetchCountriesResponse.json();
 
-    console.log(returnedCountries);
-
     setCountries(returnedCountries);
   }

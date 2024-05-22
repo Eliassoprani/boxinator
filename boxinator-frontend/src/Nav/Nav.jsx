@@ -9,10 +9,11 @@ function Nav() {
     const { user, setUser, loggedIn, setLoggedIn } = useContext(UserContext);
 
     const logout = () => {
-        setUser({});
-        //Remove token and loggedIn from storage
         localStorage.clear();
+
+        setUser({});
         setLoggedIn(false);
+        
         navigate("/");
     }
 

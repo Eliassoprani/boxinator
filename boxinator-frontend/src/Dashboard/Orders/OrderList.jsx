@@ -27,9 +27,7 @@ function OrderList({ orders, setOrders }) {
         setIsModalOpen(false);
     };
 
-    const filteredOrders = selectedStatus !== null
-        ? orders.filter(order => order.status === selectedStatus)
-        : orders; // If selectedStatus is null, show all orders
+    const filteredOrders = selectedStatus !== null ? orders.filter(order => order.status === selectedStatus) : orders; // If selectedStatus is null, show all orders
 
     const handleStatusChange = (e) => {
         const status = parseInt(e.target.value);

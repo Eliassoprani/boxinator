@@ -6,10 +6,10 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
         const inputValue = event.target.value;
 
         if (inputName && inputValue !== undefined) {
-            setUserData((prevUserData) => ({
-                ...prevUserData,
+            setUserData({
+                ...userData,
                 [inputName]: inputValue,
-            }));
+            });
         }
     }
 
