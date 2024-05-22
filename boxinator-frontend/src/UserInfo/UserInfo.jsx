@@ -1,5 +1,6 @@
+import './UserInfo.css'
 
-function UserInfo({ userData, setUserData, update }) {
+function UserInfo({ userData, setUserData, update, allCountries }) {
     const handleChange = (event) => {
         const inputName = event.target.name;
         const inputValue = event.target.value;
@@ -69,13 +70,17 @@ function UserInfo({ userData, setUserData, update }) {
             </label>
 
             <label>
-                Country of residence:
-                <input
-                    type="text"
+            Country of residence:
+                <select
+                    className="dropdown-signup"
                     name="countryOfResidence"
                     value={userData.countryOfResidence}
                     onChange={handleChange}
-                />
+                >
+                    {allCountries.map(country => (
+                        <option key={country} value={country}>{country}</option>
+                    ))}
+                </select>
             </label>
 
             <label>

@@ -10,6 +10,7 @@ import NewShipment from './NewShipment/NewShipment';
 import AboutUs from './AboutUs/AboutUs';
 import ClaimOrder from './ClaimOrder/ClaimOrder';
 import { restoreUser } from './RestoreUser/RestoreUser';
+// import { allCountries } from './assets/countries.json'
 
 const UserContext = createContext();
 
@@ -18,6 +19,7 @@ function App() {
   const [user, setUser] = useState({});
   const [token, setToken] = useState("");
   const [order, setOrder] = useState(""); //For guest claiming order
+  const [allCountries, setAllCountries] = useState([]);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -33,12 +35,21 @@ function App() {
     if (storedLoggedIn) {
       setLoggedIn(storedLoggedIn);
     }
+
+    //Get country list
+    import('./assets/countries.json')
+      .then(response => response.default)
+      .then(data => {
+        const countryNames = data.map(country => country.country);
+        setAllCountries(countryNames);
+      })
+      .catch(error => console.error('Error loading allCountries list: ', error));
   }, []);
 
 
   return (
     <>
-      <UserContext.Provider value={{ user, setUser, loggedIn, setLoggedIn, token, setToken, order, setOrder }}>
+      <UserContext.Provider value={{ user, setUser, loggedIn, setLoggedIn, token, setToken, order, setOrder, allCountries }}>
         <div className='app'>
           <Nav />
 
