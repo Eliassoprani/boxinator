@@ -10,20 +10,15 @@ export function orderConfirmationEmail(user, email, responseData) {
   if(user.role === 0 || user.role === 1) {
     toName = user.firstName;
     toEmail = user.email;
-  }
-  else {
-    console.log("In email: " + email)
-    toName = "Guest";
-    toEmail = email;
-  }
-
-  if (user.role === 0 || user.role === 1) {
     message = `Order id: ${responseData.id} 
             Receiver name: ${responseData.recieverName} 
             Weight: ${responseData.weight}
             Box colour: ${responseData.boxColor}
             Destination: ${responseData.countryId}`;
-  } else {
+  }
+  else {
+    toName = "Guest";
+    toEmail = email;
     message = `Order id: ${responseData.id} 
             Receiver name: ${responseData.recieverName} 
             Weight: ${responseData.weight}
