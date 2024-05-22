@@ -10,7 +10,7 @@ import NewShipment from './NewShipment/NewShipment';
 import AboutUs from './AboutUs/AboutUs';
 import ClaimOrder from './ClaimOrder/ClaimOrder';
 import { restoreUser } from './RestoreUser/RestoreUser';
-// import { allCountries } from './assets/countries.json'
+import { countries } from './assets/countries.json'
 
 const UserContext = createContext();
 
@@ -36,14 +36,8 @@ function App() {
       setLoggedIn(storedLoggedIn);
     }
 
-    //Get country list
-    import('./assets/countries.json')
-      .then(response => response.default)
-      .then(data => {
-        const countryNames = data.map(country => country.country);
-        setAllCountries(countryNames);
-      })
-      .catch(error => console.error('Error loading allCountries list: ', error));
+    const countryNames = countries.map(country => country.country);
+    setAllCountries(countryNames);
   }, []);
 
 
