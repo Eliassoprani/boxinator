@@ -23,7 +23,7 @@ function ShipmentModal({ isOpen, closeModal }) {
     }
 
     const [shipmentData, setShipmentData] = useState(initialState);
-    const { user } = useContext(UserContext);
+    const { user, allCountries } = useContext(UserContext);
     const [thankYouNote, setThankYouNote] = useState(false);
     const [countries, setCountries] = useState([]);
     const [multiplier, setMultiplier] = useState({});
@@ -38,7 +38,7 @@ function ShipmentModal({ isOpen, closeModal }) {
             [inputName]: inputValue,
         }));
 
-        if(inputName === "sourceCountry") {
+        if (inputName === "sourceCountry") {
             var country = countries.find(country => country.countryName === inputValue);
             setMultiplier(country.multiplier);
         }
@@ -47,15 +47,15 @@ function ShipmentModal({ isOpen, closeModal }) {
     }
 
     useEffect(() => {
+        console.log(allCountries);
+
+        fetchCountries(setCountries);
+
         if (user.hasOwnProperty('role')) {
             setShipmentData({ ...shipmentData, userId: user.id });
             setShipmentData({ ...shipmentData, email: user.email });
             setShipmentData({ ...shipmentData, sourceCountry: user.countryOfResidence });
         }
-    }, []);
-
-    useEffect(() => {
-        fetchCountries(setCountries);
     }, []);
 
     const submitNewShipment = async (e) => {
@@ -140,12 +140,16 @@ function ShipmentModal({ isOpen, closeModal }) {
 
                             <label>
                                 Destination country:
-                                <input
-                                    type="text"
+                                <select
+                                    className="dropdown"
                                     name="destinationCountry"
                                     value={shipmentData.destinationCountry}
                                     onChange={handleChange}
-                                />
+                                >
+                                    {allCountries.map(country => (
+                                        <option key={country} value={country}>{country}</option>
+                                    ))}
+                                </select>
                             </label>
 
                             {!user.hasOwnProperty('role') && (
@@ -153,6 +157,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                                     <label>
                                         Source country:
                                         <select
+                                            className="dropdown"
                                             name="sourceCountry"
                                             value={shipmentData.sourceCountry}
                                             onChange={handleChange}
