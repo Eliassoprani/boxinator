@@ -13,7 +13,6 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
         }
     }
 
-
     return (
         <>
             <label>

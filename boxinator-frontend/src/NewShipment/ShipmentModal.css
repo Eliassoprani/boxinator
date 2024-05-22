@@ -43,9 +43,10 @@ input:disabled {
 }
 
 .dropdown {
-  width: 150px;
+  width: 245px;
   height: 40px;
   background-color: white;
   color: black;
   margin-left: 10px;
+  padding-left: 8px;
 }
