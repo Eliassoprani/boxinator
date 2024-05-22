@@ -25,10 +25,10 @@ function Login() {
         const inputName = event.target.name;
         const inputValue = event.target.value;
 
-        setUserData((userData) => ({
+        setUserData({
             ...userData,
             [inputName]: inputValue,
-        }));
+        });
     };
 
     const login = async (e) => {

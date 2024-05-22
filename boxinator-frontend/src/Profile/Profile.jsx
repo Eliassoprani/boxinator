@@ -25,8 +25,6 @@ function Profile() {
 
         const token = localStorage.getItem('token');
 
-        console.log(token, userData);
-
         const updateUserResponse = await fetch(`${urlBackendBasePath}/authentication/update`, {
             method: "PUT",
             headers: {

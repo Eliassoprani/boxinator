@@ -18,24 +18,6 @@ namespace backend.Repositories
             _databaseContext = db;
         }
 
-        public async Task<Country?> addCountry(CountryPostPayload payload)
-        {
-            Country country = new Country();
-            country.CountryName = payload.CountryName;
-            country.Multiplier = payload.Multiplier;
-
-              try
-            {
-                _databaseContext.Countries.Add(country);
-                await _databaseContext.SaveChangesAsync();
-                return country;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-
         public async Task<IEnumerable<Country>> getAllCountries()
         {
             return await _databaseContext.Countries.ToListAsync();

@@ -15,8 +15,6 @@ namespace backend.Repositories
 
         public Task<User?> GetUserByEmail(string Email);
 
-        public Task<bool> DeleteUser(string Userid);
-
         public Task<LoginResPayload?> Login(LoginPayload payload);
 
     }

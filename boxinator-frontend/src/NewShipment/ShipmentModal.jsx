@@ -33,10 +33,10 @@ function ShipmentModal({ isOpen, closeModal }) {
         const inputName = event.target.name;
         const inputValue = event.target.value;
 
-        setShipmentData((shipmentData) => ({
+        setShipmentData({
             ...shipmentData,
             [inputName]: inputValue,
-        }));
+        });
 
         if (inputName === "sourceCountry") {
             var country = countries.find(country => country.countryName === inputValue);

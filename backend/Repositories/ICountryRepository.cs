@@ -8,8 +8,6 @@ namespace backend.Repositories
     {
         public Task<IEnumerable<Country>> getAllCountries();
 
-        public Task<Country?> addCountry(CountryPostPayload payload);
-
         public Task<Country?> getCountryByCountryName(string countryName);
     }
 }
