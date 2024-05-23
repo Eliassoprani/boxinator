@@ -6,6 +6,7 @@ import UserInfo from '../UserInfo/UserInfo';
 import { urlBackendBasePath } from '../assets/strings.js'
 import { accountActivationEmail } from '../Email/AccountActivation.js';
 import { updateOrder } from '../ClaimOrder/UpdateOrder.js';
+import { jwtDecode } from "jwt-decode";
 
 function Login() {
     const navigate = useNavigate();
@@ -91,6 +92,59 @@ function Login() {
         navigate("/dashboard");
     }
 
+    async function handleGoogleCallbackResponse(response) {
+        console.log("encoded jwt id token:" + response.credential)
+        var userObject = jwtDecode(response.credential);
+        console.log(userObject);
+
+        const signUpResponse = await fetch(`${urlBackendBasePath}/authentication/google_signup`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "email": userObject.email,
+                "firstName": userObject.given_name,
+                "lastName": userObject.family_name,
+                "jti": userObject.jti,
+                "iss": userObject.iss,
+                "aud": userObject.aud,
+                "azp": userObject.azp,
+                "iat": userObject.iat,
+                "nbf": userObject.nbf,
+                "sub": userObject.sub.toString(),
+                "jwt": response.credential
+            }),
+        });
+
+        if (!signUpResponse.ok) {
+            throw new Error("Failed to sign up");
+        }
+
+
+        const logInResponseData = await signUpResponse.json();
+
+        setUser(logInResponseData);
+        console.log(logInResponseData);
+        localStorage.setItem('token', logInResponseData.token);
+        localStorage.setItem('loggedIn', true);
+
+        setLoggedIn(true);
+
+        navigate("/dashboard");
+    }
+
+    useEffect(() => {
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: "799496013454-k4kisc5leble0b5jfurpvcvev4p6j7bt.apps.googleusercontent.com",
+            callback: handleGoogleCallbackResponse
+        })
+
+        google.accounts.id.renderButton(
+            document.getElementById("googleSignInDiv"),
+            { theme: "outline", size: "large" }
+        )
+    }, [])
+
     return (
         <div className="user-input">
 
@@ -159,7 +213,7 @@ function Login() {
                     </div>
                 </>
             )}
-
+            <div id="googleSignInDiv"></div>
             <div className="guest-login">
                 <button onClick={guestLogin}>Continue as guest</button>
             </div>

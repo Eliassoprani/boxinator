@@ -1,12 +1,9 @@
 using System.Security.Claims;
-using System.Web.Http;
 using backend.DTOs;
-using backend.Enums;
 using backend.Helpers;
 using backend.Models;
 using backend.Payloads;
 using backend.Repositories;
-using backend.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +21,22 @@ namespace backend.Controllers
             authGroup.MapPut("/update", updateUser);
             authGroup.MapGet("/getUserByToken", getUserByToken);
             authGroup.MapGet("/getUserByEmail/{email}", getUserByEmail);
+            authGroup.MapPost("/google_signup", googleSignup);
         }
+
+        public static async Task<IResult> googleSignup(
+            [FromServices] IUserRepository userRepository,
+            [FromBody] GoogleSignUpPayload googleSignUpPayload
+        )
+        {
+            var response = await userRepository.GoogleSignup(googleSignUpPayload);
+            if (response != null)
+            {
+                return TypedResults.Ok(response);
+            }
+            return TypedResults.BadRequest();
+        }
+
 
         /// <summary>
         /// a user that is already in the system can be logged in by entering the right credentials
@@ -66,7 +78,7 @@ namespace backend.Controllers
             return TypedResults.BadRequest();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
         public static async Task<IResult> getAllUsers(UserManager<User> userManager)
         {
             var users = await userManager.Users.ToListAsync();
@@ -75,7 +87,7 @@ namespace backend.Controllers
             return TypedResults.Ok(userDTOs);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
         public static async Task<IResult> deleteUserById(IUserRepository userRepository, string id)
         {
             bool userDeleted = await userRepository.DeleteUser(id);
@@ -87,7 +99,7 @@ namespace backend.Controllers
             return TypedResults.BadRequest();
         }
 
-        [Authorize] //Kollar om jwt finns och är giltig
+        [Microsoft.AspNetCore.Authorization.Authorize] //Kollar om jwt finns och är giltig
         public static async Task<IResult> updateUser([FromServices] IUserRepository userRepository, ClaimsPrincipal user, UserPutPayload payload)
         {
             string? userId = user.UserId();

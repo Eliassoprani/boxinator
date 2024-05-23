@@ -21,7 +21,7 @@ function RoleDashboard({ pathEnd }) {
             method: "GET",
             headers: headers
         });
-
+        console.log(token);
         if (!fetchOrdersResponse.ok) {
             throw new Error("Failed to get orders from the database");
         }

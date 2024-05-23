@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.Facebook;
 using backend.Models;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -95,6 +96,13 @@ builder.Services.AddAuthentication(options =>
             Encoding.UTF8.GetBytes(symmetricSecurityKey)
     ),
     };
+})
+.AddFacebook(options =>
+{
+    options.AppId = builder.Configuration["Authentication:Facebook:AppId"];
+    options.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+    options.SaveTokens = true;
+    options.CallbackPath = "/authentication/facebook-callback";
 });
 
 

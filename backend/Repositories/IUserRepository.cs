@@ -19,5 +19,6 @@ namespace backend.Repositories
 
         public Task<LoginResPayload?> Login(LoginPayload payload);
 
+        public Task<LoginResPayload?> GoogleSignup(GoogleSignUpPayload payload);
     }
 }

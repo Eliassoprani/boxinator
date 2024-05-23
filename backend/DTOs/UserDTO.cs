@@ -11,10 +11,10 @@ namespace backend.DTOs
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string DateOfBirth { get; set; }
-        public int Phone { get; set; }
+        public int? Phone { get; set; }
         public string CountryOfResidence { get; set; }
         public UserRoles Role { get; set; }
-        public int ZipCode { get; set; }
+        public int? ZipCode { get; set; }
 
         public UserDTO(User user)
         {

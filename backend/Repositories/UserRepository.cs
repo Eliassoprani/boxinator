@@ -5,6 +5,10 @@ using backend.Services;
 using Microsoft.AspNetCore.Identity;
 using static backend.Payloads.AuthPayload;
 using backend.Enums;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Google.Apis.Auth;
+
 namespace backend.Repositories
 {
     public class UserRepository : IUserRepository
@@ -19,7 +23,7 @@ namespace backend.Repositories
             _userManager = userManager;
             _tokenService = tokenService;
         }
-        
+
         public async Task<RegisterResPayload?> CreateAUser(RegisterPayload payload)
         {
             if (payload.Email == null) return null;
@@ -45,7 +49,7 @@ namespace backend.Repositories
             );
 
             if (result.Succeeded)
-            {   
+            {
                 var user = await _userManager.FindByEmailAsync(payload.Email);
                 return new RegisterResPayload(user.Id);
             }
@@ -152,6 +156,64 @@ namespace backend.Repositories
 
             return new LoginResPayload(token, user.Email, user.Id, user.Role, user.FirstName, user.LastName, user.DateOfBirth, user.Phone, user.CountryOfResidence, user.ZipCode);
 
+        }
+
+        public async Task<LoginResPayload?> GoogleSignup(GoogleSignUpPayload payload)
+        {
+            try
+            {
+                var payloadValidationSettings = new GoogleJsonWebSignature.ValidationSettings
+                {
+                    Audience = new List<string> { "799496013454-k4kisc5leble0b5jfurpvcvev4p6j7bt.apps.googleusercontent.com" }
+                };
+
+                var validPayload = await GoogleJsonWebSignature.ValidateAsync(payload.jwt, payloadValidationSettings);
+
+                if (validPayload == null)
+                {
+                    return null; // Invalid Google token
+                }
+
+                var user = await _userManager.FindByEmailAsync(payload.email);
+
+                if (user == null)
+                {
+                    // User does not exist, create new user
+                    var newUser = new User
+                    {
+                        UserName = payload.email,
+                        Email = payload.email,
+                        FirstName = payload.firstName ?? "", // If payload.firstName is null, assign an empty string
+                        LastName = payload.lastName ?? "",   // If payload.lastName is null, assign an empty string
+                        Role = UserRoles.User,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow,
+                        DateOfBirth = "",                  // Nullable property, no need to assign a default value
+                        Phone = 0,                           // Nullable property, assign 0 as default value
+                        CountryOfResidence = "",             // Nullable property, assign an empty string
+                        ZipCode = 0                          // Nullable property, assign 0 as default value
+                    };
+
+                    var result = await _userManager.CreateAsync(newUser);
+                    if (!result.Succeeded)
+                    {
+                        return null; // User creation failed
+                    }
+
+                    user = newUser; // Assign the newly created user to the 'user' variable
+                }
+
+                // Generate token for the user
+                var token = _tokenService.CreateToken(user);
+
+                // Return the LoginResPayload with user details and token
+                return new LoginResPayload(token, user.Email, user.Id, user.Role, user.FirstName, user.LastName, user.DateOfBirth, user.Phone, user.CountryOfResidence, user.ZipCode);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return null; // Exception occurred
+            }
         }
     }
 }

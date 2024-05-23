@@ -15,19 +15,19 @@ namespace backend.Models
         public string LastName { get; set; }
 
         [Column("date_of_birth")]
-        public string DateOfBirth { get; set; }
+        public string? DateOfBirth { get; set; } = null; // Provide default value
 
         [Column("phone")]
-        public int Phone { get; set; }
+        public int? Phone { get; set; } = null; // Provide default value
 
         [Column("country_of_residence")]
-        public string CountryOfResidence { get; set; }
+        public string? CountryOfResidence { get; set; }
 
         [Column("role")]
         public UserRoles Role { get; set; }
 
         [Column("zip_code")]
-        public int ZipCode { get; set; }
+        public int? ZipCode { get; set; } = null; // Provide default value
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }

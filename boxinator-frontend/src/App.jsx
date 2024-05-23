@@ -14,12 +14,14 @@ import { restoreUser } from './RestoreUser/RestoreUser';
 const UserContext = createContext();
 
 function App() {
+
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [token, setToken] = useState("");
   const [order, setOrder] = useState(""); //For guest claiming order
 
   useEffect(() => {
+
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       setToken(storedToken);
@@ -44,8 +46,8 @@ function App() {
 
           {!loggedIn && (
             <Routes>
-              <Route path="/" element={<Login />}/>
-              <Route path="/claimorder/:email/:orderId" element={<ClaimOrder />}/>
+              <Route path="/" element={<Login />} />
+              <Route path="/claimorder/:email/:orderId" element={<ClaimOrder />} />
             </Routes>
           )}
 
