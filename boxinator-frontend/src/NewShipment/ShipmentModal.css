@@ -37,3 +37,16 @@
 .form-submit:hover {
   cursor: pointer;
 }
+
+input:disabled {
+  opacity: 0.5;
+}
+
+.dropdown {
+  width: 244px;
+  height: 40px;
+  background-color: white;
+  color: black;
+  margin-left: 10px;
+  padding-left: 8px;
+}

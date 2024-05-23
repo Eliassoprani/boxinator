@@ -22,7 +22,6 @@ namespace backend.Controllers
             authGroup.MapGet("/getAllUserOrders", getAllUserOrders);
             authGroup.MapPut("/updateOrder", updateOrder);
             authGroup.MapPut("/updateOrdersUser", updateOrdersUser);
-            authGroup.MapDelete("/deleteOrder", deleteOrder);
         }
 
         [Authorize(Roles = "Admin")]    //Behöver ej checka claims när Roles = "Admin" är definierad här
@@ -37,11 +36,12 @@ namespace backend.Controllers
 
         public static async Task<IResult> createAnOrder([FromServices] IOrderRepository orderRepository, OrderPostPayload payload)
         {
-            Console.WriteLine("In BE create an order: " + payload);
             var order = await orderRepository.CreateAnOrder(payload);
 
             if(order == null) return TypedResults.BadRequest();
+
             OrderDTO orderDTO= new OrderDTO(order);
+
             return TypedResults.Ok(orderDTO);
         }
 
@@ -90,19 +90,9 @@ namespace backend.Controllers
             if(order == null) return TypedResults.BadRequest();
 
             //Gör om till DTO
-            //var orderDTO = new OrderDTO(order);
+            var orderDTO = new OrderDTO(order);
 
-            return TypedResults.Ok();
-        }
-
-        [Authorize(Roles = "Admin")]
-        public static async Task<IResult> deleteOrder([FromServices] IOrderRepository orderRepository, int OrderId, ClaimsPrincipal user)
-        {
-            var order = await orderRepository.DeleteOrder(OrderId);
-
-            if(order == null) return TypedResults.BadRequest();
-
-            return TypedResults.Ok(order);
+            return TypedResults.Ok(orderDTO);
         }
     }
 }

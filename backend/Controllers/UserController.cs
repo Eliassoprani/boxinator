@@ -45,12 +45,10 @@ namespace backend.Controllers
         /// <param name="tokenService"></param> is the TokenServer class that creates a JWT token easily
         /// <param name="payload"></param> id the data the user needs to provide
         /// <returns></returns> 200 if the payload is ok and the user is in the database, 400 if the payload is bad or missing
-        public static async Task<IResult> Login(
-            IUserRepository userRepository,
-            LoginPayload payload
-        )
+        public static async Task<IResult> Login(IUserRepository userRepository, LoginPayload payload)
         {
             LoginResPayload? response = await userRepository.Login(payload);
+
             if (response != null)
             {
                 return TypedResults.Ok(response);
@@ -65,36 +63,13 @@ namespace backend.Controllers
         /// <param name="userManager"></param> is the class from Identity that is used to access the users table that was generated
         /// <param name="payload"></param> is the data the user needs to provide
         /// <returns></returns> 201 created if successfull, 400 if the payload is bad or missing
-        public static async Task<IResult> Register(
-            IUserRepository userRepository,
-            RegisterPayload payload
-        )
+        public static async Task<IResult> Register(IUserRepository userRepository, RegisterPayload payload)
         {
             RegisterResPayload? response = await userRepository.CreateAUser(payload);
+
             if (response != null)
             {
-                return TypedResults.Ok(response); //Returnera user id
-            }
-            return TypedResults.BadRequest();
-        }
-
-        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
-        public static async Task<IResult> getAllUsers(UserManager<User> userManager)
-        {
-            var users = await userManager.Users.ToListAsync();
-
-            var userDTOs = users.Select(user => new UserDTO(user)).ToList();
-            return TypedResults.Ok(userDTOs);
-        }
-
-        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
-        public static async Task<IResult> deleteUserById(IUserRepository userRepository, string id)
-        {
-            bool userDeleted = await userRepository.DeleteUser(id);
-
-            if (userDeleted)
-            {
-                return TypedResults.Ok("user has been deleted");
+                return TypedResults.Ok(response); //Returnerar user id
             }
             return TypedResults.BadRequest();
         }
@@ -119,7 +94,6 @@ namespace backend.Controllers
             return TypedResults.Ok(new UserDTO(updatedUser));
         }
 
-        //Get user by token
         public static async Task<IResult> getUserByToken([FromServices] IUserRepository userRepository, ClaimsPrincipal user)
         {
             string? userId = user.UserId();
@@ -139,19 +113,16 @@ namespace backend.Controllers
             return TypedResults.Ok(new UserDTO(userToBeReturned));
         }
 
-        //Get user by email
         public static async Task<IResult> getUserByEmail([FromServices] IUserRepository userRepository, string email)
         {
             User? userToBeReturned = await userRepository.GetUserByEmail(email);
-
-            var id = "";
 
             if (userToBeReturned == null)
             {
                 return TypedResults.Ok("notRegistered");
             }
 
-            id = userToBeReturned.Id;
+            var id = userToBeReturned.Id;
 
             return TypedResults.Ok(id);
         }

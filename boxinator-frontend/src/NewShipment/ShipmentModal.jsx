@@ -6,11 +6,11 @@ Modal.setAppElement('#root'); // Set the root element for accessibility
 import PropTypes from 'prop-types';
 import { urlBackendBasePath, guestUserId } from '../assets/strings.js'
 import { orderConfirmationEmail } from "../Email/OrderConfirmation.js";
+import { calculateCost } from "./CalculateCost.js";
+import UserInput from './UserInput.jsx';
+
 
 function ShipmentModal({ isOpen, closeModal }) {
-    const { user, token } = useContext(UserContext);
-    const [thankYouNote, setThankYouNote] = useState(false);
-
     const initialState = {
         userId: guestUserId,
         email: "",
@@ -19,45 +19,31 @@ function ShipmentModal({ isOpen, closeModal }) {
         boxColor: "",
         destinationCountry: "",
         orderStatus: 0,
-        sourceCountry: user.countryOfResidence,
+        sourceCountry: "",
+        cost: 0
     }
 
     const [shipmentData, setShipmentData] = useState(initialState);
-
-    const handleChange = (event) => {
-        const inputName = event.target.name;
-        const inputValue = event.target.value;
-
-        setShipmentData((shipmentData) => ({
-            ...shipmentData,
-            [inputName]: inputValue,
-        }));
-
-        console.log(inputName + " " + inputValue);
-    };
+    const { user } = useContext(UserContext);
+    const [thankYouNote, setThankYouNote] = useState(false);
+    const [multiplier, setMultiplier] = useState({});
+    const [submitDisabled, setSubmitDisabled] = useState(true);
 
     useEffect(() => {
-        //Basic user id för alla guests
         if (user.hasOwnProperty('role')) {
-            console.log("in own property");
             setShipmentData({ ...shipmentData, userId: user.id });
             setShipmentData({ ...shipmentData, email: user.email });
+            setShipmentData({ ...shipmentData, sourceCountry: user.countryOfResidence });
         }
     }, []);
 
     const submitNewShipment = async (e) => {
         e.preventDefault();
         console.log(shipmentData);
-        console.log("token: " + token);
-
-        const headers = {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        };
 
         const newShipmentResponse = await fetch(`${urlBackendBasePath}/orders/createAnOrder`, {
             method: "POST",
-            headers: headers,
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(shipmentData),
         });
 
@@ -65,15 +51,18 @@ function ShipmentModal({ isOpen, closeModal }) {
             throw new Error("Failed to create a new order");
         }
 
-        // Retur objektet
         const responseData = await newShipmentResponse.json();
 
         //Skicka email
         //orderConfirmationEmail(user, shipmentData.email, responseData);
 
         setThankYouNote(true);
+    }
 
-        closeModal();
+    const calculate = (e) => {
+        e.preventDefault();
+
+        calculateCost(shipmentData, setShipmentData, multiplier, setSubmitDisabled);
     }
 
     return (
@@ -90,93 +79,27 @@ function ShipmentModal({ isOpen, closeModal }) {
                     </div>
 
                     {!thankYouNote && (
-                        <>
-                            <label>
-                                Receiver name:
-                                <input
-                                    type="text"
-                                    name="recieverName"
-                                    value={shipmentData.recieverName}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Weight:
-                                <input
-                                    type="number"
-                                    name="weight"
-                                    value={shipmentData.weight}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Box colour:
-                                <input
-                                    style={{
-                                        backgroundColor: shipmentData.boxColor,
-                                        cursor: "pointer",
-                                        outline: "none",
-                                        width: "70px",
-                                        height: "70px",
-                                    }}
-                                    type="color"
-                                    name="boxColor"
-                                    value={shipmentData.boxColor}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Destination country:
-                                <input
-                                    type="text"
-                                    name="destinationCountry"
-                                    value={shipmentData.destinationCountry}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            {!user.hasOwnProperty('role') && (
-                                <>
-                                    <label>
-                                        Source country:
-                                        <input
-                                            type="text"
-                                            name="sourceCountry"
-                                            value={shipmentData.sourceCountry}
-                                            onChange={handleChange}
-                                        />
-                                    </label>
-
-                                    <label>
-                                        Your email:
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            value={shipmentData.email}
-                                            onChange={handleChange}
-                                        />
-                                    </label>
-                                </>
-
-                            )}
-
-                            <input
-                                className="form-submit"
-                                type="submit"
-                                value="Submit"
-                                onClick={submitNewShipment}
-                            />
-                        </>
+                        <UserInput shipmentData={shipmentData} setShipmentData={setShipmentData} setMultiplier={setMultiplier} setSubmitDisabled={setSubmitDisabled} />
                     )}
+
+                    <button onClick={calculate}>Calculate</button>
+
+                    <div>Cost is: {shipmentData.cost}</div>
+
+                    <input
+                        disabled={submitDisabled}
+                        className="form-submit"
+                        type="submit"
+                        value="Submit"
+                        onClick={submitNewShipment}
+                    />
+
                     {thankYouNote && (
-                        <div>Thank you for your order!</div>
+                        <p>Thank you for your order! Check your inbox for a confirmation email.</p>
                     )}
                 </form>
             </div>
-        </Modal>
+        </Modal >
     )
 }
 

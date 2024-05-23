@@ -13,8 +13,4 @@ export const updateOrder = async (userId, orderId) => {
   if (!updateShipmentResponse.ok) {
     throw new Error("Failed to update order's user id");
   }
-  else {
-    //Feedback typ popup: "Order was added"
-    console.log("Order " + orderId + " was added");
-  }
 };

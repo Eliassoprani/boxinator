@@ -10,7 +10,7 @@ import { jwtDecode } from "jwt-decode";
 
 function Login() {
     const navigate = useNavigate();
-    const { setUser, setLoggedIn, order, setOrder } = useContext(UserContext);
+    const { setUser, setLoggedIn, order, setOrder, allCountries } = useContext(UserContext);
     const [signUp, setSignUp] = useState(false);
     const [userData, setUserData] = useState({ email: "", password: "" });
     const [addedOrder, setAddedOrder] = useState(false);
@@ -26,10 +26,10 @@ function Login() {
         const inputName = event.target.name;
         const inputValue = event.target.value;
 
-        setUserData((userData) => ({
+        setUserData({
             ...userData,
             [inputName]: inputValue,
-        }));
+        });
     };
 
     const login = async (e) => {
@@ -197,7 +197,7 @@ function Login() {
                     <h2>Sign up Page</h2>
 
                     <form>
-                        <UserInfo userData={userData} setUserData={setUserData} />
+                        <UserInfo userData={userData} setUserData={setUserData} allCountries={allCountries} />
 
                         <input
                             className="submit-input"

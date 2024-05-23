@@ -10,6 +10,7 @@ import NewShipment from './NewShipment/NewShipment';
 import AboutUs from './AboutUs/AboutUs';
 import ClaimOrder from './ClaimOrder/ClaimOrder';
 import { restoreUser } from './RestoreUser/RestoreUser';
+import { countries } from './assets/countries.json'
 
 const UserContext = createContext();
 
@@ -19,6 +20,7 @@ function App() {
   const [user, setUser] = useState({});
   const [token, setToken] = useState("");
   const [order, setOrder] = useState(""); //For guest claiming order
+  const [allCountries, setAllCountries] = useState([]);
 
   useEffect(() => {
 
@@ -35,37 +37,44 @@ function App() {
     if (storedLoggedIn) {
       setLoggedIn(storedLoggedIn);
     }
+
+    const countryNames = countries.map(country => country.country);
+    setAllCountries(countryNames);
   }, []);
 
 
   return (
     <>
-      <UserContext.Provider value={{ user, setUser, loggedIn, setLoggedIn, token, setToken, order, setOrder }}>
+      <UserContext.Provider value={{ user, setUser, loggedIn, setLoggedIn, token, setToken, order, setOrder, allCountries }}>
         <div className='app'>
           <Nav />
 
-          {!loggedIn && (
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/claimorder/:email/:orderId" element={<ClaimOrder />} />
-            </Routes>
-          )}
+          <div className='main'>
+            {!loggedIn && (
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/claimorder/:email/:orderId" element={<ClaimOrder />} />
+              </Routes>
+            )}
+
+            {loggedIn && (
+              <Routes>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/aboutus" element={<AboutUs />} />
+                <Route path="/newshipment" element={<NewShipment />} />
+              </Routes>
+            )}
+
+            {loggedIn && user.hasOwnProperty('role') && (
+              <Routes>
+                <Route path="/profile" element={<Profile />} />
+              </Routes>
+            )}
+          </div>
 
           {loggedIn && (
-            <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/aboutus" element={<AboutUs />} />
-              <Route path="/newshipment" element={<NewShipment />} />
-            </Routes>
+            <Footer />
           )}
-
-          {loggedIn && user.hasOwnProperty('role') && (
-            <Routes>
-              <Route path="/profile" element={<Profile />} />
-            </Routes>
-          )}
-
-          <Footer />
         </div>
       </UserContext.Provider>
     </>
