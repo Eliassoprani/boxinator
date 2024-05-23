@@ -6,8 +6,9 @@ Modal.setAppElement('#root'); // Set the root element for accessibility
 import PropTypes from 'prop-types';
 import { urlBackendBasePath, guestUserId } from '../assets/strings.js'
 import { orderConfirmationEmail } from "../Email/OrderConfirmation.js";
-import { fetchCountries } from "./FetchCountries.js";
 import { calculateCost } from "./CalculateCost.js";
+import UserInput from './UserInput.jsx';
+
 
 function ShipmentModal({ isOpen, closeModal }) {
     const initialState = {
@@ -23,34 +24,12 @@ function ShipmentModal({ isOpen, closeModal }) {
     }
 
     const [shipmentData, setShipmentData] = useState(initialState);
-    const { user, allCountries } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [thankYouNote, setThankYouNote] = useState(false);
-    const [countries, setCountries] = useState([]);
     const [multiplier, setMultiplier] = useState({});
     const [submitDisabled, setSubmitDisabled] = useState(true);
 
-    const handleChange = (event) => {
-        const inputName = event.target.name;
-        const inputValue = event.target.value;
-
-        setShipmentData({
-            ...shipmentData,
-            [inputName]: inputValue,
-        });
-
-        if (inputName === "sourceCountry") {
-            var country = countries.find(country => country.countryName === inputValue);
-            setMultiplier(country.multiplier);
-        }
-
-        setSubmitDisabled(true);
-    }
-
     useEffect(() => {
-        console.log(allCountries);
-
-        fetchCountries(setCountries);
-
         if (user.hasOwnProperty('role')) {
             setShipmentData({ ...shipmentData, userId: user.id });
             setShipmentData({ ...shipmentData, email: user.email });
@@ -100,105 +79,27 @@ function ShipmentModal({ isOpen, closeModal }) {
                     </div>
 
                     {!thankYouNote && (
-                        <>
-                            <label>
-                                Receiver name:
-                                <input
-                                    type="text"
-                                    name="recieverName"
-                                    value={shipmentData.recieverName}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Weight:
-                                <input
-                                    type="number"
-                                    name="weight"
-                                    value={shipmentData.weight}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Box colour:
-                                <input
-                                    style={{
-                                        backgroundColor: shipmentData.boxColor,
-                                        cursor: "pointer",
-                                        outline: "none",
-                                        width: "70px",
-                                        height: "70px",
-                                    }}
-                                    type="color"
-                                    name="boxColor"
-                                    value={shipmentData.boxColor}
-                                    onChange={handleChange}
-                                />
-                            </label>
-
-                            <label>
-                                Destination country:
-                                <select
-                                    className="dropdown"
-                                    name="destinationCountry"
-                                    value={shipmentData.destinationCountry}
-                                    onChange={handleChange}
-                                >
-                                    {allCountries.map(country => (
-                                        <option key={country} value={country}>{country}</option>
-                                    ))}
-                                </select>
-                            </label>
-
-                            {!user.hasOwnProperty('role') && (
-                                <>
-                                    <label>
-                                        Source country:
-                                        <select
-                                            className="dropdown"
-                                            name="sourceCountry"
-                                            value={shipmentData.sourceCountry}
-                                            onChange={handleChange}
-                                        >
-                                            <option value="Sweden">Sweden</option>
-                                            <option value="Norway">Norway</option>
-                                            <option value="Denmark">Denmark</option>
-                                        </select>
-                                    </label>
-
-                                    <label>
-                                        Your email:
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            value={shipmentData.email}
-                                            onChange={handleChange}
-                                        />
-                                    </label>
-                                </>
-                            )}
-
-                            <button onClick={calculate}>Calculate</button>
-
-                            <div>Cost is: {shipmentData.cost}</div>
-
-                            <input
-                                disabled={submitDisabled}
-                                className="form-submit"
-                                type="submit"
-                                value="Submit"
-                                onClick={submitNewShipment}
-                            />
-                        </>
+                        <UserInput shipmentData={shipmentData} setShipmentData={setShipmentData} setMultiplier={setMultiplier} setSubmitDisabled={setSubmitDisabled} />
                     )}
+
+                    <button onClick={calculate}>Calculate</button>
+
+                    <div>Cost is: {shipmentData.cost}</div>
+
+                    <input
+                        disabled={submitDisabled}
+                        className="form-submit"
+                        type="submit"
+                        value="Submit"
+                        onClick={submitNewShipment}
+                    />
+
                     {thankYouNote && (
                         <p>Thank you for your order! Check your inbox for a confirmation email.</p>
                     )}
                 </form>
             </div>
-        </Modal>
+        </Modal >
     )
 }
 
