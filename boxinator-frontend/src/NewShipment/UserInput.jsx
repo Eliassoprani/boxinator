@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { fetchCountries } from "./FetchCountries.js";
 import { UserContext } from "../App.jsx";
 
-function UserInput(shipmentData, setShipmentData, setMultiplier, setSubmitDisabled) {
+function UserInput({shipmentData, setShipmentData, setMultiplier, setSubmitDisabled}) {
     const { user, allCountries } = useContext(UserContext);
     const [sourceCountries, setSourceCountries] = useState([]);
 
@@ -23,6 +23,9 @@ function UserInput(shipmentData, setShipmentData, setMultiplier, setSubmitDisabl
             var country = sourceCountries.find(country => country.countryName === inputValue);
             setMultiplier(country.multiplier);
         }
+
+        console.log("från user input: weight: " + shipmentData.weight + " source: " + shipmentData.sourceCountry + " destination: " + shipmentData.destinationCountry + " email: " + shipmentData.email);
+
 
         setSubmitDisabled(true);
     }

@@ -61,6 +61,7 @@ function ShipmentModal({ isOpen, closeModal }) {
 
     const calculate = (e) => {
         e.preventDefault();
+        console.log("från modal: weight: " + shipmentData.weight + " source: " + shipmentData.sourceCountry + " destination: " + shipmentData.destinationCountry + " email: " + shipmentData.email);
 
         calculateCost(shipmentData, setShipmentData, multiplier, setSubmitDisabled);
     }
