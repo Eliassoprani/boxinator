@@ -119,11 +119,10 @@ function Login() {
             throw new Error("Failed to sign up");
         }
 
-
         const logInResponseData = await signUpResponse.json();
 
         setUser(logInResponseData);
-        console.log(logInResponseData);
+        console.log("loginresponse email från login: " + logInResponseData.email);
         localStorage.setItem('token', logInResponseData.token);
         localStorage.setItem('loggedIn', true);
 
