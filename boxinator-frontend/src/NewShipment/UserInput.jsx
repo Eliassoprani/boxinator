@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { fetchCountries } from "./FetchCountries.js";
 import { UserContext } from "../App.jsx";
 
-function UserInput({shipmentData, setShipmentData, setMultiplier, setSubmitDisabled}) {
+function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisabled }) {
     const { user, allCountries } = useContext(UserContext);
     const [sourceCountries, setSourceCountries] = useState([]);
 
@@ -14,18 +14,15 @@ function UserInput({shipmentData, setShipmentData, setMultiplier, setSubmitDisab
         const inputName = event.target.name;
         const inputValue = event.target.value;
 
-        setShipmentData({
-            ...shipmentData,
+        setShipmentData((prevShipmentData) => ({
+            ...prevShipmentData,
             [inputName]: inputValue,
-        });
+        }));
 
         if (inputName === "sourceCountry") {
             var country = sourceCountries.find(country => country.countryName === inputValue);
             setMultiplier(country.multiplier);
         }
-
-        console.log("från user input: weight: " + shipmentData.weight + " source: " + shipmentData.sourceCountry + " destination: " + shipmentData.destinationCountry + " email: " + shipmentData.email);
-
 
         setSubmitDisabled(true);
     }
@@ -83,32 +80,33 @@ function UserInput({shipmentData, setShipmentData, setMultiplier, setSubmitDisab
                 </select>
             </label>
 
-            {!user.hasOwnProperty('role') && (
-                <>
-                    <label>
-                        Source country:
-                        <select
-                            className="dropdown"
-                            name="sourceCountry"
-                            value={shipmentData.sourceCountry}
-                            onChange={handleChange}
-                        >
-                            <option value="Sweden">Sweden</option>
-                            <option value="Norway">Norway</option>
-                            <option value="Denmark">Denmark</option>
-                        </select>
-                    </label>
+            {!user.sourceCountry && (
+                <label>
+                    Source country:
+                    <select
+                        className="dropdown"
+                        name="sourceCountry"
+                        value={shipmentData.sourceCountry}
+                        onChange={handleChange}
+                    >
+                        <option value="Sweden">Sweden</option>
+                        <option value="Norway">Norway</option>
+                        <option value="Denmark">Denmark</option>
+                    </select>
+                </label>
+            )}
 
-                    <label>
-                        Your email:
-                        <input
-                            type="email"
-                            name="email"
-                            value={shipmentData.email}
-                            onChange={handleChange}
-                        />
-                    </label>
-                </>
+            {!user.hasOwnProperty('role') && (
+                <label>
+                    Your email:
+                    <input
+                        type="email"
+                        name="email"
+                        value={shipmentData.email}
+                        onChange={handleChange}
+                    />
+                </label>
+
             )}
         </>
     )

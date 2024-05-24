@@ -17,9 +17,9 @@ function ShipmentModal({ isOpen, closeModal }) {
         recieverName: "",
         weight: 0,
         boxColor: "",
-        destinationCountry: "",
+        destinationCountry: "Afghanistan",
         orderStatus: 0,
-        sourceCountry: "",
+        sourceCountry: "Sweden",
         cost: 0
     }
 
@@ -31,9 +31,12 @@ function ShipmentModal({ isOpen, closeModal }) {
 
     useEffect(() => {
         if (user.hasOwnProperty('role')) {
-            setShipmentData({ ...shipmentData, userId: user.id });
-            setShipmentData({ ...shipmentData, email: user.email });
-            setShipmentData({ ...shipmentData, sourceCountry: user.countryOfResidence });
+            setShipmentData((prevShipmentData) => ({
+                ...prevShipmentData,
+                userId: user.id,
+                email: user.email,
+                sourceCountry: user.countryOfResidence
+            }));
         }
     }, []);
 
@@ -61,7 +64,6 @@ function ShipmentModal({ isOpen, closeModal }) {
 
     const calculate = (e) => {
         e.preventDefault();
-        console.log("från modal: weight: " + shipmentData.weight + " source: " + shipmentData.sourceCountry + " destination: " + shipmentData.destinationCountry + " email: " + shipmentData.email);
 
         calculateCost(shipmentData, setShipmentData, multiplier, setSubmitDisabled);
     }
