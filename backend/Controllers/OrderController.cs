@@ -40,7 +40,7 @@ namespace backend.Controllers
 
             if(order == null) return TypedResults.BadRequest();
 
-            OrderDTO orderDTO= new OrderDTO(order);
+            OrderDTO orderDTO = new OrderDTO(order);
 
             return TypedResults.Ok(orderDTO);
         }

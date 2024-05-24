@@ -4,7 +4,7 @@ import OrderList from '../Orders/OrderList';
 import { urlBackendBasePath } from '../../assets/strings.js'
 
 function RoleDashboard({ pathEnd }) {
-    const { token } = useContext(UserContext);
+    //const { token } = useContext(UserContext);
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
@@ -12,6 +12,8 @@ function RoleDashboard({ pathEnd }) {
     }, [])
 
     async function fetchOrders() {
+        const token = localStorage.getItem('token');
+        console.log("TOKEN: " + token);
         const headers = {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`

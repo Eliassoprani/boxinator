@@ -1,6 +1,7 @@
 export const calculateCost = (shipmentData, setShipmentData, multiplier, setSubmitDisabled) => {
   //Dessa fält måste vara ifyllda
   if (shipmentData.weight === 0 || shipmentData.sourceCountry === "" || shipmentData.destinationCountry === "" || shipmentData.email === "") {
+    console.log("weight: " + shipmentData.weight + " source: " + shipmentData.sourceCountry + " destination: " + shipmentData.destinationCountry + " email: " + shipmentData.email);
     console.log("wrong fields");
   } 
 
