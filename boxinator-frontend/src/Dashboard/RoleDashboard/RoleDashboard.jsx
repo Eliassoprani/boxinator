@@ -13,7 +13,7 @@ function RoleDashboard({ pathEnd }) {
 
     async function fetchOrders() {
         const token = localStorage.getItem('token');
-        console.log("TOKEN: " + token);
+
         const headers = {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
@@ -23,12 +23,13 @@ function RoleDashboard({ pathEnd }) {
             method: "GET",
             headers: headers
         });
-        console.log(token);
+
         if (!fetchOrdersResponse.ok) {
             throw new Error("Failed to get orders from the database");
         }
 
         const orders = await fetchOrdersResponse.json();
+        
         setOrders(orders);
     }
 

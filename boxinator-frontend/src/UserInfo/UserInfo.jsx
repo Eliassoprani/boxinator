@@ -76,7 +76,7 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
                     value={userData.countryOfResidence}
                     onChange={handleChange}
                 >
-                    {allCountries.map(country => (
+                    {allCountries && allCountries.map(country => (
                         <option key={country} value={country}>{country}</option>
                     ))}
                 </select>

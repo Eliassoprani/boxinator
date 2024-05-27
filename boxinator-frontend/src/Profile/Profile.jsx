@@ -1,17 +1,17 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { UserContext } from "../App";
 import "../Login/Login.css"
 import UserInfo from '../UserInfo/UserInfo';
 import { urlBackendBasePath } from '../assets/strings';
 
 function Profile() {
-    const { user } = useContext(UserContext);
+    const { user, allCountries } = useContext(UserContext);
     const update = true;
 
     const initialState = {
         firstName: user.firstName,
         lastName: user.lastName,
-        password: null,
+        email: user.email,
         dateOfBirth: user.dateOfBirth,
         phone: user.phone,
         countryOfResidence: user.countryOfResidence,
@@ -19,6 +19,7 @@ function Profile() {
     };
 
     const [userData, setUserData] = useState(initialState);
+    const [updatedAlert, setUpdatedAlert] = useState(false);
 
     const updateUser = async (e) => {
         e.preventDefault();
@@ -37,7 +38,16 @@ function Profile() {
         if (!updateUserResponse.ok) {
             throw new Error("Failed to update user");
         }
+
+        //user feedback
+        setUpdatedAlert(true);
     }
+
+    useEffect(() => {
+        if (updatedAlert) {
+          setTimeout(() => {setUpdatedAlert(false)}, 2500);
+        }
+      }, [updatedAlert]);
 
     return (
         <>
@@ -46,7 +56,7 @@ function Profile() {
                 <h2>Profile Page</h2>
                 
                 <form>
-                    <UserInfo userData={userData} setUserData={setUserData} update={update} />
+                    <UserInfo userData={userData} setUserData={setUserData} update={update} allCountries={allCountries}/>
 
                     <input
                         className="submit-input"
@@ -55,6 +65,11 @@ function Profile() {
                         onClick={updateUser}
                     />
                 </form>
+
+                {updatedAlert && (
+                    <p style={{color: '#BBF3F7'}}>User updated</p>
+                )}
+
             </div>
         </>
     )
