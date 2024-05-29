@@ -1,17 +1,49 @@
+import { useState } from 'react';
 import './UserInfo.css'
 
 function UserInfo({ userData, setUserData, update, allCountries }) {
+    const [inputInvalid, setInputInvalid] = useState(false);
+
+    const nameRegex = /^[a-zA-ZåäöÅÄÖ]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const numberRegex = /^\d+$/;
+
     const handleChange = (event) => {
         const inputName = event.target.name;
         const inputValue = event.target.value;
 
         if (inputName && inputValue !== undefined) {
+            //Validera user input dynamiskt
+            switch(inputName) {
+                case "firstName":
+                case "lastName":
+                    validation(inputValue, nameRegex);
+                    break;
+                case "email":
+                    validation(inputValue, emailRegex);
+                    break;
+                case "zipCode":
+                case "phone":
+                    validation(inputValue, numberRegex);
+                    break;
+            }
+
             setUserData({
                 ...userData,
                 [inputName]: inputValue,
             });
         }
     }
+
+    const validation = (inputValue, regex) => {
+        if(!regex.test(inputValue)) {
+            setInputInvalid(true);
+        }
+        else {
+            setInputInvalid(false);
+        }
+    }
+
 
     return (
         <>
@@ -101,6 +133,10 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
                     onChange={handleChange}
                 />
             </label>
+
+            {inputInvalid && (
+                <p>Invalid input</p>
+            )}
         </>
     )
 }
