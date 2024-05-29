@@ -1,3 +1,3 @@
-For backend api spec visit : "http://localhost:5012/swagger/index.html" 
-
-To launch backend with https: "dotnet watch run --launch-profile https" And "dotnet dev-certs https --trust" so your machine truts the https cert.
+Run "docker-compose up --build" to launch containerized application and visit
+"http://localhost:8080" for backend
+"http://localhost:3000" for frontend

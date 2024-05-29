@@ -123,13 +123,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
+app.UseCors("CorsPolicy");
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.ConfigureUserApi();
 app.ConfigureOrderApi();
 app.ConfigureCountriesApi();
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.Run();
 
