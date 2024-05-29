@@ -24,9 +24,17 @@ namespace backend.Controllers
             authGroup.MapPut("/updateOrdersUser", updateOrdersUser);
         }
 
-        [Authorize(Roles = "Admin")]    //Behöver ej checka claims när Roles = "Admin" är definierad här
+        [Authorize(Roles = "Admin")]    //Denna annotation fungerar ej. Måste ändå kolla user's role i metoden
         public static async Task<IResult> getAllOrders([FromServices] IOrderRepository orderRepository, ClaimsPrincipal user)
         {
+            var roleClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+            var role = roleClaim?.Value ?? "No Role";
+
+            if (role != "Admin")
+            {
+                return TypedResults.Unauthorized();
+            }
+
             var orders = await orderRepository.GetAllOrders();
 
             var orderDTOs =  orders.Select(order => new OrderDTO(order)).ToList();
@@ -74,6 +82,14 @@ namespace backend.Controllers
         [Authorize(Roles = "Admin")]
         public static async Task<IResult> updateOrder([FromServices] IOrderRepository orderRepository, OrderPutPayload payload, int OrderId)
         {
+            var roleClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role); //Helper för att hitta user.Role fungerar ej?
+            var role = roleClaim?.Value ?? "No Role";
+
+            if (role != "Admin")
+            {
+                return TypedResults.Unauthorized();
+            }
+            
             var order = await orderRepository.UpdateOrder(payload, OrderId);
 
             if(order == null) return TypedResults.BadRequest();
