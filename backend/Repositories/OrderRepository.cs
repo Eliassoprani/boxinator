@@ -42,7 +42,7 @@ namespace backend.Repositories
                 Weight = payload.Weight,
                 BoxColor = payload.BoxColor,
                 Status = payload.OrderStatus,
-                DestinationCounty = payload.DestinationCountry,
+                DestinationCountry = payload.DestinationCountry,
                 CountryId = country.Id,
                 UserId = payload.UserId,
                 Cost = payload.Cost,

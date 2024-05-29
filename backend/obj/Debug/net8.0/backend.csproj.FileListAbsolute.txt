@@ -264,3 +264,9 @@ C:\Users\elias\boxinator\backend\bin\Debug\net8.0\Google.Apis.Auth.dll
 C:\Users\elias\boxinator\backend\bin\Debug\net8.0\Google.Apis.Core.dll
 C:\Users\elias\boxinator\backend\bin\Debug\net8.0\System.Management.dll
 C:\Users\elias\boxinator\backend\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Management.dll
+C:\Users\AHarns\Documents\boxinator\backend\bin\Debug\net8.0\Google.Apis.dll
+C:\Users\AHarns\Documents\boxinator\backend\bin\Debug\net8.0\Google.Apis.Auth.dll
+C:\Users\AHarns\Documents\boxinator\backend\bin\Debug\net8.0\Google.Apis.Core.dll
+C:\Users\AHarns\Documents\boxinator\backend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Facebook.dll
+C:\Users\AHarns\Documents\boxinator\backend\bin\Debug\net8.0\System.Management.dll
+C:\Users\AHarns\Documents\boxinator\backend\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Management.dll

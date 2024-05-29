@@ -64,11 +64,6 @@ namespace backend.Repositories
             }
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
-        {
-            return null;
-        }
-
         public async Task<User?> GetUserById(string Userid)
         {
             var user = await _userManager.FindByIdAsync(Userid);
@@ -90,7 +85,10 @@ namespace backend.Repositories
         public async Task<User?> UpdateUser(string userId, UserPutPayload payload)
         {
             User? user = await GetUserById(userId);
-            if (user == null) return null;
+            if (user == null) {
+                return null;
+                Console.WriteLine("User is null");
+            }
 
             // Update the user properties with the payload values if they are not null
             if (payload.FirstName != null)
@@ -107,6 +105,8 @@ namespace backend.Repositories
                 user.CountryOfResidence = payload.CountryOfResidence;
             if (payload.ZipCode != null)
                 user.ZipCode = payload.ZipCode.Value;
+
+            user.UpdatedAt = DateTime.UtcNow;
 
             var result = await _userManager.UpdateAsync(user);
 

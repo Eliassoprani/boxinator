@@ -60,7 +60,7 @@ namespace backend.Data
                     CountryId = 1,
                     Cost = 10,
                     UserId = admin.Id,
-                    DestinationCounty = "Italien",
+                    DestinationCountry = "Italien",
                     Status = OrderStatus.CREATED
                 });
         }

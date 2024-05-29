@@ -11,8 +11,8 @@ using static backend.Payloads.AuthPayload;
 
 namespace backend.Controllers
 {
-    public static class UserApi
-    {
+    public static class UserApi {
+    
         public static void ConfigureUserApi(this WebApplication app)
         {
             var authGroup = app.MapGroup("authentication");
@@ -45,13 +45,14 @@ namespace backend.Controllers
         /// <param name="tokenService"></param> is the TokenServer class that creates a JWT token easily
         /// <param name="payload"></param> id the data the user needs to provide
         /// <returns></returns> 200 if the payload is ok and the user is in the database, 400 if the payload is bad or missing
-        public static async Task<IResult> Login(IUserRepository userRepository, LoginPayload payload)
+        public static async Task<IResult> Login([FromServices] IUserRepository userRepository, LoginPayload payload) //
         {
+            // LoginPayload testPayload = new LoginPayload("alex.hernstrom@gmail.com", "password");
             LoginResPayload? response = await userRepository.Login(payload);
 
             if (response != null)
             {
-                return TypedResults.Ok(response);
+                return TypedResults.Ok(response);   //respons är ett LoginResPayload
             }
 
             return TypedResults.BadRequest();
@@ -69,7 +70,7 @@ namespace backend.Controllers
 
             if (response != null)
             {
-                return TypedResults.Ok(response); //Returnerar user id
+                return TypedResults.Ok(response); //Returnerar user id (som regrespayload ej string)
             }
             return TypedResults.BadRequest();
         }
@@ -91,7 +92,9 @@ namespace backend.Controllers
                 return TypedResults.BadRequest();
             }
 
-            return TypedResults.Ok(new UserDTO(updatedUser));
+            UserDTO updatedUserDto = new UserDTO(updatedUser);
+
+            return TypedResults.Ok(updatedUserDto);   //Ändra till att returnera TypedResults.Ok(updatedUserDto.FirstName) för testning pga problem med deserialisering av UserDTO objekt 
         }
 
         public static async Task<IResult> getUserByToken([FromServices] IUserRepository userRepository, ClaimsPrincipal user)
@@ -110,7 +113,9 @@ namespace backend.Controllers
                 return TypedResults.BadRequest();
             }
 
-            return TypedResults.Ok(new UserDTO(userToBeReturned));
+            UserDTO userDto = new UserDTO(userToBeReturned);
+
+            return TypedResults.Ok(userDto);
         }
 
         public static async Task<IResult> getUserByEmail([FromServices] IUserRepository userRepository, string email)

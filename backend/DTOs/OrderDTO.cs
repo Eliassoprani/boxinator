@@ -15,6 +15,7 @@ namespace backend.DTOs
         public float Cost { get; set; }
         public string DestinationCountry {get; set;}
         public string UserId {get; set;}
+        
         public OrderDTO(Order order)
         {
             Id = order.Id;
@@ -24,7 +25,7 @@ namespace backend.DTOs
             SourceCountry = order.SourceCountry.CountryName;
             Status = order.Status;
             Cost = order.Cost;
-            DestinationCountry = order.DestinationCounty;
+            DestinationCountry = order.DestinationCountry;
             UserId = order.UserId;
         }
     }

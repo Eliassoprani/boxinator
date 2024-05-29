@@ -5,8 +5,6 @@ namespace backend.Repositories
 {
     public interface IUserRepository
     {
-        public Task<IEnumerable<User>> GetAllUsers();
-
         public Task<RegisterResPayload?> CreateAUser(RegisterPayload payload);
 
         public Task<User?> UpdateUser(string userId, UserPutPayload payload);
