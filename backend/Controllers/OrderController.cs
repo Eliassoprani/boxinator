@@ -80,9 +80,9 @@ namespace backend.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public static async Task<IResult> updateOrder([FromServices] IOrderRepository orderRepository, OrderPutPayload payload, int OrderId)
+        public static async Task<IResult> updateOrder([FromServices] IOrderRepository orderRepository, ClaimsPrincipal user, OrderPutPayload payload, int OrderId)
         {
-            var roleClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role); //Helper för att hitta user.Role fungerar ej?
+            var roleClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
             var role = roleClaim?.Value ?? "No Role";
 
             if (role != "Admin")
