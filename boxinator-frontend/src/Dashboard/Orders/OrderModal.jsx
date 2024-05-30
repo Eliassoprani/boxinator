@@ -65,12 +65,17 @@ function OrderModal({ isOpen, closeModal, orderObj, orders, setOrders }) {
             onRequestClose={closeModal}
             contentLabel="New Shipment Prompt"
         >
-            <h2>Change Order Status</h2>
-            <select value={selectedStatus} onChange={e => setSelectedStatus(parseInt(e.target.value))}>
+            <h2 style={{marginLeft: '18px'}}>Change Order Status</h2>
+
+            <select
+            className="status-dropdown"
+                value={selectedStatus}
+                onChange={e => setSelectedStatus(parseInt(e.target.value))}>
                 {Object.keys(STATUS).map(statusKey => (
                     <option key={statusKey} value={statusKey}>{STATUS[statusKey]}</option>
                 ))}
             </select>
+
             <button onClick={changeStatus}>Update Status</button>
         </Modal>
     )

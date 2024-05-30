@@ -1,0 +1,32 @@
+.order-list {
+  color: #000;
+  background-color: #e8e9eb;
+  padding: 10px;
+  border-radius: 5px;
+  width: 80vw;
+}
+
+.order-item {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.order-item p {
+    margin-left: 20px;
+}
+
+.order-item button {
+    color: #000;
+    padding: 15px;
+    margin: 10px;
+}
+
+.status-dropdown {
+    margin: 15px 15px 0 15px;
+    width: 200px;
+    height: 40px;
+    font-size: 16px;
+    padding: 5px;
+    background-color: #0a253bc7;
+}

@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import OrderModal from "./OrderModal";
 import PropTypes from 'prop-types';
 import { UserContext } from "../../App";
+import('./OrderList.css')
 
 function OrderList({ orders, setOrders }) {
     const { user } = useContext(UserContext);
@@ -35,22 +36,18 @@ function OrderList({ orders, setOrders }) {
     };
 
     return (
-        <div style={{
-            color: "#000",
-            backgroundColor: "#e8e9eb",
-            padding: "10px",
-            border: '1px',
-            borderRadius: '10px',
-            width: '80vw'
-        }}>
+        <div className="order-list" >
             {/* Status filter dropdown */}
-            <select value={selectedStatus !== null ? selectedStatus.toString() : '-1'} onChange={handleStatusChange}>
+            <select
+                className="status-dropdown"
+                value={selectedStatus !== null ? selectedStatus.toString() : '-1'}
+                onChange={handleStatusChange}>
                 <option value="-1">All statuses</option>
                 {Object.keys(STATUS).map(statusKey => (
                     <option key={statusKey} value={parseInt(statusKey)}>{STATUS[statusKey]}</option>
                 ))}
             </select>
-            
+
             {filteredOrders.map((order, index) => {
                 let backgroundColor;
                 switch (order.status) {
@@ -74,22 +71,21 @@ function OrderList({ orders, setOrders }) {
                         break;
                 }
                 return (
-                    <div key={index} style={{
-                        backgroundColor: backgroundColor,
-                        padding: "10px",
-                        margin: "10px",
-                        border: '1px',
-                        borderRadius: '10px',
-                    }}>
-                        <p>ID: {order.id}</p>
-                        <p>Recipient: {order.recieverName}</p>
+                    <div className="order-item" key={index} style={{ backgroundColor: backgroundColor }}>
+                        <p style={{fontSize: '20px', fontWeight: 'bold'}}>Order ID: {order.id}</p>
+                        <p>Sender ID: {order.userId}</p>
+                        <p>Recipient Name: {order.recieverName}</p>
+                        <p>Destination Country: {order.destinationCountry}</p>
+                        <p>Source Country: {order.sourceCountry}</p>
+                        <p>Box Color: {order.boxColor}</p>
                         <p>Weight: {order.weight}</p>
-                        <p>Country ID: {order.sourceCountry}</p>
+                        <p>Cost: {order.cost}</p>
                         <p>Status: {STATUS[order.status]}</p>
                         {user.role === 0 && <button onClick={() => handleOpenModal(order)}>Change Status</button>}
                     </div>
                 );
             })}
+
             <OrderModal isOpen={isModalOpen} closeModal={closeModal} orderObj={selectedOrder} orders={orders} setOrders={setOrders} />
         </div>
     )
