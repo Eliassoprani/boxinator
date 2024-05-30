@@ -85,9 +85,9 @@ function ShipmentModal({ isOpen, closeModal }) {
                         <UserInput shipmentData={shipmentData} setShipmentData={setShipmentData} setMultiplier={setMultiplier} setSubmitDisabled={setSubmitDisabled} />
                     )}
 
-                    <button onClick={calculate}>Calculate</button>
+                    <button className="calc-btn" onClick={calculate}>Calculate</button>
 
-                    <div>Cost is: {shipmentData.cost}</div>
+                    <div className="cost">Cost is: {shipmentData.cost}</div>
 
                     <input
                         disabled={submitDisabled}
