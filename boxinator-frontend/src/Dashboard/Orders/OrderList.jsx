@@ -78,6 +78,7 @@ function OrderList({ orders, setOrders }) {
                         <p>Weight:</p>
                         <p>Cost:</p>
                         <p>Current Status:</p>
+                        <p style={{color: 'transparent'}}>Empty</p>
                     </div>
 
             {filteredOrders.map((order, index) => {
