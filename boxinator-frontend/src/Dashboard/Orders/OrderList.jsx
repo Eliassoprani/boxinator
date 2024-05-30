@@ -20,6 +20,7 @@ function OrderList({ orders, setOrders }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState({});
     const [selectedStatus, setSelectedStatus] = useState(null); // State to store selected status filter
+    const [senderId, setSenderId] = useState("");
 
     const handleOpenModal = (order) => {
         setSelectedOrder(order);
@@ -54,32 +55,51 @@ function OrderList({ orders, setOrders }) {
         }
     }
 
+    const findOrdersBySender = () => {
+        //Filter by user id
+    }
+
 
     return (
         <div className="order-list" >
-            {/* Status filter dropdown */}
-            <select
-                className="status-dropdown"
-                value={selectedStatus !== null ? selectedStatus.toString() : '-1'}
-                onChange={handleStatusChange}>
-                <option value="-1">All statuses</option>
-                {Object.keys(STATUS).map(statusKey => (
-                    <option key={statusKey} value={parseInt(statusKey)}>{STATUS[statusKey]}</option>
-                ))}
-            </select>
+            <div className="order-nav">
+                {/* Status filter dropdown */}
+                <select
+                    className="status-dropdown"
+                    value={selectedStatus !== null ? selectedStatus.toString() : '-1'}
+                    onChange={handleStatusChange}>
+                    <option value="-1">All statuses</option>
+                    {Object.keys(STATUS).map(statusKey => (
+                        <option key={statusKey} value={parseInt(statusKey)}>{STATUS[statusKey]}</option>
+                    ))}
+                </select>
+
+                <div className="filter-by-sender">
+                    <label>
+                        Find orders by sender id:
+                        <input
+                            type="text"
+                            name="senderId"
+                            value={senderId}
+                            onChange={(event) => setSenderId(event.target.value)}
+                        />
+                    </label>
+                    <button style={{backgroundColor: '#0a253bc7'}} onClick={findOrdersBySender}>Find</button>
+                </div>
+            </div>
 
             <div className="order-item-top">
-                        <p>Order ID:</p>
-                        <p>Sender ID:</p>
-                        <p>Recipient Name:</p>
-                        <p>Destination Country:</p>
-                        <p>Source Country:</p>
-                        <p>Box Color:</p>
-                        <p>Weight:</p>
-                        <p>Cost:</p>
-                        <p>Current Status:</p>
-                        <p style={{color: 'transparent'}}>Empty</p>
-                    </div>
+                <p>Order ID:</p>
+                <p>Sender ID:</p>
+                <p>Recipient Name:</p>
+                <p>Destination Country:</p>
+                <p>Source Country:</p>
+                <p>Box Color:</p>
+                <p>Weight:</p>
+                <p>Cost:</p>
+                <p>Current Status:</p>
+                <p style={{ color: 'transparent' }}>Empty</p>
+            </div>
 
             {filteredOrders.map((order, index) => {
                 const backgroundColor = setBackgroundColor(order.status);
@@ -93,7 +113,7 @@ function OrderList({ orders, setOrders }) {
                         <p>{order.boxColor || 'N/A'}</p>
                         <p>{order.weight}</p>
                         <p>{order.cost}</p>
-                        <p>{STATUS[order.status]}</p>
+                        <p>{STATUS[order.status].toUpperCase()}</p>
                         {user.role === 0 && <button onClick={() => handleOpenModal(order)}>Change Status</button>}
                     </div>
                 );
