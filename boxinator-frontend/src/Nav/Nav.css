@@ -3,7 +3,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    padding: 30px;
+    padding: 20px;
 }
 
 .nav div {
@@ -14,5 +14,5 @@
 }
 
 .nav-link:hover {
-    color: #FFF;
+    color: #c6f8fc;
 }

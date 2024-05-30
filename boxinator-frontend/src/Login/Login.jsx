@@ -212,7 +212,9 @@ function Login() {
                     </div>
                 </>
             )}
+            
             <div id="googleSignInDiv"></div>
+
             <div className="guest-login">
                 <button onClick={guestLogin}>Continue as guest</button>
             </div>
