@@ -6,7 +6,7 @@
 }
 
 .user-input div {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .switch {
@@ -15,7 +15,15 @@
 }
 
 .switch button {
-    margin-left: 10px;
+    background-color: transparent;
+    text-decoration: underline;
+    border: none;
+}
+.switch button:hover {
+    color: rgb(167, 255, 248);
+}
+.switch button:focus {
+    outline: none;
 }
 
 .submit-input {
@@ -28,4 +36,11 @@
 
 .submit-input:hover {
     cursor: pointer;
+}
+
+.guest-login button{
+    margin-top: 10px;
+    margin-bottom: 50px;
+    background-color: transparent;
+    border-color: aliceblue;
 }
