@@ -11,6 +11,7 @@ import AboutUs from './AboutUs/AboutUs';
 import ClaimOrder from './ClaimOrder/ClaimOrder';
 import { restoreUser } from './RestoreUser/RestoreUser';
 import { countries } from './assets/countries.json'
+import Sender from './Sender/Sender';
 
 const UserContext = createContext();
 
@@ -68,6 +69,12 @@ function App() {
             {loggedIn && user.hasOwnProperty('role') && (
               <Routes>
                 <Route path="/profile" element={<Profile />} />
+              </Routes>
+            )}
+
+            {loggedIn && user.role === 0 && (
+              <Routes>
+                <Route path="/sender/:userId" element={<Sender />} />
               </Routes>
             )}
           </div>

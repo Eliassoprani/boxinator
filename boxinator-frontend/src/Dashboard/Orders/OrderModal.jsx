@@ -63,7 +63,6 @@ function OrderModal({ isOpen, closeModal, orderObj, orders, setOrders }) {
             className="modal"
             isOpen={isOpen}
             onRequestClose={closeModal}
-            contentLabel="New Shipment Prompt"
         >
             <h2 style={{marginLeft: '18px'}}>Change Order Status</h2>
 

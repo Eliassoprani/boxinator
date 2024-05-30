@@ -21,6 +21,7 @@ namespace backend.Controllers
             authGroup.MapPut("/update", updateUser);
             authGroup.MapGet("/getUserByToken", getUserByToken);
             authGroup.MapGet("/getUserByEmail/{email}", getUserByEmail);
+            authGroup.MapGet("/getUserById/{id}", getUserById);
             authGroup.MapPost("/google_signup", googleSignup);
         }
 
@@ -125,6 +126,20 @@ namespace backend.Controllers
             var id = userToBeReturned.Id;
 
             return TypedResults.Ok(id);
+        }
+
+        public static async Task<IResult> getUserById([FromServices] IUserRepository userRepository, string id)
+        {
+            User? userToBeReturned = await userRepository.GetUserById(id);
+
+            if (userToBeReturned == null)
+            {
+                return TypedResults.Ok("notRegistered");
+            }
+
+            UserDTO userDTO = new UserDTO(userToBeReturned);
+
+            return TypedResults.Ok(userDTO);
         }
     }
 }
