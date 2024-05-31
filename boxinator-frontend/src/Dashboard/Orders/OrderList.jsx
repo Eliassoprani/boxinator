@@ -44,6 +44,7 @@ function OrderList({ orders, setOrders }) {
 
     const findOrdersBySender = () => {
         setFilteredOrders(orders.filter(order => order.userId === senderId));
+        setSelectedStatus(null);
     }
 
     function setBackgroundColor(status) {
