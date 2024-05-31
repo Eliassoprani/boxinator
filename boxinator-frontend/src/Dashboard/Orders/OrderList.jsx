@@ -47,6 +47,11 @@ function OrderList({ orders, setOrders }) {
         setSelectedStatus(null);
     }
 
+    const clearSenderId = () => {
+        setFilteredOrders(orders);
+        setSenderId("");
+    }
+
     function setBackgroundColor(status) {
         switch (status) {
             case 0:
@@ -89,7 +94,8 @@ function OrderList({ orders, setOrders }) {
                             onChange={(event) => setSenderId(event.target.value)}
                         />
                     </label>
-                    <button style={{ backgroundColor: '#0a253bc7' }} onClick={findOrdersBySender}>Find</button>
+                    <button style={{ backgroundColor: '#0a253bc7', marginRight: '2px' }} onClick={findOrdersBySender}>Find</button>
+                    <button style={{ backgroundColor: '#0a253bc7' }} onClick={clearSenderId}>Clear</button>
                 </div>
             </div>
 
