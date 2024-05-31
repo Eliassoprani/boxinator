@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import OrderModal from "./OrderModal";
 import PropTypes from 'prop-types';
 import { UserContext } from "../../App";
@@ -19,8 +19,13 @@ function OrderList({ orders, setOrders }) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState({});
-    const [selectedStatus, setSelectedStatus] = useState(null); // State to store selected status filter
+    const [selectedStatus, setSelectedStatus] = useState(null); // Ändrar text i dropdown menyn
     const [senderId, setSenderId] = useState("");
+    const [filteredOrders, setFilteredOrders] = useState(orders);
+
+    useEffect(() => {
+        setFilteredOrders(orders);
+    }, [orders]);
 
     const handleOpenModal = (order) => {
         setSelectedOrder(order);
@@ -31,12 +36,15 @@ function OrderList({ orders, setOrders }) {
         setIsModalOpen(false);
     };
 
-    const filteredOrders = selectedStatus !== null ? orders.filter(order => order.status === selectedStatus) : orders; // If selectedStatus is null, show all orders
-
     const handleStatusChange = (e) => {
         const status = parseInt(e.target.value);
-        setSelectedStatus(status !== -1 ? status : null); // Set selectedStatus to null for "All statuses" option
+        setSelectedStatus(status !== -1 ? status : null);
+        setFilteredOrders(status !== -1 ? orders.filter(order => order.status === status) : orders);
     };
+
+    const findOrdersBySender = () => {
+        setFilteredOrders(orders.filter(order => order.userId === senderId));
+    }
 
     function setBackgroundColor(status) {
         switch (status) {
@@ -55,18 +63,13 @@ function OrderList({ orders, setOrders }) {
         }
     }
 
-    const findOrdersBySender = () => {
-        //Filter by user id
-    }
-
 
     return (
         <div className="order-list" >
             <div className="order-nav">
-                {/* Status filter dropdown */}
                 <select
                     className="status-dropdown"
-                    value={selectedStatus !== null ? selectedStatus.toString() : '-1'}
+                    value={selectedStatus !== null ? selectedStatus.toString() : '-1'} 
                     onChange={handleStatusChange}>
                     <option value="-1">All statuses</option>
                     {Object.keys(STATUS).map(statusKey => (
