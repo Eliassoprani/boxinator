@@ -70,7 +70,7 @@ function OrderList({ orders, setOrders }) {
             <div className="order-nav">
                 <select
                     className="status-dropdown"
-                    value={selectedStatus !== null ? selectedStatus.toString() : '-1'} 
+                    value={selectedStatus !== null ? selectedStatus.toString() : '-1'}
                     onChange={handleStatusChange}>
                     <option value="-1">All statuses</option>
                     {Object.keys(STATUS).map(statusKey => (
@@ -79,49 +79,55 @@ function OrderList({ orders, setOrders }) {
                 </select>
 
                 <div className="filter-by-sender">
-                    <label>
+                    <label htmlFor="senderId">
                         Find orders by sender id:
                         <input
+                            id="senderId"
                             type="text"
                             name="senderId"
                             value={senderId}
                             onChange={(event) => setSenderId(event.target.value)}
                         />
                     </label>
-                    <button style={{backgroundColor: '#0a253bc7'}} onClick={findOrdersBySender}>Find</button>
+                    <button style={{ backgroundColor: '#0a253bc7' }} onClick={findOrdersBySender}>Find</button>
                 </div>
             </div>
 
-            <div className="order-item-top">
-                <p>Order ID:</p>
-                <p>Sender ID:</p>
-                <p>Recipient Name:</p>
-                <p>Destination Country:</p>
-                <p>Source Country:</p>
-                <p>Box Color:</p>
-                <p>Weight:</p>
-                <p>Cost:</p>
-                <p>Current Status:</p>
-                <p style={{ color: 'transparent' }}>Empty</p>
-            </div>
-
-            {filteredOrders.map((order, index) => {
-                const backgroundColor = setBackgroundColor(order.status);
-                return (
-                    <div className="order-item" key={index} style={{ backgroundColor: backgroundColor }}>
-                        <p>{order.id}</p>
-                        <p className="user-id" onClick={() => navigate(`/sender/${order.userId}`)}>{order.userId}</p>
-                        <p>{order.recieverName}</p>
-                        <p>{order.destinationCountry}</p>
-                        <p>{order.sourceCountry}</p>
-                        <p>{order.boxColor || 'N/A'}</p>
-                        <p>{order.weight}</p>
-                        <p>{order.cost}</p>
-                        <p>{STATUS[order.status].toUpperCase()}</p>
-                        {user.role === 0 && <button onClick={() => handleOpenModal(order)}>Change Status</button>}
-                    </div>
-                );
-            })}
+            <table className="order-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Sender ID</th>
+                        <th>Recipient Name</th>
+                        <th>Destination Country</th>
+                        <th>Source Country</th>
+                        <th>Box Color</th>
+                        <th>Weight</th>
+                        <th>Cost</th>
+                        <th>Current Status</th>
+                        {user.role === 0 && <th>Update Status</th>}
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredOrders.map((order, index) => {
+                        const backgroundColor = setBackgroundColor(order.status);
+                        return (
+                            <tr key={index} style={{ backgroundColor: backgroundColor }}>
+                                <td>{order.id}</td>
+                                <td className="user-id" onClick={() => navigate(`/sender/${order.userId}`)}>{order.userId}</td>
+                                <td>{order.recieverName}</td>
+                                <td>{order.destinationCountry}</td>
+                                <td>{order.sourceCountry}</td>
+                                <td>{order.boxColor || 'N/A'}</td>
+                                <td>{order.weight}</td>
+                                <td>{order.cost}</td>
+                                <td>{STATUS[order.status].toUpperCase()}</td>
+                                {user.role === 0 && <td><button onClick={() => handleOpenModal(order)}>Update Status</button></td>}
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
 
             <OrderModal isOpen={isModalOpen} closeModal={closeModal} orderObj={selectedOrder} orders={orders} setOrders={setOrders} />
         </div>

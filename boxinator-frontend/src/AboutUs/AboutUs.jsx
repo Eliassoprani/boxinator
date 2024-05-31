@@ -12,10 +12,10 @@ function AboutUs() {
 
             <div>
                 <p className='text-left'>{loremIpsum}</p>
-                <img src={dogPackageImage} alt="dog package" />
+                <img src={dogPackageImage} alt="big dog delivering package" />
             </div>
             <div>
-                <img src={dogPackageImage2} alt="dog package 2" />
+                <img src={dogPackageImage2} alt="small dog delivering package" />
                 <p className='text-right'>{loremIpsum}</p>
             </div>
         </div>

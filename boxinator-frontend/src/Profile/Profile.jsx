@@ -5,7 +5,7 @@ import UserInfo from '../UserInfo/UserInfo';
 import { urlBackendBasePath } from '../assets/strings';
 
 function Profile() {
-    const { user, allCountries } = useContext(UserContext);
+    const { user, setUser, allCountries } = useContext(UserContext);
     const update = true;
 
     const initialState = {
@@ -39,13 +39,17 @@ function Profile() {
             throw new Error("Failed to update user");
         }
 
+        const responseData = await updateUserResponse.json();
+
+        setUser(responseData);
+
         //user feedback
         setUpdatedAlert(true);
     }
 
     useEffect(() => {
         if (updatedAlert) {
-          setTimeout(() => {setUpdatedAlert(false)}, 2500);
+          setTimeout(() => {setUpdatedAlert(false)}, 3000);
         }
       }, [updatedAlert]);
 
