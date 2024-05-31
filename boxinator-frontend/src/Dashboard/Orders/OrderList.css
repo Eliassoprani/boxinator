@@ -6,39 +6,6 @@
   width: 80vw;
 }
 
-.order-item-top {
-  display: flex;
-  align-items: center;
-  font-size: 20px;
-  font-weight: bold;
-  margin-left: 1%;
-}
-
-.order-item-top p {
-  flex: 1;
-  text-align: center;
-  margin-bottom: 0px;
-}
-
-.order-item {
-  display: flex;
-  align-items: center;
-    padding: 10px;
-    margin: 7px;
-  border-radius: 10px;
-}
-
-.order-item p {
-  flex: 1;
-  text-align: center;
-}
-
-.order-item button {
-  color: #000;
-  padding: 15px;
-}
-
-
 .order-nav {
   display: flex;
   align-items: center;
@@ -70,4 +37,18 @@
 }
 .user-id:active {
     color: #0a253bc7;
+}
+
+table {
+  width: 100%;
+  margin-top: 50px;
+}
+
+thead {
+  font-size: 18px;
+}
+
+tbody tr {
+  height: 70px;
+  text-align: center;
 }
