@@ -14,5 +14,5 @@
 }
 
 .nav-link:hover {
-    color: #c6f8fc;
+    color: var(--light-turqoise);
 }

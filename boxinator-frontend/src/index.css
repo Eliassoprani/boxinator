@@ -13,6 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   --dark-turquoise: rgb(38, 99, 99);
+  --light-turqoise: #c6f8fc;
 }
 
 a {
