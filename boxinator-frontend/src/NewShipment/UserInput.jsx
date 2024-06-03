@@ -14,6 +14,10 @@ function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisa
         const inputName = event.target.name;
         const inputValue = event.target.value;
 
+        if (inputName === 'weight' && inputValue < 0) {
+            return;
+        }
+
         setShipmentData((prevShipmentData) => ({
             ...prevShipmentData,
             [inputName]: inputValue,
