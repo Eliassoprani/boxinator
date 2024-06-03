@@ -110,7 +110,6 @@ function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisa
                         onChange={handleChange}
                     />
                 </label>
-
             )}
         </>
     )
