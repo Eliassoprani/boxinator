@@ -52,6 +52,11 @@ function OrderList({ orders, setOrders }) {
         setSenderId("");
     }
 
+    const sortByColumn = (property) => {
+        const sortedOrders = [...orders].sort((a, b) => a[property] - b[property]);
+        setFilteredOrders(sortedOrders);
+    }
+
     function setBackgroundColor(status) {
         switch (status) {
             case 0:
@@ -99,21 +104,20 @@ function OrderList({ orders, setOrders }) {
                 </div>
             </div>
 
-            <div style={{marginLeft: '16px', marginBottom: '-25px'}}>Total number of orders: {filteredOrders.length}</div>
+            <div style={{ marginLeft: '16px', marginBottom: '-25px' }}>Total number of orders: {filteredOrders.length}</div>
 
             <table className="order-table">
                 <thead>
                     <tr>
-                        <th>Order ID</th>
+                        <th className="sort-column" onClick={() => sortByColumn('id')}>Order ID ▼</th>
                         <th>Sender ID</th>
                         <th>Recipient Name</th>
                         <th>Destination Country</th>
                         <th>Source Country</th>
                         <th>Box Color</th>
-                        <th>Weight</th>
-                        <th>Cost</th>
+                        <th className="sort-column" onClick={() => sortByColumn('weight')}>Weight ▼</th>
+                        <th className="sort-column" onClick={() => sortByColumn('cost')}>Cost ▼</th>
                         <th>Current Status</th>
-                        {user.role === 0 && <th>Update Status</th>}
                     </tr>
                 </thead>
                 <tbody>

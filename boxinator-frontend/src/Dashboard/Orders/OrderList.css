@@ -61,3 +61,7 @@ tbody tr {
   margin-right: 6px;
   vertical-align: middle;
 }
+
+.sort-column:hover {
+  cursor: pointer;
+}
