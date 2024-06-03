@@ -26,7 +26,7 @@ function ShipmentModal({ isOpen, closeModal }) {
     const [shipmentData, setShipmentData] = useState(initialState);
     const { user } = useContext(UserContext);
     const [thankYouNote, setThankYouNote] = useState(false);
-    const [multiplier, setMultiplier] = useState({});
+    const [multiplier, setMultiplier] = useState(1);
     const [submitDisabled, setSubmitDisabled] = useState(true);
 
     useEffect(() => {
