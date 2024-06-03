@@ -82,23 +82,31 @@ function ShipmentModal({ isOpen, closeModal }) {
                     </div>
 
                     {!thankYouNote && (
-                        <UserInput shipmentData={shipmentData} setShipmentData={setShipmentData} setMultiplier={setMultiplier} setSubmitDisabled={setSubmitDisabled} />
+                        <>
+                            <UserInput shipmentData={shipmentData} setShipmentData={setShipmentData} setMultiplier={setMultiplier} setSubmitDisabled={setSubmitDisabled} />
+
+                            <button className="calc-btn" onClick={calculate}>Calculate</button>
+
+                            <div className="cost">Cost is SEK {shipmentData.cost}</div>
+
+                            <input
+                                disabled={submitDisabled}
+                                className="form-submit"
+                                type="submit"
+                                value="Submit"
+                                onClick={submitNewShipment}
+                            />
+                        </>
                     )}
 
-                    <button className="calc-btn" onClick={calculate}>Calculate</button>
-
-                    <div className="cost">Cost is: {shipmentData.cost}</div>
-
-                    <input
-                        disabled={submitDisabled}
-                        className="form-submit"
-                        type="submit"
-                        value="Submit"
-                        onClick={submitNewShipment}
-                    />
-
                     {thankYouNote && (
-                        <p>Thank you for your order! Check your inbox for a confirmation email.</p>
+                        <>
+                            <br />
+                            <p>Thank you for your order!</p>
+                            <p>Check your inbox for a confirmation email.</p>
+                            <br />
+                            <button style={{ marginRight: 'auto' }} className="close-button" onClick={closeModal}>Close</button>
+                        </>
                     )}
                 </form>
             </div>

@@ -7,7 +7,7 @@
   overflow-y: auto;
   margin: 0 auto;
   margin-top: 10%;
-  border-radius: 5px;
+  border-radius: 20px;
 }
 
 .modal input {
@@ -57,9 +57,14 @@ input:disabled {
 
 .cost {
   margin: auto;
+  font-size: 20px;
 }
 
 .calc-btn {
   margin-right: 8px;
   background-color: var(--dark-turquoise);
 } 
+
+.user-input p {
+  margin: auto;
+}
