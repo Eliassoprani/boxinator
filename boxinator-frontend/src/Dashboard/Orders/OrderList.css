@@ -52,3 +52,12 @@ tbody tr {
   height: 70px;
   text-align: center;
 }
+
+.color-box {
+  display: inline-block;
+  width: 14px; 
+  height: 14px;
+  border-radius: 30%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
