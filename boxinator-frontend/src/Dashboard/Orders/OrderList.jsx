@@ -20,7 +20,7 @@ function OrderList({ orders, setOrders }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState({});
     const [selectedStatus, setSelectedStatus] = useState(null); // Ändrar text i dropdown menyn
-    const [senderId, setSenderId] = useState("");
+    const [searchText, setSearchText] = useState("");
     const [filteredOrders, setFilteredOrders] = useState(orders);
 
     useEffect(() => {
@@ -42,14 +42,17 @@ function OrderList({ orders, setOrders }) {
         setFilteredOrders(status !== -1 ? orders.filter(order => order.status === status) : orders);
     };
 
-    const findOrdersBySender = () => {
-        setFilteredOrders(orders.filter(order => order.userId === senderId));
+    const findOrders = () => {
         setSelectedStatus(null);
+        setFilteredOrders(orders.filter(object =>
+            Object.values(object).some(value =>
+                String(value).toLowerCase().includes(searchText.toLowerCase())
+            )));
     }
 
-    const clearSenderId = () => {
+    const clearSearchText = () => {
         setFilteredOrders(orders);
-        setSenderId("");
+        setSearchText("");
     }
 
     const sortByColumn = (property) => {
@@ -90,17 +93,17 @@ function OrderList({ orders, setOrders }) {
 
                 <div className="filter-by-sender">
                     <label htmlFor="senderId">
-                        Find orders by sender id:
+                        Free text search:
                         <input
-                            id="senderId"
+                            id="searchText"
                             type="text"
-                            name="senderId"
-                            value={senderId}
-                            onChange={(event) => setSenderId(event.target.value)}
+                            name="searchText"
+                            value={searchText}
+                            onChange={(event) => setSearchText(event.target.value)}
                         />
                     </label>
-                    <button style={{ backgroundColor: '#0a253bc7', marginRight: '2px' }} onClick={findOrdersBySender}>Find</button>
-                    <button style={{ backgroundColor: '#0a253bc7' }} onClick={clearSenderId}>Clear</button>
+                    <button style={{ backgroundColor: '#0a253bc7', marginRight: '2px' }} onClick={findOrders}>Find</button>
+                    <button style={{ backgroundColor: '#0a253bc7' }} onClick={clearSearchText}>Clear</button>
                 </div>
             </div>
 
@@ -137,7 +140,7 @@ function OrderList({ orders, setOrders }) {
                                 <td>{order.weight}</td>
                                 <td>{order.cost}</td>
                                 <td>{STATUS[order.status].toUpperCase()}</td>
-                                {user.role === 0 && <td><button onClick={() => handleOpenModal(order)}>Update Status</button></td>}
+                                {user.role === 0 && <td><button style={{backgroundColor: 'var(--dark-turquoise)'}} onClick={() => handleOpenModal(order)}>Update Status</button></td>}
                             </tr>
                         );
                     })}
