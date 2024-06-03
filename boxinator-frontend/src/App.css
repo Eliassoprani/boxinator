@@ -15,4 +15,5 @@ All child components will be vertically stacked in a column (footer hamnar i bot
 
 .main {
   margin-bottom: 40px;
+  margin-top: 200px;
 }
