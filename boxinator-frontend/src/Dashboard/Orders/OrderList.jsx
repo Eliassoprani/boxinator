@@ -93,7 +93,7 @@ function OrderList({ orders, setOrders }) {
 
                 <div className="filter-by-sender">
                     <label htmlFor="senderId">
-                        Free text search:
+                        Full text search:
                         <input
                             id="searchText"
                             type="text"
