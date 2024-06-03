@@ -99,6 +99,8 @@ function OrderList({ orders, setOrders }) {
                 </div>
             </div>
 
+            <div style={{marginLeft: '16px', marginBottom: '-25px'}}>Total number of orders: {filteredOrders.length}</div>
+
             <table className="order-table">
                 <thead>
                     <tr>
