@@ -52,6 +52,7 @@ function OrderList({ orders, setOrders }) {
 
     const clearSearchText = () => {
         setFilteredOrders(orders);
+        setSelectedStatus("");
         setSearchText("");
     }
 
@@ -103,7 +104,7 @@ function OrderList({ orders, setOrders }) {
                         />
                     </label>
                     <button style={{ backgroundColor: '#0a253bc7', marginRight: '2px' }} onClick={findOrders}>Find</button>
-                    <button style={{ backgroundColor: '#0a253bc7' }} onClick={clearSearchText}>Clear</button>
+                    <button style={{ backgroundColor: '#0a253bc7' }} onClick={clearSearchText}>Clear all</button>
                 </div>
             </div>
 
