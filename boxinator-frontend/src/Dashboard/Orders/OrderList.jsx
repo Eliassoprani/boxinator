@@ -124,7 +124,10 @@ function OrderList({ orders, setOrders }) {
                                 <td>{order.recieverName}</td>
                                 <td>{order.destinationCountry}</td>
                                 <td>{order.sourceCountry}</td>
-                                <td>{order.boxColor || 'N/A'}</td>
+                                <td>{order.boxColor !== 'N/A' && (
+                                    <span className="color-box" style={{ backgroundColor: order.boxColor }}></span>)}
+                                    {order.boxColor || 'N/A'}
+                                </td>
                                 <td>{order.weight}</td>
                                 <td>{order.cost}</td>
                                 <td>{STATUS[order.status].toUpperCase()}</td>
