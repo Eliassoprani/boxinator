@@ -4,3 +4,13 @@
     align-items: center;
     justify-content: center;
 }
+
+.new-shipment-btn {
+    border: none;
+    margin-left: -12px;
+    color: var(--light-turqoise);
+}
+.new-shipment-btn:active {
+    outline: transparent;
+    color: #FFF;
+}
