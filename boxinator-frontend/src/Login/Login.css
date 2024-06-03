@@ -20,7 +20,7 @@
     border: none;
 }
 .switch button:hover {
-    color: rgb(167, 255, 248);
+    color: var(--light-turqoise);
 }
 .switch button:focus {
     outline: none;
@@ -33,7 +33,6 @@
     margin-bottom: 10px;
     background-color: var(--dark-turquoise);
 }
-
 .submit-input:hover {
     cursor: pointer;
 }
@@ -41,6 +40,4 @@
 .guest-login button{
     margin-top: 10px;
     margin-bottom: 50px;
-    background-color: transparent;
-    border-color: aliceblue;
 }

@@ -48,10 +48,10 @@ button {
   background-color: transparent;
   border-color: aliceblue;
   cursor: pointer;
-  transition: border-color 0.15s;
+  transition: border-color 0.1s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--dark-turquoise);
 }
 button:focus,
 button:focus-visible {
