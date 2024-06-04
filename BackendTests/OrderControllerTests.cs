@@ -38,11 +38,39 @@ namespace backend.tests
 
 
         [Test]
-        public async Task UpdateOrdersUserTest() {
-            //I body: UserId: userId, OrderId: orderId
-            //Sätter nytt user_id på en Order
+        public async Task UpdateOrdersUserTest()
+        {
+            // Log in as a user to fetch orders
+            var loginRequestJson = JsonConvert.SerializeObject(
+                new { Email = "alex.hernstrom@gmail.com", Password = "password" }
+            );
+
+            // Convert JSON string to HttpContent
+            var loginContent = new StringContent(
+                loginRequestJson,
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            var loginResponse = await _client.PostAsync("/authentication/login", loginContent);
+            loginResponse.EnsureSuccessStatusCode();
+
+            var loginResponseData = await loginResponse.Content.ReadAsStringAsync();
+            var actualLoginResPayload = JsonConvert.DeserializeObject<LoginResPayload>(
+                loginResponseData
+            );
+
+            var token = actualLoginResPayload.Token;
+
+            // Add the JWT token to the request headers
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer",
+                token
+            );
+
+            // Prepare the update order request
             var updateOrderRequest = JsonConvert.SerializeObject(
-                new { UserId = "64b278e4-902e-4685-afac-7614c737a31b", OrderId = "24" }
+                new OrderPutUserPayload("64b278e4-902e-4685-afac-7614c737a31b", "69")
             );
 
             // Convert JSON string to HttpContent
@@ -52,11 +80,12 @@ namespace backend.tests
                 "application/json"
             );
 
+            // Send the update order request
             var orderResponse = await _client.PutAsync("/orders/updateOrdersUser", orderContent);
             orderResponse.EnsureSuccessStatusCode();
 
             var orderResponseData = await orderResponse.Content.ReadAsStringAsync();
-            var actualOrderResPayload = JsonConvert.DeserializeObject<Order>(   //Kan ej deserialisera order när toString metod finns med i modell class
+            var actualOrderResPayload = JsonConvert.DeserializeObject<Order>(
                 orderResponseData
             );
 
@@ -64,6 +93,7 @@ namespace backend.tests
 
             Assert.AreEqual("64b278e4-902e-4685-afac-7614c737a31b", actualOrderResPayload.UserId);
         }
+
 
         [Test]
         public async Task UpdateOrderTest()
@@ -126,88 +156,96 @@ namespace backend.tests
             Assert.AreEqual(OrderStatus.CANCELLED, orderResPayload.Status);
         }
 
-        
-                [Test]
-                public async Task GetAllUserOrdersTest()
+
+        [Test]
+        public async Task GetAllUserOrdersTest()
+        {
+            // Log in as a user to fetch orders
+            var loginRequestJson = JsonConvert.SerializeObject(
+                new { Email = "alex.hernstrom@gmail.com", Password = "password" }
+            );
+
+            // Convert JSON string to HttpContent
+            var loginContent = new StringContent(
+                loginRequestJson,
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            var loginResponse = await _client.PostAsync("/authentication/login", loginContent);
+            loginResponse.EnsureSuccessStatusCode();
+
+            var loginResponseData = await loginResponse.Content.ReadAsStringAsync();
+            var actualLoginResPayload = JsonConvert.DeserializeObject<LoginResPayload>(
+                loginResponseData
+            );
+
+            var token = actualLoginResPayload.Token;
+
+            Console.WriteLine("TOKEN: " + token);
+
+            // Add the JWT token to the request headers
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer",
+                token
+            );
+
+            // Fetch user orders with the token
+            var response = await _client.GetAsync("/orders/getAllUserOrders");
+
+            response.EnsureSuccessStatusCode();
+            Assert.NotNull(response);
+
+            var responseData = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine("RESPONSE: " + responseData);
+
+            // Deserialize response to a dynamic object
+            dynamic dynamicOrderObject = JsonConvert.DeserializeObject<dynamic>(responseData);
+
+            // Convert dynamic object to list of OrderDTO
+            var orderDTOList = new List<OrderDTO>();
+
+            foreach (var order in dynamicOrderObject)
+            {
+                var orderDTO = new OrderDTO
                 {
-                    //Logga in som user, hämta ordrar
-                    var loginRequestJson = JsonConvert.SerializeObject(
-                        new { Email = "alex.hernstrom@gmail.com", Password = "password" }
-                    );
-        
-                    // Convert JSON string to HttpContent
-                    var loginContent = new StringContent(
-                        loginRequestJson,
-                        Encoding.UTF8,
-                        "application/json"
-                    );
-        
-                    var loginResponse = await _client.PostAsync("/authentication/login", loginContent);
-                    loginResponse.EnsureSuccessStatusCode();
-        
-                    var loginResponseData = await loginResponse.Content.ReadAsStringAsync();
-                    var actualLoginResPayload = JsonConvert.DeserializeObject<LoginResPayload>(
-                        loginResponseData
-                    );
-        
-                    var token = actualLoginResPayload.Token;
-        
-                    Console.WriteLine("TOKEN: " + token);
-        
-                    // Add the JWT token to the request headers
-                    _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                        "Bearer",
-                        token
-                    );
-        
-                    //Hämta ordrar
-                    var response = await _client.GetAsync("/orders/getAllUserOrders");
-        
-                    response.EnsureSuccessStatusCode();
-                    Assert.NotNull(response);
-        
-                    var responseData = await response.Content.ReadAsStringAsync();
-        
-                    //Problem att deserialisera DTO objekt. Utbytt till list of orders i order controllern
-                    var updateResponse = JsonConvert.DeserializeObject<List<Order>>(responseData);
-        
-                    OrderDTO? orderToTest = null;
-        
-                    foreach (var order in updateResponse)
-                    {
-                        Console.WriteLine(order);
-                        if (order.Id == 49)
-                        {
-                            orderToTest = new OrderDTO(order);
-                        }
-                    }
-        
-                    Console.WriteLine("Order to test: " + orderToTest);
+                    Id = (int)order.id,
+                    RecieverName = (string)order.recieverName,
+                    Weight = (int)order.weight,
+                    BoxColor = (string)order.boxColor,
+                    SourceCountry = (string)order.sourceCountry,
+                    Status = (OrderStatus)order.status,
+                    Cost = (float)order.cost,
+                    DestinationCountry = (string)order.destinationCountry,
+                    UserId = (string)order.userId
+                };
 
-                    //Testa mot en av ordrarna där id=49
-                    OrderDTO orderToTest2 = new OrderDTO(new Order
-                    {
-                        UserId = "64b278e4-902e-4685-afac-7614c737a31b",
-                        RecieverName = "Elin",
-                        Weight = 1,
-                        BoxColor = "#FFF",
-                        DestinationCounty = "Greece",
-                        SourceCountry = new Country { CountryName = "Denmark" },
-                        Status = OrderStatus.RECIEVED,
-                        Cost = 10
-                    });
+                orderDTOList.Add(orderDTO);
+            }
 
-                Assert.AreEqual(orderToTest2.UserId, orderToTest.UserId);
-                    Assert.AreEqual(orderToTest2.RecieverName, orderToTest.RecieverName);
-                    Assert.AreEqual(orderToTest2.Weight, orderToTest.Weight);
-                    Assert.AreEqual(orderToTest2.BoxColor, orderToTest.BoxColor);
-                    Assert.AreEqual(orderToTest2.DestinationCountry, orderToTest.DestinationCountry);
-                    Assert.AreEqual(orderToTest2.SourceCountry, orderToTest.SourceCountry);
-                    Assert.AreEqual(OrderStatus.RECIEVED, orderToTest.Status); // Kan ej jämföra orderPayload.OrderStatus (som är 1) med RECIEVED
-                    Assert.AreEqual(orderToTest2.Cost, orderToTest.Cost);
-                }
-                
-                        [Test]
+            foreach (var orderDTO in orderDTOList)
+            {
+                Console.WriteLine(orderDTO);
+            }
+
+            // Example assertion for testing
+            var orderToTest = orderDTOList.FirstOrDefault(o => o.Id == 49);
+            if (orderToTest != null)
+            {
+                Assert.AreEqual("64b278e4-902e-4685-afac-7614c737a31b", orderToTest.UserId);
+                Assert.AreEqual("Elin", orderToTest.RecieverName);
+                Assert.AreEqual(1, orderToTest.Weight);
+                Assert.AreEqual("#FFF", orderToTest.BoxColor);
+                Assert.AreEqual("Denmark", orderToTest.SourceCountry);
+                Assert.AreEqual(OrderStatus.CANCELLED, orderToTest.Status);
+                Assert.AreEqual(10, orderToTest.Cost);
+                Assert.AreEqual("Greece", orderToTest.DestinationCountry);
+            }
+        }
+
+
+        [Test]
                         public async Task CreateAnOrderTest()
                         {
                         //Skapa payload
@@ -257,54 +295,93 @@ namespace backend.tests
                             Assert.AreEqual(OrderStatus.CREATED, orderResPayload.Status);   // Kan ej jämföra orderPayload.OrderStatus (som är 0) med CREATED
                             Assert.AreEqual(orderPayload.Cost, orderResPayload.Cost);
                         }
-                
-                        
-                                [Test]
-                                public async Task GetAllOrdersTest() {
-                                    //Test logga in som admin och icke admin. Sedan hämta alla ordrar. Ändrade min user role (0/1) direkt i databas vid testning att vara user/admin
-                                    var loginRequestJson = JsonConvert.SerializeObject(
-                                        new { Email = "alex.hernstrom@gmail.com", Password = "password" }
-                                    );
-                        
-                                    // Convert JSON string to HttpContent
-                                    var loginContent = new StringContent(
-                                        loginRequestJson,
-                                        Encoding.UTF8,
-                                        "application/json"
-                                    );
-                        
-                                    var loginResponse = await _client.PostAsync("/authentication/login", loginContent);
-                                    loginResponse.EnsureSuccessStatusCode();
-                        
-                                    var loginResponseData = await loginResponse.Content.ReadAsStringAsync();
-                                    var actualLoginResPayload = JsonConvert.DeserializeObject<LoginResPayload>(
-                                        loginResponseData
-                                    );
-                        
-                                    var token = actualLoginResPayload.Token;
-                        
-                                    //Hämta ordrar som icke admin / admin
-                                    Console.WriteLine("TOKEN: " + token);
-                        
-                                    // Add the JWT token to the request headers
-                                    _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                                        "Bearer",
-                                        token
-                                    );
-                        
-                                    //Hämta ordrar med token
-                                    var response = await _client.GetAsync("/orders/getAllOrders");
-                        
-                                    response.EnsureSuccessStatusCode();
-                                    Assert.NotNull(response);
-                        
-                                    var responseData = await response.Content.ReadAsStringAsync();
-                        
-                                    Console.WriteLine("RESPONSE: " + responseData);
-                        
-                                    //Problem att deserialisera DTO objekt. Utbytt till list of orders i order controllern
-                                    var updateResponse = JsonConvert.DeserializeObject<List<Order>>(responseData);
-                                }
-                        
+
+
+        [Test]
+        public async Task GetAllOrdersTest()
+        {
+            // Log in as admin and non-admin to fetch all orders
+            var loginRequestJson = JsonConvert.SerializeObject(
+                new { Email = "alex.hernstrom@gmail.com", Password = "password" }
+            );
+
+            // Convert JSON string to HttpContent
+            var loginContent = new StringContent(
+                loginRequestJson,
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            var loginResponse = await _client.PostAsync("/authentication/login", loginContent);
+            loginResponse.EnsureSuccessStatusCode();
+
+            var loginResponseData = await loginResponse.Content.ReadAsStringAsync();
+            var actualLoginResPayload = JsonConvert.DeserializeObject<LoginResPayload>(
+                loginResponseData
+            );
+
+            var token = actualLoginResPayload.Token;
+
+            // Add the JWT token to the request headers
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer",
+                token
+            );
+
+            // Fetch orders with the token
+            var response = await _client.GetAsync("/orders/getAllOrders");
+
+            response.EnsureSuccessStatusCode();
+            Assert.NotNull(response);
+
+            var responseData = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine("RESPONSE: " + responseData);
+
+            // Deserialize response to a dynamic object
+            dynamic dynamicOrderObject = JsonConvert.DeserializeObject<dynamic>(responseData);
+
+            // Convert dynamic object to list of OrderDTO
+            var orderDTOList = new List<OrderDTO>();
+
+            foreach (var order in dynamicOrderObject)
+            {
+                var orderDTO = new OrderDTO
+                {
+                    Id = (int)order.id,
+                    RecieverName = (string)order.recieverName,
+                    Weight = (int)order.weight,
+                    BoxColor = (string)order.boxColor,
+                    SourceCountry = (string)order.sourceCountry,
+                    Status = (OrderStatus)order.status,
+                    Cost = (float)order.cost,
+                    DestinationCountry = (string)order.destinationCountry,
+                    UserId = (string)order.userId
+                };
+
+                orderDTOList.Add(orderDTO);
+            }
+
+            foreach (var orderDTO in orderDTOList)
+            {
+                Console.WriteLine(orderDTO);
+            }
+
+            // Example assertion for testing
+            var orderToTest = orderDTOList.FirstOrDefault(o => o.Id == 49);
+            if (orderToTest != null)
+            {
+                Assert.AreEqual("64b278e4-902e-4685-afac-7614c737a31b", orderToTest.UserId);
+                Assert.AreEqual("Elin", orderToTest.RecieverName);
+                Assert.AreEqual(1, orderToTest.Weight);
+                Assert.AreEqual("#FFF", orderToTest.BoxColor);
+                Assert.AreEqual("Denmark", orderToTest.SourceCountry);
+                Assert.AreEqual(OrderStatus.CANCELLED, orderToTest.Status);
+                Assert.AreEqual(10, orderToTest.Cost);
+                Assert.AreEqual("Greece", orderToTest.DestinationCountry);
+            }
+        }
+
+
     }
 }
