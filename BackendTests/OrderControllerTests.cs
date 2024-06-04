@@ -36,7 +36,7 @@ namespace backend.tests
 
 
 
-/*
+
         [Test]
         public async Task UpdateOrdersUserTest() {
             //I body: UserId: userId, OrderId: orderId
@@ -64,7 +64,7 @@ namespace backend.tests
 
             Assert.AreEqual("64b278e4-902e-4685-afac-7614c737a31b", actualOrderResPayload.UserId);
         }
-/*
+
         [Test]
         public async Task UpdateOrderTest()
         {
@@ -126,7 +126,7 @@ namespace backend.tests
             Assert.AreEqual(OrderStatus.CANCELLED, orderResPayload.Status);
         }
 
-        /*
+        
                 [Test]
                 public async Task GetAllUserOrdersTest()
                 {
@@ -171,58 +171,48 @@ namespace backend.tests
                     //Problem att deserialisera DTO objekt. Utbytt till list of orders i order controllern
                     var updateResponse = JsonConvert.DeserializeObject<List<Order>>(responseData);
         
-                    Order orderToTest = new Order();
+                    OrderDTO? orderToTest = null;
         
                     foreach (var order in updateResponse)
                     {
                         Console.WriteLine(order);
                         if (order.Id == 49)
                         {
-                            orderToTest = order;
+                            orderToTest = new OrderDTO(order);
                         }
                     }
         
                     Console.WriteLine("Order to test: " + orderToTest);
-        
+
                     //Testa mot en av ordrarna där id=49
-                    var orderToTest2 = new
+                    OrderDTO orderToTest2 = new OrderDTO(new Order
                     {
                         UserId = "64b278e4-902e-4685-afac-7614c737a31b",
                         RecieverName = "Elin",
                         Weight = 1,
                         BoxColor = "#FFF",
-                        DestinationCountry = "Greece",
-                        SourceCountry = "Denmark",
-                        OrderStatus = 1,
+                        DestinationCounty = "Greece",
+                        SourceCountry = new Country { CountryName = "Denmark" },
+                        Status = OrderStatus.RECIEVED,
                         Cost = 10
-                    };
-        
-                    Assert.AreEqual(orderToTest2.UserId, orderToTest.UserId);
+                    });
+
+                Assert.AreEqual(orderToTest2.UserId, orderToTest.UserId);
                     Assert.AreEqual(orderToTest2.RecieverName, orderToTest.RecieverName);
                     Assert.AreEqual(orderToTest2.Weight, orderToTest.Weight);
                     Assert.AreEqual(orderToTest2.BoxColor, orderToTest.BoxColor);
                     Assert.AreEqual(orderToTest2.DestinationCountry, orderToTest.DestinationCountry);
-                    Assert.AreEqual(orderToTest2.SourceCountry, orderToTest.SourceCountry.CountryName);
+                    Assert.AreEqual(orderToTest2.SourceCountry, orderToTest.SourceCountry);
                     Assert.AreEqual(OrderStatus.RECIEVED, orderToTest.Status); // Kan ej jämföra orderPayload.OrderStatus (som är 1) med RECIEVED
                     Assert.AreEqual(orderToTest2.Cost, orderToTest.Cost);
                 }
-                /*
+                
                         [Test]
                         public async Task CreateAnOrderTest()
                         {
-                            //Skapa payload
-                            var orderPayload = new
-                            {
-                                UserId = "64b278e4-902e-4685-afac-7614c737a31b",
-                                RecieverName = "Elin",
-                                Weight = 1,
-                                BoxColor = "#FFF",
-                                DestinationCountry = "Greece",
-                                SourceCountry = "Denmark",
-                                OrderStatus = 0,
-                                Cost = 10
-                            };
-                
+                        //Skapa payload
+                        OrderPostPayload orderPayload = new OrderPostPayload("64b278e4-902e-4685-afac-7614c737a31b", "Elin", 1, "#FFF", "Greece", "Denmark", 0, 10);
+                     
                             // Convert to JSON string
                             var jsonPayload = JsonConvert.SerializeObject(orderPayload);
                 
@@ -237,8 +227,22 @@ namespace backend.tests
                             // Deserialize the response to RegisterResPayload
                             var responseData = await response.Content.ReadAsStringAsync();
                 
-                            var orderResPayload = JsonConvert.DeserializeObject<Order>(responseData);
-                
+                            dynamic dynamicOrderObject = JsonConvert.DeserializeObject<dynamic>(responseData);
+
+                            // Create a new instance of OrderDTO and map properties
+                            var orderResPayload = new OrderDTO
+                            {
+                                Id = (int)dynamicOrderObject.id,
+                                RecieverName = (string)dynamicOrderObject.recieverName,
+                                Weight = (int)dynamicOrderObject.weight,
+                                BoxColor = (string)dynamicOrderObject.boxColor,
+                                SourceCountry = (string)dynamicOrderObject.sourceCountry,
+                                Status = (OrderStatus)dynamicOrderObject.status,
+                                Cost = (float)dynamicOrderObject.cost,
+                                DestinationCountry = (string)dynamicOrderObject.destinationCountry,
+                                UserId = (string)dynamicOrderObject.userId
+                            };
+
                             Console.WriteLine("RETURN: " + orderResPayload);
                             Console.WriteLine(
                                 "Sent OrderStatus: " + orderPayload.OrderStatus + " Received OrderStatus: " + orderResPayload.Status
@@ -249,12 +253,12 @@ namespace backend.tests
                             Assert.AreEqual(orderPayload.Weight, orderResPayload.Weight);
                             Assert.AreEqual(orderPayload.BoxColor, orderResPayload.BoxColor);
                             Assert.AreEqual(orderPayload.DestinationCountry, orderResPayload.DestinationCountry);
-                            Assert.AreEqual(orderPayload.SourceCountry, orderResPayload.SourceCountry.CountryName);
+                            Assert.AreEqual(orderPayload.SourceCountry, orderResPayload.SourceCountry);
                             Assert.AreEqual(OrderStatus.CREATED, orderResPayload.Status);   // Kan ej jämföra orderPayload.OrderStatus (som är 0) med CREATED
                             Assert.AreEqual(orderPayload.Cost, orderResPayload.Cost);
                         }
                 
-                        /*
+                        
                                 [Test]
                                 public async Task GetAllOrdersTest() {
                                     //Test logga in som admin och icke admin. Sedan hämta alla ordrar. Ändrade min user role (0/1) direkt i databas vid testning att vara user/admin
@@ -301,6 +305,6 @@ namespace backend.tests
                                     //Problem att deserialisera DTO objekt. Utbytt till list of orders i order controllern
                                     var updateResponse = JsonConvert.DeserializeObject<List<Order>>(responseData);
                                 }
-                        */
+                        
     }
 }
