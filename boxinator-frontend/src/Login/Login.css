@@ -19,12 +19,6 @@
     text-decoration: underline;
     border: none;
 }
-.switch button:hover {
-    color: var(--light-turqoise);
-}
-.switch button:focus {
-    outline: none;
-}
 
 .submit-input {
     margin-right: auto;

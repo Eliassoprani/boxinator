@@ -159,7 +159,7 @@ function Login() {
                         <label>
                             Email:
                             <input
-                                type="text"
+                                type="email"
                                 name="email"
                                 value={userData.email}
                                 onChange={handleChange}

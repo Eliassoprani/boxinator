@@ -5,16 +5,25 @@
     justify-content: space-around;
     position: fixed;
     width: 100%;
-    background-color: #242424;
+    background-color: var(--dark-bg);
+}
+
+.title {
+    cursor: pointer;
+    color: var(--light-turquoise);
+    letter-spacing: 2px;
 }
 
 .nav div {
     display: flex;
     flex-direction: row;
     padding: 10px 20px;
-    cursor: pointer;
 }
 
-.nav-link:hover {
-    color: var(--light-turqoise);
+.nav-link button {
+    border: none;
 }
+
+.nav button:focus {  
+    border-color: var(--dark-turquoise);
+  }

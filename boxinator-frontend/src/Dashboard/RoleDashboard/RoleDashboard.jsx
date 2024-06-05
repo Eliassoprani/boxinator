@@ -3,7 +3,6 @@ import OrderList from '../Orders/OrderList';
 import { urlBackendBasePath } from '../../assets/strings.js'
 
 function RoleDashboard({ pathEnd }) {
-    //const { token } = useContext(UserContext);
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {

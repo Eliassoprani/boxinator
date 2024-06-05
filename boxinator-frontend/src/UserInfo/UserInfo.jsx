@@ -70,7 +70,7 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
             <label>
                 Email:
                 <input
-                    type="text"
+                    type="email"
                     name="email"
                     value={userData.email}
                     onChange={handleChange}
@@ -117,7 +117,7 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
             <label>
                 Zip code:
                 <input
-                    type="text"
+                    type="number"
                     name="zipCode"
                     value={userData.zipCode}
                     onChange={handleChange}
@@ -127,7 +127,7 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
             <label>
                 Phone number:
                 <input
-                    type="text"
+                    type="tel"
                     name="phone"
                     value={userData.phone}
                     onChange={handleChange}

@@ -27,3 +27,7 @@
   color: rgb(19, 19, 19);
   border-radius: 5px;
 }
+
+.footer button:focus {  
+  border-color: var(--dark-turquoise);
+}

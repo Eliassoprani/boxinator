@@ -4,38 +4,20 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255);
-  background-color: #242424;
-  overflow-x: hidden;
+  background-color: var(--dark-bg);
+  overflow-x: hidden; /* Ta bort för horisontell scroll och möjlighet att zooma in 200% */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  --dark-bg: #242424;
   --dark-turquoise: rgb(38, 99, 99);
-  --light-turqoise: #c6f8fc;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  --light-turquoise: #c6f8fc;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 3em;
 }
 
 button {
@@ -51,12 +33,13 @@ button {
   transition: border-color 0.1s;
 }
 button:hover {
+  color: var(--light-turquoise);
   border-color: var(--dark-turquoise);
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+button:focus {    /* Also good when using tab to navigate */
+  color: var(--light-turquoise);
+  outline: transparent;
+}   
 
 input {
   width: 220px;
@@ -74,9 +57,10 @@ label {
   padding: 7px;
 }
 
-/* Drop down menyer för country */
+/* Drop down menyer för country och status */
 select {
   border-radius: 5px;
+  cursor: pointer;
 }
 
 form {
