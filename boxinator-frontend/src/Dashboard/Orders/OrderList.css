@@ -3,7 +3,7 @@
   background-color: #e8e9eb;
   padding: 10px;
   border-radius: 5px;
-  width: 80vw;
+  width: 80%;
 }
 
 .order-nav {
@@ -64,4 +64,5 @@ tbody tr {
 
 .sort-column:hover {
   cursor: pointer;
+  color: var(--dark-turquoise);
 }

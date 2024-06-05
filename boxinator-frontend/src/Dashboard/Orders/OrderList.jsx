@@ -66,7 +66,7 @@ function OrderList({ orders, setOrders }) {
             case 0:
                 return '#C7E5EF';
             case 1:
-                return '#C7C7C7';
+                return '#D5D5D5';
             case 2:
                 return '#EFE9C4';
             case 3:
@@ -108,7 +108,7 @@ function OrderList({ orders, setOrders }) {
                 </div>
             </div>
 
-            <div style={{ marginLeft: '16px', marginBottom: '-25px' }}>Total number of orders: {filteredOrders.length}</div>
+            <div style={{ marginLeft: '16px', marginBottom: '-25px' }}>Number of orders: {filteredOrders.length}</div>
 
             <table className="order-table">
                 <thead>

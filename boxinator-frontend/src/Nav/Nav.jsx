@@ -25,16 +25,18 @@ function Nav() {
 
             {loggedIn && (
                 <>
-                    <div>
-                        <div className="nav-link" onClick={() => navigate('/dashboard')}>Dashboard</div>
-                        <div className="nav-link" onClick={() => navigate('/newshipment')}>New Shipment</div>
-                        <div className="nav-link" onClick={() => navigate('/aboutus')}>About Us</div>
+                    <div className="nav-link">
+                        <button onClick={() => navigate('/dashboard')}>Dashboard</button>
+                        <button onClick={() => navigate('/newshipment')}>New Shipment</button>
+                        <button onClick={() => navigate('/aboutus')}>About Us</button>
                     </div>
 
                     <div>
-                        {(user.role === 0 || user.role === 1) && (
-                            <div className="nav-link" onClick={() => navigate('/profile')}>{user.firstName}</div>
-                        )}
+                        <div className="nav-link">
+                            {(user.role === 0 || user.role === 1) && (
+                                <button onClick={() => navigate('/profile')}>{user.firstName}</button>
+                            )}
+                        </div>
 
                         <button onClick={logout}>{(user.role === 0 || user.role === 1) ? "Log out" : "Log in / Sign up"}</button>
                     </div>

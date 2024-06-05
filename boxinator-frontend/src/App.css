@@ -2,6 +2,7 @@ body {
   /* Make the body fill all the size of viewport */
   width: 100vw;
   height: 100vh;
+  margin: 0;
 }
 
 /* Create a root container that fills the screen.
@@ -14,6 +15,6 @@ All child components will be vertically stacked in a column (footer hamnar i bot
 }
 
 .main {
-  margin-bottom: 40px;
-  margin-top: 200px;
+  margin-bottom: 40px; /* Space mellan orderlist och footer */
+  margin-top: 180px;  /* Så main hamnar under Nav */
 }
