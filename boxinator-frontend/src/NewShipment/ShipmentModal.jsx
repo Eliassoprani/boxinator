@@ -35,7 +35,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                 ...prevShipmentData,
                 userId: user.id,
                 email: user.email,
-                sourceCountry: user.countryOfResidence
+                sourceCountry: user.countryOfResidence !== "" ? user.countryOfResidence : "Sweden"
             }));
         }
     }, []);
