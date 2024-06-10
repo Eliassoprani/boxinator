@@ -66,7 +66,7 @@ function App() {
               </Routes>
             )}
 
-            {loggedIn && user.hasOwnProperty('role') && (
+            {loggedIn && (user.role === 0 || user.role === 1) && (
               <Routes>
                 <Route path="/profile" element={<Profile />} />
               </Routes>
