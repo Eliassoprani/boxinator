@@ -105,7 +105,7 @@ function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisa
                 </label>
             )}
 
-            {!user.hasOwnProperty('role') && (
+            {(user.role !== 0 && user.role !== 1) && (
                 <label htmlFor="email">
                     Your email:
                     <input

@@ -12,11 +12,11 @@ function Dashboard() {
         <div className="dashboard">
             <h2>Dashboard</h2>
 
-            {user && user.role === 0 && (
+            {user.role === 0 && (
                 <RoleDashboard pathEnd={"getAllOrders"} />
             )}
 
-            {user && user.role === 1 && (
+            {user.role === 1 && (
                 <RoleDashboard pathEnd={"getAllUserOrders"} />
             )}
 

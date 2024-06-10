@@ -93,9 +93,9 @@ function Login() {
     }
 
     async function handleGoogleCallbackResponse(response) {
-        console.log("encoded jwt id token:" + response.credential)
+        //console.log("encoded jwt id token:" + response.credential)
         var userObject = jwtDecode(response.credential);
-        console.log(userObject);
+        //console.log(userObject);
 
         const signUpResponse = await fetch(`${urlBackendBasePath}/authentication/google_signup`, {
             method: "POST",
@@ -122,7 +122,7 @@ function Login() {
         const logInResponseData = await signUpResponse.json();
 
         setUser(logInResponseData);
-        console.log("loginresponse email från login: " + logInResponseData.email);
+        //console.log("loginresponse email från login: " + logInResponseData.email);
         localStorage.setItem('token', logInResponseData.token);
         localStorage.setItem('loggedIn', true);
 

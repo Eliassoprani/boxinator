@@ -30,7 +30,7 @@ function ShipmentModal({ isOpen, closeModal }) {
     const [submitDisabled, setSubmitDisabled] = useState(true);
 
     useEffect(() => {
-        if (user.hasOwnProperty('role')) {
+        if (user.role === 0 || user.role === 1) {
             setShipmentData((prevShipmentData) => ({
                 ...prevShipmentData,
                 userId: user.id,
