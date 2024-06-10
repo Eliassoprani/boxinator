@@ -4,18 +4,19 @@
   padding: 10px;
   border-radius: 5px;
   width: 80%;
+  overflow-x: auto; /* WCAG zoom */
 }
 
 .order-nav {
   display: flex;
   align-items: center;
-  margin: 15px;
+  margin: 1rem;
 }
 
-.filter-by-sender {
-  margin-left: 30px;
+.full-text-search {
+  margin-left: 1rem;
 }
-.filter-by-sender input {
+.full-text-search input {
   background-color: #e8e9eb;
   color: #000;
 }
@@ -26,6 +27,7 @@
   font-size: 16px;
   padding: 5px;
   background-color: #0a253bc7;
+  color: white;
 }
 
 .user-id {
@@ -40,16 +42,14 @@
 }
 
 table {
-  width: 100%;
-  margin-top: 50px;
+  margin-top: 2.5rem;
 }
 
 thead {
-  font-size: 18px;
+  font-size: 1.1rem;
 }
 
 tbody tr {
-  height: 70px;
   text-align: center;
 }
 
@@ -58,7 +58,7 @@ tbody tr {
   width: 14px; 
   height: 14px;
   border-radius: 30%;
-  margin-right: 6px;
+  margin-right: 0.5rem;
   vertical-align: middle;
 }
 

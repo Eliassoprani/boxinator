@@ -1,24 +1,42 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './Footer.css'
 
 function Footer() {
     const [email, setEmail] = useState("");
+    const [signedUp, setSignedUp] = useState(false);
 
     const signUpForNewsLetter = () => {
-        setEmail("Thanks!");
+        setEmail("");
+        setSignedUp(true);
     }
+
+    useEffect(() => {
+        if (signedUp) {
+            setTimeout(() => { setSignedUp(false) }, 3000);
+        }
+    }, [signedUp]);
 
     return (
         <div className="footer">
             <div className='newsletter'>
-                <div className='newsletter-text'>Sign up for our Newsletter:</div>
                 <div className='newsletter-signup'>
-                    <input
-                        type="text"
-                        name="recieverName"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)} />
-                    <button onClick={signUpForNewsLetter}>Sign me up</button>
+                    <label htmlFor="newsLetterEmail">
+                        Sign up for our Newsletter:
+                        <input
+                            id='newsLetterEmail'
+                            type="email"
+                            name="newsLetterEmail"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)} />
+                    </label>
+
+                    <div className='button-response'>
+                        <button onClick={signUpForNewsLetter}>Sign me up</button>
+
+                        {signedUp && (
+                            <p style={{ marginLeft: "14px" }}>Thanks!</p>
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -27,7 +45,7 @@ function Footer() {
                 <p>Stockholm</p>
                 <p>Växjö</p>
             </div>
-        </div>
+        </div >
     )
 }
 

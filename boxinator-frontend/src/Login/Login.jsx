@@ -156,9 +156,10 @@ function Login() {
                     )}
 
                     <form>
-                        <label>
+                        <label htmlFor='email'>
                             Email:
                             <input
+                                id='email'
                                 type="email"
                                 name="email"
                                 value={userData.email}
@@ -166,9 +167,10 @@ function Login() {
                             />
                         </label>
 
-                        <label>
+                        <label htmlFor='password'>
                             Password:
                             <input
+                                id='password'
                                 type="password"
                                 name="password"
                                 value={userData.password}
@@ -212,13 +214,12 @@ function Login() {
                     </div>
                 </>
             )}
-            
+
             <div id="googleSignInDiv"></div>
 
             <div className="guest-login">
                 <button onClick={guestLogin}>Continue as guest</button>
             </div>
-
         </div>
     )
 }

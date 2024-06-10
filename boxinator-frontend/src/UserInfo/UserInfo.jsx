@@ -14,7 +14,7 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
 
         if (inputName && inputValue !== undefined) {
             //Validera user input dynamiskt
-            switch(inputName) {
+            switch (inputName) {
                 case "firstName":
                 case "lastName":
                     validation(inputValue, nameRegex);
@@ -36,7 +36,7 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
     }
 
     const validation = (inputValue, regex) => {
-        if(!regex.test(inputValue)) {
+        if (!regex.test(inputValue)) {
             setInputInvalid(true);
         }
         else {
@@ -47,9 +47,10 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
 
     return (
         <>
-            <label>
+            <label htmlFor="firstName">
                 First Name:
                 <input
+                    id='firstName'
                     type="text"
                     name="firstName"
                     value={userData.firstName}
@@ -57,9 +58,10 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
                 />
             </label>
 
-            <label>
+            <label htmlFor="lastName">
                 Last Name:
                 <input
+                    id='lastName'
                     type="text"
                     name="lastName"
                     value={userData.lastName}
@@ -67,9 +69,10 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
                 />
             </label>
 
-            <label>
+            <label htmlFor='email'>
                 Email:
                 <input
+                    id='email'
                     type="email"
                     name="email"
                     value={userData.email}
@@ -79,9 +82,10 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
 
             {/* Om komponent används i Profile page ska password ej finnas med */}
             {!update && (
-                <label>
+                <label htmlFor='password'>
                     Password:
                     <input
+                        id='password'
                         type="password"
                         name="password"
                         value={userData.password}
@@ -90,9 +94,10 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
                 </label>
             )}
 
-            <label>
+            <label htmlFor='dateOfBirth'>
                 Date of birth:
                 <input
+                    id='dateOfBirth'
                     type="date"
                     name="dateOfBirth"
                     value={userData.dateOfBirth}
@@ -100,9 +105,10 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
                 />
             </label>
 
-            <label>
-            Country of residence:
+            <label htmlFor='countryOfResidence'>
+                Country of residence:
                 <select
+                    id='countryOfResidence'
                     className="dropdown-signup"
                     name="countryOfResidence"
                     value={userData.countryOfResidence}
@@ -114,9 +120,10 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
                 </select>
             </label>
 
-            <label>
+            <label htmlFor='zipCode'>
                 Zip code:
                 <input
+                    id='zipCode'
                     type="number"
                     name="zipCode"
                     value={userData.zipCode}
@@ -124,9 +131,10 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
                 />
             </label>
 
-            <label>
+            <label htmlFor='phoneNumber'>
                 Phone number:
                 <input
+                    id='phoneNumber'
                     type="tel"
                     name="phone"
                     value={userData.phone}

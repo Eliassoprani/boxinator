@@ -7,7 +7,7 @@
 
 .new-shipment-btn {
     border: none;
-    margin-left: -12px;
+    margin-left: -0.8rem;
     color: var(--light-turqoise);
 }
 .new-shipment-btn:active {

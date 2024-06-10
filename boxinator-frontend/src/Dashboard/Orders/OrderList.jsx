@@ -20,7 +20,7 @@ function OrderList({ orders, setOrders }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState({});
     const [selectedStatus, setSelectedStatus] = useState(null); // Ändrar text i dropdown menyn
-    const [searchText, setSearchText] = useState("");
+    const [fullTextSearch, setFullTextSearch] = useState("");
     const [filteredOrders, setFilteredOrders] = useState(orders);
 
     useEffect(() => {
@@ -46,14 +46,14 @@ function OrderList({ orders, setOrders }) {
         setSelectedStatus(null);
         setFilteredOrders(orders.filter(object =>
             Object.values(object).some(value =>
-                String(value).toLowerCase().includes(searchText.toLowerCase())
+                String(value).toLowerCase().includes(fullTextSearch.toLowerCase())
             )));
     }
 
-    const clearSearchText = () => {
+    const clearFullTextSearch = () => {
         setFilteredOrders(orders);
         setSelectedStatus("");
-        setSearchText("");
+        setFullTextSearch("");
     }
 
     const sortByColumn = (property) => {
@@ -92,19 +92,19 @@ function OrderList({ orders, setOrders }) {
                     ))}
                 </select>
 
-                <div className="filter-by-sender">
-                    <label htmlFor="senderId">
+                <div className="full-text-search">
+                    <label htmlFor="fullTextSearch">
                         Full text search:
                         <input
-                            id="searchText"
+                            id="fullTextSearch"
                             type="text"
-                            name="searchText"
-                            value={searchText}
-                            onChange={(event) => setSearchText(event.target.value)}
+                            name="fullTextSearch"
+                            value={fullTextSearch}
+                            onChange={(event) => setFullTextSearch(event.target.value)}
                         />
                     </label>
                     <button style={{ backgroundColor: '#0a253bc7', marginRight: '2px' }} onClick={findOrders}>Find</button>
-                    <button style={{ backgroundColor: '#0a253bc7' }} onClick={clearSearchText}>Clear all</button>
+                    <button style={{ backgroundColor: '#0a253bc7' }} onClick={clearFullTextSearch}>Clear all</button>
                 </div>
             </div>
 
@@ -141,7 +141,9 @@ function OrderList({ orders, setOrders }) {
                                 <td>{order.weight}</td>
                                 <td>{order.cost}</td>
                                 <td>{STATUS[order.status].toUpperCase()}</td>
-                                {user.role === 0 && <td><button style={{backgroundColor: 'var(--dark-turquoise)'}} onClick={() => handleOpenModal(order)}>Update Status</button></td>}
+                                {user.role === 0 && (
+                                    <td><button style={{ backgroundColor: 'var(--dark-turquoise)' }} onClick={() => handleOpenModal(order)}>Update Status</button></td>
+                                )}
                             </tr>
                         );
                     })}
