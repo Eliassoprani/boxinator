@@ -3,13 +3,11 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color: #FFF;
   background-color: var(--dark-bg);
-  overflow-x: hidden; /* Ta bort för horisontell scroll och möjlighet att zooma in 200% */
+  overflow-x: hidden;  /* WCAG - Horisontell scroll 200% krävs endast på Dashboard. (Nav har flex-wrap) */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 
   --dark-bg: #242424;
   --dark-turquoise: rgb(38, 99, 99);
@@ -21,6 +19,7 @@ h1 {
 }
 
 button {
+  color: #FFF;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -36,25 +35,32 @@ button:hover {
   color: var(--light-turquoise);
   border-color: var(--dark-turquoise);
 }
-button:focus {    /* Also good when using tab to navigate */
+button:focus {
+  /* Also good when using tab to navigate */
   color: var(--light-turquoise);
   outline: transparent;
-}   
+}
 
 input {
   width: 220px;
   padding: 10px;
   margin-left: 10px;
   border-radius: 5px;
+  -webkit-text-fill-color: black; /* Behåll svart färg vid autofill input */
 }
 
 input[type="submit"] {
+  -webkit-text-fill-color: white;
   width: fit-content;
   border-radius: 7px;
 }
 
 label {
   padding: 7px;
+}
+
+img {
+  border-radius: 5px;
 }
 
 /* Drop down menyer för country och status */

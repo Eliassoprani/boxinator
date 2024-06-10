@@ -1,29 +1,27 @@
 .nav {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    position: fixed;
-    width: 100%;
-    background-color: var(--dark-bg);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  position: fixed;
+  width: 100%;
+  background-color: var(--dark-bg);
+  flex-wrap: wrap; /* Få med allt vid 200% zoom */
 }
 
-.title {
-    cursor: pointer;
-    color: var(--light-turquoise);
-    letter-spacing: 2px;
+h1 {
+  letter-spacing: 2px;
 }
 
 .nav div {
-    display: flex;
-    flex-direction: row;
-    padding: 10px 20px;
+  display: flex;
+  flex-direction: row;
 }
 
 .nav-link button {
-    border: none;
+  border: none;
 }
 
-.nav button:focus {  
-    border-color: var(--dark-turquoise);
-  }
+.nav button:focus {
+  border-color: var(--dark-turquoise);
+}

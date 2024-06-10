@@ -64,10 +64,10 @@ function OrderModal({ isOpen, closeModal, orderObj, orders, setOrders }) {
             isOpen={isOpen}
             onRequestClose={closeModal}
         >
-            <h2 style={{marginLeft: '18px'}}>Change Order Status</h2>
+            <h2 style={{ marginLeft: '18px' }}>Change Order Status</h2>
 
             <select
-            className="status-dropdown"
+                className="status-dropdown"
                 value={selectedStatus}
                 onChange={e => setSelectedStatus(parseInt(e.target.value))}>
                 {Object.keys(STATUS).map(statusKey => (

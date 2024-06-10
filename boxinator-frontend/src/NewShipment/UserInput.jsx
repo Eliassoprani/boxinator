@@ -33,9 +33,10 @@ function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisa
 
     return (
         <>
-            <label>
+            <label htmlFor="receiverName">
                 Receiver name:
                 <input
+                    id="receiverName"
                     type="text"
                     name="recieverName"
                     value={shipmentData.recieverName}
@@ -43,9 +44,10 @@ function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisa
                 />
             </label>
 
-            <label>
+            <label htmlFor="weight">
                 Weight:
                 <input
+                    id="weight"
                     type="number"
                     name="weight"
                     value={shipmentData.weight}
@@ -53,9 +55,10 @@ function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisa
                 />
             </label>
 
-            <label>
+            <label htmlFor="boxColor">
                 Box colour:
                 <input
+                    id="boxColor"
                     style={{
                         backgroundColor: shipmentData.boxColor,
                         cursor: "pointer",
@@ -70,9 +73,10 @@ function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisa
                 />
             </label>
 
-            <label>
+            <label htmlFor="destinationCountry">
                 Destination country:
                 <select
+                    id="destinationCountry"
                     className="dropdown"
                     name="destinationCountry"
                     value={shipmentData.destinationCountry}
@@ -85,9 +89,10 @@ function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisa
             </label>
 
             {!user.sourceCountry && (
-                <label>
+                <label htmlFor="sourceCountry">
                     Source country:
                     <select
+                        id="sourceCountry"
                         className="dropdown"
                         name="sourceCountry"
                         value={shipmentData.sourceCountry}
@@ -101,9 +106,10 @@ function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisa
             )}
 
             {!user.hasOwnProperty('role') && (
-                <label>
+                <label htmlFor="email">
                     Your email:
                     <input
+                        id="email"
                         type="email"
                         name="email"
                         value={shipmentData.email}

@@ -19,9 +19,7 @@ function Nav() {
 
     return (
         <div className='nav'>
-            <div className='title' onClick={loggedIn ? () => navigate('/dashboard') : undefined}>
-                <h1>Boxinator</h1>
-            </div>
+            <h1>Boxinator</h1>
 
             {loggedIn && (
                 <>
