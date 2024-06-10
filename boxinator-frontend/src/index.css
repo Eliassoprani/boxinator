@@ -9,9 +9,10 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 
-  --dark-bg: #242424;
+  --dark-bg: #1e2b3b;
   --dark-turquoise: rgb(38, 99, 99);
   --light-turquoise: #c6f8fc;
+  --dark-footer: #23485a;
 }
 
 h1 {
