@@ -5,8 +5,16 @@
   justify-content: space-around;
   position: fixed;
   width: 100%;
-  background-color: var(--dark-bg);
   flex-wrap: wrap; /* Få med allt vid 200% zoom */
+}
+
+#nav-dark {
+  background-color: var(--dark-bg);
+}
+
+#nav-light {
+  background-color: var(--light-bg);
+  color: var(--dark-text);
 }
 
 h1 {

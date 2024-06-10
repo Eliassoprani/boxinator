@@ -10,7 +10,7 @@ import { jwtDecode } from "jwt-decode";
 
 function Login() {
     const navigate = useNavigate();
-    const { setUser, setLoggedIn, order, setOrder, allCountries } = useContext(UserContext);
+    const { setUser, setLoggedIn, order, setOrder, allCountries, lightTheme } = useContext(UserContext);
     const [signUp, setSignUp] = useState(false);
     const [userData, setUserData] = useState({ email: "", password: "" });
     const [addedOrder, setAddedOrder] = useState(false);
@@ -145,7 +145,7 @@ function Login() {
     }, [])
 
     return (
-        <div className="user-input">
+        <div className="user-input" id={lightTheme ? 'login-light' : 'login-dark'}>
 
             {!signUp && (
                 <>

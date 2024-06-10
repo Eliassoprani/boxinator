@@ -2,12 +2,15 @@ import './AboutUs.css'
 import dogPackageImage from '../assets/dog_package.jpg';
 import dogPackageImage2 from '../assets/dog_package2.jpg';
 import { text } from '../assets/loremipsum.json'
+import { UserContext } from "../App";
+import { useContext } from 'react'
 
 function AboutUs() {
+    const { lightTheme } = useContext(UserContext);
     const loremIpsum = text[0].text;
 
     return (
-        <div className="about-us">
+        <div className="about-us" id={lightTheme ? 'about-light' : 'about-dark'}>
             <h2>About us</h2>
 
             <div>

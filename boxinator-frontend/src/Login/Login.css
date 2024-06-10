@@ -5,6 +5,13 @@
     justify-content: center;
 }
 
+#login-light {
+    background-color: var(--light-bg);
+}
+#login-dark {
+    background-color: var(--dark-bg);
+}
+
 .user-input div {
     margin-bottom: 10px;
 }

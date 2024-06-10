@@ -22,9 +22,9 @@ function App() {
   const [token, setToken] = useState("");
   const [order, setOrder] = useState(""); //For guest claiming order
   const [allCountries, setAllCountries] = useState([]);
+  const [lightTheme, setLightTheme] = useState(false);
 
   useEffect(() => {
-
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       setToken(storedToken);
@@ -41,13 +41,19 @@ function App() {
 
     const countryNames = countries.map(country => country.country);
     setAllCountries(countryNames);
+
+    const storedLightTheme = localStorage.getItem('lightTheme');
+    if (storedLightTheme) {
+      console.log("Stored light theme? " + storedLightTheme);
+      setLightTheme(storedLightTheme);
+    }
   }, []);
 
 
   return (
     <>
-      <UserContext.Provider value={{ user, setUser, loggedIn, setLoggedIn, token, setToken, order, setOrder, allCountries }}>
-        <div className='app'>
+      <UserContext.Provider value={{ user, setUser, loggedIn, setLoggedIn, token, setToken, order, setOrder, allCountries, lightTheme, setLightTheme }}>
+        <div className='app' id={lightTheme ? 'app-light' : 'app-dark'}>
           <Nav />
 
           <div className='main'>

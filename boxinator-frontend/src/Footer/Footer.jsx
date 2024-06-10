@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { UserContext } from "../App";
 import './Footer.css'
 
 function Footer() {
     const [email, setEmail] = useState("");
     const [signedUp, setSignedUp] = useState(false);
+    const { lightTheme } = useContext(UserContext);
 
     const signUpForNewsLetter = () => {
         setEmail("");
@@ -17,7 +19,7 @@ function Footer() {
     }, [signedUp]);
 
     return (
-        <div className="footer">
+        <div className="footer" id={lightTheme ? 'footer-light' : 'footer-dark'}>
             <div className='newsletter'>
                 <div className='newsletter-signup'>
                     <label htmlFor="newsLetterEmail">
