@@ -6,7 +6,7 @@ import('./OrderList.css')
 import { useNavigate } from "react-router-dom";
 
 function OrderList({ orders, setOrders }) {
-    const { user } = useContext(UserContext);
+    const { user, lightTheme } = useContext(UserContext);
     const navigate = useNavigate();
 
     const STATUS = Object.freeze({
@@ -80,7 +80,7 @@ function OrderList({ orders, setOrders }) {
 
 
     return (
-        <div className="order-list" >
+        <div className="order-list" id={lightTheme ? 'orders-light' : 'orders-dark'}>
             <div className="order-nav">
                 <select
                     className="status-dropdown"

@@ -2,7 +2,9 @@ import { useState } from 'react';
 import './UserInfo.css'
 
 function UserInfo({ userData, setUserData, update, allCountries }) {
-    const [inputInvalid, setInputInvalid] = useState(false);
+    const [inputTextInvalid, setInputTextInvalid] = useState(false);
+    const [inputEmailInvalid, setInputEmailInvalid] = useState(false);
+    const [inputNumberInvalid, setInputNumberInvalid] = useState(false);
 
     const nameRegex = /^[a-zA-ZåäöÅÄÖ]+$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,10 +39,31 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
 
     const validation = (inputValue, regex) => {
         if (!regex.test(inputValue)) {
-            setInputInvalid(true);
+            switch (regex) {
+                case nameRegex:
+                    setInputTextInvalid(true);
+                    break;
+                case emailRegex:
+                    setInputEmailInvalid(true);
+                    break;
+                case numberRegex:
+                    setInputNumberInvalid(true);
+                    break;
+            }
+
         }
         else {
-            setInputInvalid(false);
+            switch (regex) {
+                case nameRegex:
+                    setInputTextInvalid(false);
+                    break;
+                case emailRegex:
+                    setInputEmailInvalid(false);
+                    break;
+                case numberRegex:
+                    setInputNumberInvalid(false);
+                    break;
+            }
         }
     }
 
@@ -68,6 +91,9 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
                     onChange={handleChange}
                 />
             </label>
+            {inputTextInvalid && (
+                <p>Invalid input. Name can only be characters.</p>
+            )}
 
             <label htmlFor='email'>
                 Email:
@@ -79,6 +105,9 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
                     onChange={handleChange}
                 />
             </label>
+            {inputEmailInvalid && (
+                <p>Invalid input. Email must follow format doe@host.com</p>
+            )}
 
             {/* Om komponent används i Profile page ska password ej finnas med */}
             {!update && (
@@ -142,8 +171,8 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
                 />
             </label>
 
-            {inputInvalid && (
-                <p>Invalid input</p>
+            {inputNumberInvalid && (
+                <p>Invalid input. Can only be numbers.</p>
             )}
         </>
     )

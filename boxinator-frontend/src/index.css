@@ -4,14 +4,19 @@
   font-weight: 400;
 
   color: #FFF;
-  background-color: var(--dark-bg);
+  background-color: rgb(113, 255, 108);
   overflow-x: hidden;  /* WCAG - Horisontell scroll 200% krävs endast på Dashboard. (Nav har flex-wrap) */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 
-  --dark-bg: #242424;
+  --dark-bg: #171f31;
+  --light-bg: #d6e7fc;
   --dark-turquoise: rgb(38, 99, 99);
+  --medium-turquoise: #36a4ac;
   --light-turquoise: #c6f8fc;
+  --dark-footer: #162f42;
+  --light-footer: #caeaf0;
+  --dark-text: #1f1f1f;
 }
 
 h1 {

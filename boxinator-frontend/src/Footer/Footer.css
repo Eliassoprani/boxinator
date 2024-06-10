@@ -5,7 +5,15 @@
   align-items: center;
   padding: 20px;
   margin-top: auto; /* Push footer to the bottom */
-  background-color: rgb(58, 58, 58);
+}
+
+#footer-dark {
+  background-color: var(--dark-footer);
+}
+
+#footer-light {
+  background-color: var(--light-footer);
+  color: black;
 }
 
 .footer div {
@@ -29,6 +37,6 @@
   flex-direction: row;
 }
 
-.footer button:focus {  
+.footer button:focus {
   border-color: var(--dark-turquoise);
 }

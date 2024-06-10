@@ -14,7 +14,23 @@ All child components will be vertically stacked in a column (footer hamnar i bot
   flex-direction: column;
 }
 
+#app-light {
+  background-color: var(--light-bg);
+  color: var(--dark-text);
+}
+#app-light button {
+  color: var(--dark-text);
+  border-color: var(--dark-turquoise);
+}
+#app-light button:hover {
+  color: var(--medium-turquoise);
+  border-color: var(--light-turquoise);
+}
+
+#app-dark {
+  background-color: var(--dark-bg);
+}
+
 .main {
-  margin-bottom: 40px; /* Space mellan orderlist och footer */
   margin-top: 180px;  /* Så main hamnar under Nav */
 }

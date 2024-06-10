@@ -5,11 +5,11 @@ import RoleDashboard from './RoleDashboard/RoleDashboard';
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
-    const { user } = useContext(UserContext);
+    const { user, lightTheme } = useContext(UserContext);
     const navigate = useNavigate();
 
     return (
-        <div className="dashboard">
+        <div className="dashboard" id = {lightTheme ? 'dashboard-light' : 'dashboard-dark'}>
             <h2>Dashboard</h2>
 
             {user.role === 0 && (
