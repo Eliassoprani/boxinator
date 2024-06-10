@@ -5,7 +5,7 @@
   align-items: center;
   padding: 20px;
   margin-top: auto; /* Push footer to the bottom */
-  background-color: rgb(58, 58, 58);
+  background-color: var(--dark-footer);
 }
 
 .footer div {
