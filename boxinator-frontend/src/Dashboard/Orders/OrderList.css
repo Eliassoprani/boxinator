@@ -44,7 +44,7 @@
 }
 .user-id:hover {
     cursor: pointer;
-    color: rgb(13, 194, 194);
+    color: var(--medium-turquoise);
 }
 .user-id:active {
     color: #0a253bc7;
@@ -74,5 +74,5 @@ tbody tr {
 
 .sort-column:hover {
   cursor: pointer;
-  color: var(--dark-turquoise);
+  color: var(--medium-turquoise);
 }

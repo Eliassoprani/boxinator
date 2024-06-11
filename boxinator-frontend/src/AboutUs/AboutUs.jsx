@@ -10,7 +10,7 @@ function AboutUs() {
     const loremIpsum = text[0].text;
 
     return (
-        <div className="about-us" id={lightTheme ? 'about-light' : 'about-dark'}>
+        <div className="about-us" id={lightTheme ? 'about-light' : 'about-dark'} aria-label="about us section">
             <h2>About us</h2>
 
             <section>

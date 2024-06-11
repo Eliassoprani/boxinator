@@ -55,14 +55,10 @@ function ClaimOrder() {
     return (
         <>
             {registered && (
-                <div>
-                    Order {orderId} has been added to your account with email address: {email}
-                </div>
+                <p>Order {orderId} has been added to your account with email address: {email}</p>
             )}
             {!registered && (
-                <div>
-                    To claim your order with order id: {orderId}, you will need to create an account.
-                </div>
+                <p>To claim your order with order id: {order}, you will need to create an account.</p>
             )}
             <button onClick={goToLogin}>{registered ? "Log in" : "Sign up"}</button>
         </>

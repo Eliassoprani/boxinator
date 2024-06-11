@@ -145,14 +145,13 @@ function Login() {
 
 
     return (
-        <div className="user-input" id={lightTheme ? 'login-light' : 'login-dark'}>
-
+        <div className="login-signup" id={lightTheme ? 'login-light' : 'login-dark'} aria-label='log in or sign up'>
             {!signUp && (
                 <section>
                     <h2>Log in Page</h2>
 
                     {addedOrder && (
-                        <div>Your order was added successfully! Log in to track the shipment.</div>
+                        <p>Your order was added successfully! Log in to track the shipment.</p>
                     )}
 
                     <form>
@@ -215,7 +214,7 @@ function Login() {
                 </section>
             )}
 
-            <section id="googleSignInDiv"></section>
+            <div aria-label="google log in button" id="googleSignInDiv"></div>
 
             <section className="guest-login">
                 <button onClick={guestLogin}>Continue as guest</button>

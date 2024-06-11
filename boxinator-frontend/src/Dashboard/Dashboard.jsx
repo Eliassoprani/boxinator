@@ -9,7 +9,7 @@ function Dashboard() {
     const navigate = useNavigate();
 
     return (
-        <div className="dashboard" id = {lightTheme ? 'dashboard-light' : 'dashboard-dark'}>
+        <div className="dashboard" id = {lightTheme ? 'dashboard-light' : 'dashboard-dark'} aria-label="dashboard">
             <h2>Dashboard</h2>
 
             {user.role === 0 && (

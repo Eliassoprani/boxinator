@@ -35,7 +35,7 @@ function Sender() {
 
 
     return (
-        <div className="sender">
+        <div className="sender" aria-label="sender information">
             <h2>Sender</h2>
             <p>User status: {senderData.role === 0 ? 'Admin' : senderData.role === 1 ? 'User' : 'Guest'}</p>
             <p>Sender id: {userId}</p>

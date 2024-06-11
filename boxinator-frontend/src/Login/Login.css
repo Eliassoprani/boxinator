@@ -1,4 +1,4 @@
-.user-input {
+.login-signup {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,7 +13,7 @@
     background-color: var(--dark-bg);
 }
 
-.user-input div, .user-input section {
+.login-signup div, .login-signup section {
     margin-bottom: 10px;
 }
 
@@ -29,10 +29,7 @@
 }
 
 .submit-input {
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin: auto;
     background-color: var(--dark-turquoise);
 }
 .submit-input:hover {

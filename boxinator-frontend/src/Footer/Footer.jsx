@@ -19,35 +19,33 @@ function Footer() {
     }, [signedUp]);
 
     return (
-        <div className="footer" id={lightTheme ? 'footer-light' : 'footer-dark'}>
-            <div className='newsletter'>
-                <div className='newsletter-signup'>
-                    <label htmlFor="newsLetterEmail">
-                        Sign up for our Newsletter:
-                        <input
-                            id='newsLetterEmail'
-                            type="email"
-                            name="newsLetterEmail"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)} />
-                    </label>
+        <footer id={lightTheme ? 'footer-light' : 'footer-dark'}>
+            <section className='newsletter'>
+                <label htmlFor="newsLetterEmail">
+                    Sign up for our Newsletter:
+                    <input
+                        id='newsLetterEmail'
+                        type="email"
+                        name="newsLetterEmail"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} />
+                </label>
 
-                    <div className='button-response'>
-                        <button onClick={signUpForNewsLetter}>Sign me up</button>
+                <div className='button-response'>
+                    <button onClick={signUpForNewsLetter}>Sign me up</button>
 
-                        {signedUp && (
-                            <p style={{ marginLeft: "14px" }}>Thanks!</p>
-                        )}
-                    </div>
+                    {signedUp && (
+                        <p style={{ marginLeft: "14px" }} role="status">Thanks!</p>
+                    )}
                 </div>
-            </div>
+            </section>
 
-            <div>
+            <section>
                 <h3>Our Locations</h3>
                 <p>Stockholm</p>
                 <p>Växjö</p>
-            </div>
-        </div >
+            </section>
+        </footer >
     )
 }
 

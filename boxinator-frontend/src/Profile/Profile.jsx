@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react'
 import { UserContext } from "../App";
-import "../Login/Login.css"
+import "./Profile.css"
 import UserInfo from '../UserInfo/UserInfo';
 import { urlBackendBasePath } from '../assets/strings';
 
@@ -55,7 +55,7 @@ function Profile() {
 
     
     return (
-        <div className='user-input'>
+        <div className='profile' aria-label='profile page'>
             <h2>Profile Page</h2>
 
             <form>

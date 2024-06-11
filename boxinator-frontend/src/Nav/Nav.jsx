@@ -54,7 +54,7 @@ function Nav() {
                 </>
             )}
 
-            <button style={{ borderRadius: '20px', marginLeft: '-12%' }} onClick={setTheme}>{themeSymbol}</button>
+            <button aria-label="light dark mode" style={{ borderRadius: '20px', marginLeft: '-12%', border: '1px outset #FFF' }} onClick={setTheme} >{themeSymbol}</button>
         </nav>
     )
 }
