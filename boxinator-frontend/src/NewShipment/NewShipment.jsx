@@ -18,7 +18,7 @@ function NewShipment() {
 
     
     return (
-        <div className="new-shipment" id={lightTheme ? 'shipment-light' : 'shipment-dark'}>
+        <div className="new-shipment" id={lightTheme ? 'shipment-light' : 'shipment-dark'} aria-label="new shipment">
             <h2>New Shipment</h2>
             <p>Shipments can be sent from Sweden, Norway, and Denmark to anywhere in the world.</p>
             <p>There is a set fee for shipments sent within Sweden, Norway, and Denmark, at SEK 100.</p>

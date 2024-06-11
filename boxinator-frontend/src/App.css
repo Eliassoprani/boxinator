@@ -1,12 +1,5 @@
-body {
-  /* Make the body fill all the size of viewport */
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-}
 
-/* Create a root container that fills the screen.
-All child components will be vertically stacked in a column (footer hamnar i botten)*/
+/* All elements are vertically stacked in a column (footer hamnar i botten)*/
 .app {
   width: 100vw;
   height: 100vh;

@@ -80,7 +80,7 @@ function OrderList({ orders, setOrders }) {
 
 
     return (
-        <div className="order-list" id={lightTheme ? 'orders-light' : 'orders-dark'}>
+        <div className="order-list" id={lightTheme ? 'orders-light' : 'orders-dark'} aria-label="order table">
             <div className="order-nav">
                 <select
                     className="status-dropdown"

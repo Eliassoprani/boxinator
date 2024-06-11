@@ -1,4 +1,4 @@
-:root {
+:root { /* root for global variables */
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -18,6 +18,12 @@
   --light-footer: #caeaf0;
   --dark-text: #1f1f1f;
   --dark-btn: #0a253bc7;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
 }
 
 h1 {
@@ -59,6 +65,7 @@ input[type="submit"] {
   -webkit-text-fill-color: white;
   width: fit-content;
   border-radius: 7px;
+  margin-top: 20px;
 }
 
 label {

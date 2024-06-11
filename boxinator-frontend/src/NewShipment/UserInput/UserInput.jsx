@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
-import { fetchCountries } from "./FetchCountries.js";
-import { UserContext } from "../App.jsx";
+import { fetchCountries } from "../FetchCountries.js";
+import { UserContext } from "../../App.jsx";
+import('./UserInput.css');
 
 function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisabled }) {
     const { user, allCountries } = useContext(UserContext);
@@ -33,7 +34,7 @@ function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisa
 
     
     return (
-        <>
+        <div className="user-input">
             <label htmlFor="receiverName">
                 Receiver name:
                 <input
@@ -118,7 +119,7 @@ function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisa
                     />
                 </label>
             )}
-        </>
+        </div>
     )
 }
 

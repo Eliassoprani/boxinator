@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { urlBackendBasePath, guestUserId } from '../assets/strings.js'
 import { orderConfirmationEmail } from "../Email/OrderConfirmation.js";
 import { calculateCost } from "./CalculateCost.js";
-import UserInput from './UserInput.jsx';
+import UserInput from './UserInput/UserInput.jsx';
 
 
 function ShipmentModal({ isOpen, closeModal }) {
@@ -74,20 +74,20 @@ function ShipmentModal({ isOpen, closeModal }) {
             isOpen={isOpen}
             onRequestClose={closeModal}
         >
-            <div className="user-input">
-                <form>
-                    <div className="modal-title">
-                        <h2>New Shipment</h2>
-                        <button className="close-button" onClick={closeModal}>X</button>
-                    </div>
+            <form>
+                <div className="modal-title">
+                    <h2>New Shipment</h2>
+                    <button className="close-button" onClick={closeModal}>X</button>
+                </div>
 
-                    {!thankYouNote && (
-                        <section>
-                            <UserInput shipmentData={shipmentData} setShipmentData={setShipmentData} setMultiplier={setMultiplier} setSubmitDisabled={setSubmitDisabled} />
+                {!thankYouNote && (
+                    <section>
+                        <UserInput shipmentData={shipmentData} setShipmentData={setShipmentData} setMultiplier={setMultiplier} setSubmitDisabled={setSubmitDisabled} />
 
+                        <div className="calc-submit">
                             <button className="calc-btn" onClick={calculate}>Calculate</button>
 
-                            <p className="cost">Cost is SEK {shipmentData.cost}</p>
+                            <p className="cost" aria-live="polite">Cost is SEK {shipmentData.cost}</p>
 
                             <input
                                 disabled={submitDisabled}
@@ -96,20 +96,20 @@ function ShipmentModal({ isOpen, closeModal }) {
                                 value="Submit"
                                 onClick={submitNewShipment}
                             />
-                        </section>
-                    )}
+                        </div>
+                    </section>
+                )}
 
-                    {thankYouNote && (
-                        <section>
-                            <br />
-                            <p>Thank you for your order!</p>
-                            <p>Check your inbox for a confirmation email.</p>
-                            <br />
-                            <button style={{ marginRight: 'auto' }} className="close-button" onClick={closeModal}>Close</button>
-                        </section>
-                    )}
-                </form>
-            </div>
+                {thankYouNote && (
+                    <section>
+                        <br />
+                        <p>Thank you for your order!</p>
+                        <p>Check your inbox for a confirmation email.</p>
+                        <br />
+                        <button style={{ marginRight: 'auto' }} className="close-button" onClick={closeModal}>Close</button>
+                    </section>
+                )}
+            </form>
         </Modal >
     )
 }
