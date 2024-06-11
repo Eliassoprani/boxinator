@@ -31,7 +31,7 @@ function Nav() {
 
             {!loggedIn ? (
                 <>
-                    <button aria-label="light dark mode" className='theme-btn' onClick={setTheme} >{themeSymbol}</button>
+                    <button aria-label="light dark mode" style={{ marginLeft: '40px', marginTop: '10px'}} className='theme-btn' onClick={setTheme} >{themeSymbol}</button>
                 </>
             ) : (
                 <>

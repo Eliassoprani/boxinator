@@ -12,6 +12,7 @@ import ClaimOrder from './ClaimOrder/ClaimOrder';
 import { restoreUser } from './RestoreUser/RestoreUser';
 import { countries } from './assets/countries.json'
 import Sender from './Sender/Sender';
+import Sitemap from './Sitemap/Sitemap';
 
 const UserContext = createContext();
 
@@ -67,6 +68,7 @@ function App() {
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/aboutus" element={<AboutUs />} />
                   <Route path="/newshipment" element={<NewShipment />} />
+                  <Route path="/sitemap" element={<Sitemap />} />
 
                   {(user.role === 0 || user.role === 1) && (
                     <Route path="/profile" element={<Profile />} />

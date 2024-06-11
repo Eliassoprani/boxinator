@@ -10,6 +10,12 @@ footer {
 #footer-dark {
   background-color: var(--dark-footer);
 }
+#footer-dark a {
+  color: white;
+}
+#footer-dark a:hover {
+  color: var(--light-turquoise);
+}
 
 #footer-light {
   background-color: var(--light-footer);
