@@ -2,14 +2,10 @@ nav {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   position: fixed;
   width: 100%;
   flex-wrap: wrap; /* Få med allt vid 200% zoom */
-}
-
-nav button {
-  margin-right: 5px;
 }
 
 #nav-dark {
@@ -21,14 +17,31 @@ nav button {
 #nav-dark a:hover {
   color: var(--light-turquoise);
 }
+#nav-dark .theme-btn{
+  border-color: black;
+}
+#nav-dark .theme-btn:active{
+  border: inset;
+}
 
 #nav-light {
   background-color: var(--light-bg);
   color: var(--dark-text);
 }
+#nav-light .theme-btn {
+  border-color: #FFF;
+}
+#nav-light .theme-btn:active {
+  border: inset;
+}
 
 h1 {
   letter-spacing: 2px;
+}
+
+nav button {
+  padding: 10px;
+  margin-left: 10px;
 }
 
 ul {
@@ -37,14 +50,15 @@ ul {
   list-style-type: none;
 }
 
-li {
-  margin: 20px;
-}
-
 a {
   color: var(--dark-text);
   text-decoration: none;
 }
 a:hover {
   color: var(--medium-turquoise);
+}
+
+.theme-btn {
+  border: 2px outset;
+  border-radius: 20px;
 }

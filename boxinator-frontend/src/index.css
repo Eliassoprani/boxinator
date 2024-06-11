@@ -88,3 +88,13 @@ form {
   align-items: flex-end;
   padding: 20px;
 }
+
+ul {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+li {
+  font-size: 18px;
+  margin: 20px;
+}
