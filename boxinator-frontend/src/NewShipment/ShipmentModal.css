@@ -1,5 +1,5 @@
 .modal {
-  background-color: rgb(124, 177, 190);
+  background-color: var(--medium-turquoise);
   border: 1px solid #c4f6f8;
   padding: 20px;
   max-width: fit-content;

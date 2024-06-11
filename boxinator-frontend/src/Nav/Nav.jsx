@@ -1,5 +1,5 @@
 import './Nav.css'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Nav() {
     const navigate = useNavigate();
     const { user, setUser, loggedIn, setLoggedIn, lightTheme, setLightTheme } = useContext(UserContext);
+    const [themeSymbol, setThemeSymbol] = useState("☀️");
 
     const logout = () => {
         localStorage.clear();
@@ -18,37 +19,43 @@ function Nav() {
     }
 
     const setTheme = () => {
-        console.log("light theme? " + !lightTheme);
         localStorage.setItem('lightTheme', !lightTheme);
         setLightTheme(!lightTheme);
+        setThemeSymbol(themeSymbol === "🌙" ? "☀️" : "🌙");
     }
 
+    
     return (
-        <div className="nav" id={lightTheme ? 'nav-light' : 'nav-dark'}>
+        <nav id={lightTheme ? 'nav-light' : 'nav-dark'}>
             <h1>Boxinator</h1>
 
             {loggedIn && (
                 <>
-                    <div className="nav-link">
-                        <button onClick={() => navigate('/dashboard')}>Dashboard</button>
-                        <button onClick={() => navigate('/newshipment')}>New Shipment</button>
-                        <button onClick={() => navigate('/aboutus')}>About Us</button>
-                    </div>
+                    <ul>
+                        <li>
+                            {/* e.preventDefault gör så att sidan ej laddar om (för SPA) */}
+                            <a href="/dashboard" onClick={(e) => { e.preventDefault(); navigate('/dashboard'); }}>Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="/newshipment" onClick={(e) => { e.preventDefault(); navigate('/newshipment'); }}>New Shipment</a>
+                        </li>
+                        <li>
+                            <a href="/aboutus" onClick={(e) => { e.preventDefault(); navigate('/aboutus'); }}>About Us</a>
+                        </li>
+                    </ul>
 
-                    <div>
-                        <div className="nav-link">
-                            {(user.role === 0 || user.role === 1) && (
-                                <button onClick={() => navigate('/profile')}>{user.firstName}</button>
-                            )}
-                        </div>
+                    <section>
+                        {(user.role === 0 || user.role === 1) && (
+                            <button style={{ border: 'none' }}onClick={() => navigate('/profile')}>{user.firstName}</button>
+                        )}
 
                         <button onClick={logout}>{(user.role === 0 || user.role === 1) ? "Log out" : "Log in / Sign up"}</button>
-
-                        <button style={{borderRadius: '20px', marginLeft: '15px'}} onClick={setTheme}>🌙/☀️</button>
-                    </div>
+                    </section>
                 </>
             )}
-        </div>
+
+            <button style={{ borderRadius: '20px', marginLeft: '-12%' }} onClick={setTheme}>{themeSymbol}</button>
+        </nav>
     )
 }
 

@@ -31,6 +31,6 @@ All child components will be vertically stacked in a column (footer hamnar i bot
   background-color: var(--dark-bg);
 }
 
-.main {
-  margin-top: 180px;  /* Så main hamnar under Nav */
+main {
+  margin-top: 160px;  /* Så main hamnar under Nav */
 }

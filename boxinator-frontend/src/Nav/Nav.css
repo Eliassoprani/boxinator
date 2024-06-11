@@ -1,4 +1,4 @@
-.nav {
+nav {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -8,8 +8,18 @@
   flex-wrap: wrap; /* Få med allt vid 200% zoom */
 }
 
+nav button {
+  margin-right: 5px;
+}
+
 #nav-dark {
   background-color: var(--dark-bg);
+}
+#nav-dark a {
+  color: var(--light-text);
+}
+#nav-dark a:hover {
+  color: var(--light-turquoise);
 }
 
 #nav-light {
@@ -21,15 +31,20 @@ h1 {
   letter-spacing: 2px;
 }
 
-.nav div {
+ul {
   display: flex;
   flex-direction: row;
+  list-style-type: none;
 }
 
-.nav-link button {
-  border: none;
+li {
+  margin: 20px;
 }
 
-.nav button:focus {
-  border-color: var(--dark-turquoise);
+a {
+  color: var(--dark-text);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--medium-turquoise);
 }

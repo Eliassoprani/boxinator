@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 #login-light {
@@ -12,12 +13,12 @@
     background-color: var(--dark-bg);
 }
 
-.user-input div {
+.user-input div, .user-input section {
     margin-bottom: 10px;
 }
 
 .switch {
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
 }
 
@@ -39,6 +40,5 @@
 }
 
 .guest-login button{
-    margin-top: 10px;
     margin-bottom: 50px;
 }

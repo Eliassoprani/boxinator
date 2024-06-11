@@ -1,9 +1,12 @@
 import { useState } from "react";
 import ShipmentModal from "./ShipmentModal";
 import ('./NewShipment.css')
+import { UserContext } from "../App";
+import { useContext } from 'react'
 
 function NewShipment() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { lightTheme } = useContext(UserContext);
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -13,8 +16,9 @@ function NewShipment() {
         setIsModalOpen(false);
     };
 
+    
     return (
-        <div className="new-shipment">
+        <div className="new-shipment" id={lightTheme ? 'shipment-light' : 'shipment-dark'}>
             <h2>New Shipment</h2>
             <p>Shipments can be sent from Sweden, Norway, and Denmark to anywhere in the world.</p>
             <p>There is a set fee for shipments sent within Sweden, Norway, and Denmark, at SEK 100.</p>

@@ -82,12 +82,12 @@ function ShipmentModal({ isOpen, closeModal }) {
                     </div>
 
                     {!thankYouNote && (
-                        <>
+                        <section>
                             <UserInput shipmentData={shipmentData} setShipmentData={setShipmentData} setMultiplier={setMultiplier} setSubmitDisabled={setSubmitDisabled} />
 
                             <button className="calc-btn" onClick={calculate}>Calculate</button>
 
-                            <div className="cost">Cost is SEK {shipmentData.cost}</div>
+                            <p className="cost">Cost is SEK {shipmentData.cost}</p>
 
                             <input
                                 disabled={submitDisabled}
@@ -96,17 +96,17 @@ function ShipmentModal({ isOpen, closeModal }) {
                                 value="Submit"
                                 onClick={submitNewShipment}
                             />
-                        </>
+                        </section>
                     )}
 
                     {thankYouNote && (
-                        <>
+                        <section>
                             <br />
                             <p>Thank you for your order!</p>
                             <p>Check your inbox for a confirmation email.</p>
                             <br />
                             <button style={{ marginRight: 'auto' }} className="close-button" onClick={closeModal}>Close</button>
-                        </>
+                        </section>
                     )}
                 </form>
             </div>

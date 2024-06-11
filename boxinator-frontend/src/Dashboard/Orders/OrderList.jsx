@@ -92,7 +92,7 @@ function OrderList({ orders, setOrders }) {
                     ))}
                 </select>
 
-                <div className="full-text-search">
+                <section className="full-text-search">
                     <label htmlFor="fullTextSearch">
                         Full text search:
                         <input
@@ -103,12 +103,12 @@ function OrderList({ orders, setOrders }) {
                             onChange={(event) => setFullTextSearch(event.target.value)}
                         />
                     </label>
-                    <button style={{ backgroundColor: '#0a253bc7', marginRight: '2px' }} onClick={findOrders}>Find</button>
-                    <button style={{ backgroundColor: '#0a253bc7' }} onClick={clearFullTextSearch}>Clear all</button>
-                </div>
+                    <button onClick={findOrders}>Find</button>
+                    <button onClick={clearFullTextSearch}>Clear all</button>
+                </section>
             </div>
 
-            <div style={{ marginLeft: '16px', marginBottom: '-25px' }}>Number of orders: {filteredOrders.length}</div>
+            <p style={{ marginLeft: '17px'}}>Number of orders: {filteredOrders.length}</p>
 
             <table className="order-table">
                 <thead>

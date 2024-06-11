@@ -122,7 +122,6 @@ function Login() {
         const logInResponseData = await signUpResponse.json();
 
         setUser(logInResponseData);
-        //console.log("loginresponse email från login: " + logInResponseData.email);
         localStorage.setItem('token', logInResponseData.token);
         localStorage.setItem('loggedIn', true);
 
@@ -142,13 +141,14 @@ function Login() {
             document.getElementById("googleSignInDiv"),
             { theme: "outline", size: "large" }
         )
-    }, [])
+    }, []);
+
 
     return (
         <div className="user-input" id={lightTheme ? 'login-light' : 'login-dark'}>
 
             {!signUp && (
-                <>
+                <section>
                     <h2>Log in Page</h2>
 
                     {addedOrder && (
@@ -186,15 +186,15 @@ function Login() {
                         />
                     </form>
 
-                    <div className="switch">
+                    <section className="switch">
                         <p>Not already a user?</p>
                         <button onClick={() => setSignUp(true)}>Sign up</button>
-                    </div>
-                </>
+                    </section>
+                </section>
             )}
 
             {signUp && (
-                <>
+                <section>
                     <h2>Sign up Page</h2>
 
                     <form>
@@ -212,14 +212,14 @@ function Login() {
                         <p>Already a user?</p>
                         <button onClick={() => setSignUp(false)}>Log in</button>
                     </div>
-                </>
+                </section>
             )}
 
-            <div id="googleSignInDiv"></div>
+            <section id="googleSignInDiv"></section>
 
-            <div className="guest-login">
+            <section className="guest-login">
                 <button onClick={guestLogin}>Continue as guest</button>
-            </div>
+            </section>
         </div>
     )
 }
