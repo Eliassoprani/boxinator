@@ -73,7 +73,7 @@ function App() {
                   {(user.role === 0 || user.role === 1) && (
                     <Route path="/profile" element={<Profile />} />
                   )}
-                  
+
                   {user.role === 0 && (
                     <Route path="/sender/:userId" element={<Sender />} />
                   )}
@@ -82,9 +82,8 @@ function App() {
             </Routes>
           </main>
 
-          {loggedIn && (
-            <Footer />
-          )}
+          <Footer />
+
         </div>
       </UserContext.Provider>
     </>
