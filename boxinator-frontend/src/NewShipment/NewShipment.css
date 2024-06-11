@@ -2,4 +2,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 20px;
+}
+
+#shipment-light {
+    background-color: var(--light-bg);
+}
+
+#shipment-dark {
+    background-color: var(--dark-bg);
 }

@@ -49,33 +49,30 @@ function Profile() {
 
     useEffect(() => {
         if (updatedAlert) {
-          setTimeout(() => {setUpdatedAlert(false)}, 3000);
+            setTimeout(() => { setUpdatedAlert(false) }, 3000);
         }
-      }, [updatedAlert]);
+    }, [updatedAlert]);
 
+    
     return (
-        <>
-            <div className='user-input'>
+        <div className='user-input'>
+            <h2>Profile Page</h2>
 
-                <h2>Profile Page</h2>
-                
-                <form>
-                    <UserInfo userData={userData} setUserData={setUserData} update={update} allCountries={allCountries}/>
+            <form>
+                <UserInfo userData={userData} setUserData={setUserData} update={update} allCountries={allCountries} />
 
-                    <input
-                        className="submit-input"
-                        type="submit"
-                        value="Update"
-                        onClick={updateUser}
-                    />
-                </form>
+                <input
+                    className="submit-input"
+                    type="submit"
+                    value="Update"
+                    onClick={updateUser}
+                />
+            </form>
 
-                {updatedAlert && (
-                    <p style={{color: '#BBF3F7'}}>User updated</p>
-                )}
-
-            </div>
-        </>
+            {updatedAlert && (
+                <p style={{ color: '#BBF3F7' }}>User updated</p>
+            )}
+        </div>
     )
 }
 

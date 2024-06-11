@@ -31,6 +31,7 @@ function UserInput({ shipmentData, setShipmentData, setMultiplier, setSubmitDisa
         setSubmitDisabled(true);
     }
 
+    
     return (
         <>
             <label htmlFor="receiverName">

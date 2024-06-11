@@ -22,7 +22,7 @@ function App() {
   const [token, setToken] = useState("");
   const [order, setOrder] = useState(""); //For guest claiming order
   const [allCountries, setAllCountries] = useState([]);
-  const [lightTheme, setLightTheme] = useState(false);
+  const [lightTheme, setLightTheme] = useState(true);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -44,7 +44,6 @@ function App() {
 
     const storedLightTheme = localStorage.getItem('lightTheme');
     if (storedLightTheme) {
-      console.log("Stored light theme? " + storedLightTheme);
       setLightTheme(storedLightTheme);
     }
   }, []);
@@ -56,34 +55,30 @@ function App() {
         <div className='app' id={lightTheme ? 'app-light' : 'app-dark'}>
           <Nav />
 
-          <div className='main'>
-            {!loggedIn && (
-              <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/claimorder/:email/:orderId" element={<ClaimOrder />} />
-              </Routes>
-            )}
+          <main>
+            <Routes>
+              {!loggedIn ? (
+                <>
+                  <Route path="/" element={<Login />} />
+                  <Route path="/claimorder/:email/:orderId" element={<ClaimOrder />} />
+                </>
+              ) : (
+                <>
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/aboutus" element={<AboutUs />} />
+                  <Route path="/newshipment" element={<NewShipment />} />
 
-            {loggedIn && (
-              <Routes>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/aboutus" element={<AboutUs />} />
-                <Route path="/newshipment" element={<NewShipment />} />
-              </Routes>
-            )}
-
-            {loggedIn && (user.role === 0 || user.role === 1) && (
-              <Routes>
-                <Route path="/profile" element={<Profile />} />
-              </Routes>
-            )}
-
-            {loggedIn && user.role === 0 && (
-              <Routes>
-                <Route path="/sender/:userId" element={<Sender />} />
-              </Routes>
-            )}
-          </div>
+                  {(user.role === 0 || user.role === 1) && (
+                    <Route path="/profile" element={<Profile />} />
+                  )}
+                  
+                  {user.role === 0 && (
+                    <Route path="/sender/:userId" element={<Sender />} />
+                  )}
+                </>
+              )}
+            </Routes>
+          </main>
 
           {loggedIn && (
             <Footer />

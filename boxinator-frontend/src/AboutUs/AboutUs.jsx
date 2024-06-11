@@ -13,14 +13,14 @@ function AboutUs() {
         <div className="about-us" id={lightTheme ? 'about-light' : 'about-dark'}>
             <h2>About us</h2>
 
-            <div>
+            <section>
                 <p className='text-left'>{loremIpsum}</p>
                 <img src={dogPackageImage} alt="big dog delivering package" />
-            </div>
-            <div>
+            </section>
+            <section>
                 <img src={dogPackageImage2} alt="small dog delivering package" />
                 <p className='text-right'>{loremIpsum}</p>
-            </div>
+            </section>
         </div>
     )
 }

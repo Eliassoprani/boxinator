@@ -5,15 +5,23 @@
     justify-content: center;
 }
 
-#about-light div {
+#about-light {
+    background-color: var(--light-bg);
+}
+
+#about-dark {
+    background-color: var(--dark-bg);
+}
+
+#about-light section {
     background-color: rgb(221, 255, 255);
 }
 
-#about-dark div {
+#about-dark section {
     background-color: rgb(101, 129, 129);
 }
 
-.about-us div {
+.about-us section {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -23,7 +31,7 @@
     margin-bottom: 2rem;
     padding: 20px;
     border-radius: 5px;
-    max-width: 1100px;
+    max-width: 80%;
 }
 
 .about-us p {

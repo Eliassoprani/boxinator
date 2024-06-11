@@ -19,10 +19,15 @@
 
 .full-text-search {
   margin-left: 1rem;
+  align-items: center;
 }
 .full-text-search input {
   background-color: #e8e9eb;
   color: #000;
+}
+.full-text-search button {
+  background-color: var(--dark-btn); 
+  margin-right: 4px;
 }
 
 .status-dropdown {
@@ -46,7 +51,8 @@
 }
 
 table {
-  margin-top: 2.5rem;
+  width: 100%;
+  margin-top: 1.5rem;
 }
 
 thead {
