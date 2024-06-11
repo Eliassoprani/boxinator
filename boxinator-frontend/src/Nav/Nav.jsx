@@ -24,12 +24,16 @@ function Nav() {
         setThemeSymbol(themeSymbol === "🌙" ? "☀️" : "🌙");
     }
 
-    
+
     return (
         <nav id={lightTheme ? 'nav-light' : 'nav-dark'}>
             <h1>Boxinator</h1>
 
-            {loggedIn && (
+            {!loggedIn ? (
+                <>
+                    <button aria-label="light dark mode" className='theme-btn' onClick={setTheme} >{themeSymbol}</button>
+                </>
+            ) : (
                 <>
                     <ul>
                         <li>
@@ -46,15 +50,17 @@ function Nav() {
 
                     <section>
                         {(user.role === 0 || user.role === 1) && (
-                            <button style={{ border: 'none' }}onClick={() => navigate('/profile')}>{user.firstName}</button>
+                            <button style={{ border: 'none' }} onClick={() => navigate('/profile')}>{user.firstName}</button>
                         )}
 
                         <button onClick={logout}>{(user.role === 0 || user.role === 1) ? "Log out" : "Log in / Sign up"}</button>
+
+                        <button aria-label="light dark mode" className='theme-btn' onClick={setTheme} >{themeSymbol}</button>
                     </section>
                 </>
             )}
 
-            <button aria-label="light dark mode" style={{ borderRadius: '20px', marginLeft: '-12%', border: '1px outset #FFF' }} onClick={setTheme} >{themeSymbol}</button>
+
         </nav>
     )
 }
