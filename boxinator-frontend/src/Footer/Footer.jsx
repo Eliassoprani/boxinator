@@ -1,11 +1,13 @@
 import { useState, useEffect, useContext } from 'react'
 import { UserContext } from "../App";
 import './Footer.css'
+import { useNavigate } from "react-router-dom";
 
 function Footer() {
     const [email, setEmail] = useState("");
     const [signedUp, setSignedUp] = useState(false);
     const { lightTheme } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const signUpForNewsLetter = () => {
         setEmail("");
@@ -44,6 +46,10 @@ function Footer() {
                 <h3>Our Locations</h3>
                 <p>Stockholm</p>
                 <p>Växjö</p>
+            </section>
+
+            <section>
+                <a href="/sitemap" onClick={(e) => { e.preventDefault(); navigate('/sitemap'); }}>Sitemap</a>
             </section>
         </footer >
     )
