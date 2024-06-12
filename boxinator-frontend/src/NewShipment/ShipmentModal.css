@@ -1,37 +1,9 @@
-.modal {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--medium-turquoise);
-  padding: 15px;
-  width: 500px;
-  max-height: 70vh;
-  overflow-y: auto; /* Om skärmhöjd är för kort så skapas scrollbar */
-  margin: 0 auto;
-  margin-top: 10%;
-  border-radius: 20px;
-}
-
-.modal input {
-  color: black; /* Black color for input text */
-
-}
 
 .close-button {
   margin-left: auto;
   margin-right: 8px;
   background-color: transparent;
   border-color: #ffffff;
-}
-
-.modal-title {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.modal-title h2 {
-  margin-right: 120px;
 }
 
 input:disabled {

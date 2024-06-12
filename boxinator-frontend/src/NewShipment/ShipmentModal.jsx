@@ -15,7 +15,7 @@ function ShipmentModal({ isOpen, closeModal }) {
         userId: guestUserId,
         email: "",
         recieverName: "",
-        weight: 0,
+        weight: 1,
         boxColor: "",
         destinationCountry: "Afghanistan",
         orderStatus: 0,
@@ -38,7 +38,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                 sourceCountry: user.countryOfResidence !== "" ? user.countryOfResidence : "Sweden"
             }));
         }
-    }, []);
+    }, [user]);
 
     const submitNewShipment = async (e) => {
         e.preventDefault();
@@ -78,7 +78,7 @@ function ShipmentModal({ isOpen, closeModal }) {
         <Modal
             className="modal"
             isOpen={isOpen}
-            onRequestClose={closeModal}
+            onRequestClose={closeAndClear}
         >
             <form>
                 <div className="modal-title">
