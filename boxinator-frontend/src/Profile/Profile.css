@@ -3,3 +3,11 @@
     flex-direction: column;
     align-items: center;
 }
+
+#profile-light {
+    background-color: var(--light-bg);
+}
+
+#profile-dark {
+    background-color: var(--dark-bg);
+}
