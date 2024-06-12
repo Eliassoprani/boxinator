@@ -64,7 +64,10 @@ function OrderModal({ isOpen, closeModal, orderObj, orders, setOrders }) {
             isOpen={isOpen}
             onRequestClose={closeModal}
         >
-            <h2 style={{ marginLeft: '18px' }}>Change Order Status</h2>
+            <div className="modal-title">
+                <h2>Update status</h2>
+                <button className="close-button" onClick={closeModal}>X</button>
+            </div>
 
             <select
                 className="status-dropdown"
