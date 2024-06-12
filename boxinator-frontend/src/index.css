@@ -1,11 +1,12 @@
-:root { /* root for global variables */
+:root {
+  /* root for global variables */
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color: #FFF;
+  color: #fff;
   background-color: rgb(113, 255, 108);
-  overflow-x: hidden;  /* WCAG - Horisontell scroll 200% krävs endast på Dashboard. (Nav har flex-wrap) */
+  overflow-x: hidden; /* WCAG - Horisontell scroll 200% krävs endast på Dashboard. (Nav har flex-wrap) */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 
@@ -31,7 +32,7 @@ h1 {
 }
 
 button {
-  color: #FFF;
+  color: #fff;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -44,13 +45,15 @@ button {
   transition: border-color 0.1s;
 }
 button:hover {
+  /* For mouse */
   color: var(--light-turquoise);
   border-color: var(--dark-turquoise);
 }
 button:focus {
-  /* Also good when using tab to navigate */
+  /* For tabbing */
   color: var(--light-turquoise);
-  outline: transparent;
+  border-color: var(--dark-turquoise);
+  background-color: var(--medium-turquoise);
 }
 
 input {
@@ -66,6 +69,9 @@ input[type="submit"] {
   width: fit-content;
   border-radius: 7px;
   margin-top: 20px;
+}
+input[type="submit"]:focus {
+  background-color: var(--medium-turquoise);
 }
 
 label {
@@ -97,4 +103,8 @@ ul {
 li {
   font-size: 18px;
   margin: 20px;
+}
+
+a:focus {
+  background-color: var(--medium-turquoise);
 }
