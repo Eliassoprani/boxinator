@@ -47,12 +47,12 @@ button {
 button:hover {
   /* For mouse */
   color: var(--light-turquoise);
-  border-color: var(--dark-turquoise);
+  border-color: var(--medium-turquoise);
 }
 button:focus {
   /* For tabbing */
   color: var(--light-turquoise);
-  border-color: var(--dark-turquoise);
+  border-color: var(--medium-turquoise);
 }
 
 input {

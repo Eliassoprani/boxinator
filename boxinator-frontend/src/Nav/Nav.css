@@ -4,7 +4,7 @@ nav {
   align-items: center;
   justify-content: center;
   position: fixed;
-  width: 100%;
+  width: 100vw;
   flex-wrap: wrap; /* Få med allt vid 200% zoom */
 }
 
