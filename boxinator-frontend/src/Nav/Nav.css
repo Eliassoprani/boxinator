@@ -17,6 +17,9 @@ nav {
 #nav-dark a:hover {
   color: var(--light-turquoise);
 }
+#nav-dark a:focus {
+  color: var(--light-turquoise);
+}
 #nav-dark .theme-btn{
   border-color: black;
 }
@@ -42,20 +45,6 @@ h1 {
 nav button {
   padding: 10px;
   margin-left: 10px;
-}
-
-ul {
-  display: flex;
-  flex-direction: row;
-  list-style-type: none;
-}
-
-a {
-  color: var(--dark-text);
-  text-decoration: none;
-}
-a:hover {
-  color: var(--medium-turquoise);
 }
 
 .theme-btn {

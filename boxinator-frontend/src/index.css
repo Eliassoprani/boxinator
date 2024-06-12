@@ -53,7 +53,6 @@ button:focus {
   /* For tabbing */
   color: var(--light-turquoise);
   border-color: var(--dark-turquoise);
-  background-color: var(--medium-turquoise);
 }
 
 input {
@@ -96,6 +95,9 @@ form {
 }
 
 ul {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
   margin-left: 5%;
   margin-right: 5%;
 }
@@ -105,6 +107,15 @@ li {
   margin: 20px;
 }
 
+a {
+  color: var(--dark-text);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--medium-turquoise);
+  border-color: var(--medium-turquoise);
+}
 a:focus {
-  background-color: var(--medium-turquoise);
+  color: var(--medium-turquoise);
+  border-color: var(--medium-turquoise);
 }

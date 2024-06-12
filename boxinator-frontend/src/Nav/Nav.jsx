@@ -38,7 +38,7 @@ function Nav() {
                     <ul>
                         <li>
                             {/* e.preventDefault gör så att sidan ej laddar om (för SPA) */}
-                            <a href="/dashboard" onClick={(e) => { e.preventDefault(); navigate('/dashboard'); }}>Dashboard</a>
+                            <a href="/dashboard" onClick={(e) => { e.preventDefault(); e.target.blur(); navigate('/dashboard'); }}>Dashboard</a>
                         </li>
                         <li>
                             <a href="/newshipment" onClick={(e) => { e.preventDefault(); navigate('/newshipment'); }}>New Shipment</a>
