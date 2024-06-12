@@ -5,7 +5,7 @@ import UserInfo from '../UserInfo/UserInfo';
 import { urlBackendBasePath } from '../assets/strings';
 
 function Profile() {
-    const { user, setUser, allCountries } = useContext(UserContext);
+    const { user, setUser, allCountries, lightTheme } = useContext(UserContext);
     const update = true;
 
     const initialState = {
@@ -55,7 +55,7 @@ function Profile() {
 
     
     return (
-        <div className='profile' aria-label='profile page'>
+        <div className='profile' id={lightTheme ? 'profile-light' : 'profile-dark'} aria-label='profile page'>
             <h2>Profile Page</h2>
 
             <form>
