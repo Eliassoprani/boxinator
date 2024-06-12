@@ -1,4 +1,14 @@
 .sitemap {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+}
+
+#sitemap-light {
+    background-color: var(--light-bg);
+}
+
+#sitemap-dark {
+    background-color: var(--dark-bg);
 }

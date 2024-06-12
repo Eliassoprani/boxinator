@@ -55,7 +55,7 @@ function Nav() {
 
                         <button onClick={logout}>{(user.role === 0 || user.role === 1) ? "Log out" : "Log in / Sign up"}</button>
 
-                        <button aria-label="light dark mode" className='theme-btn' onClick={(e) => { e.target.blur(); setTheme}} >{themeSymbol}</button>
+                        <button aria-label="light dark mode" className='theme-btn' onClick={(e) => { e.target.blur(); setTheme(); }} >{themeSymbol}</button>
                     </section>
                 </>
             )}
