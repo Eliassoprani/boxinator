@@ -68,6 +68,12 @@ function ShipmentModal({ isOpen, closeModal }) {
         calculateCost(shipmentData, setShipmentData, multiplier, setSubmitDisabled);
     }
 
+    const closeAndClear = () => {
+        closeModal();
+        setThankYouNote(false);
+        setShipmentData(initialState);
+    }
+
     return (
         <Modal
             className="modal"
@@ -77,7 +83,7 @@ function ShipmentModal({ isOpen, closeModal }) {
             <form>
                 <div className="modal-title">
                     <h2>New Shipment</h2>
-                    <button className="close-button" onClick={closeModal}>X</button>
+                    <button className="close-button" onClick={closeAndClear}>X</button>
                 </div>
 
                 {!thankYouNote && (
@@ -106,7 +112,7 @@ function ShipmentModal({ isOpen, closeModal }) {
                         <p>Thank you for your order!</p>
                         <p>Check your inbox for a confirmation email.</p>
                         <br />
-                        <button style={{ marginRight: 'auto' }} className="close-button" onClick={closeModal}>Close</button>
+                        <button style={{ marginRight: 'auto' }} className="close-button" onClick={closeAndClear}>Close</button>
                     </section>
                 )}
             </form>

@@ -25,7 +25,7 @@ function NewShipment() {
             <p>The fee for shipments to other destination countries is based on the weight of the package.</p>
             <br />
             <button onClick={handleOpenModal}>Create new shipment</button>
-            <ShipmentModal isOpen={isModalOpen} onClose={closeModal} />
+            <ShipmentModal isOpen={isModalOpen} closeModal={closeModal} />
         </div>
     )
 }
