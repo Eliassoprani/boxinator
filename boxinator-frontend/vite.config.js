@@ -12,6 +12,6 @@ export default defineConfig({
   port: 8080,
   strictPort: true,
   host: true,
-  origin: "http://0.0.0.0:8080",
+  origin: "http://localhost:3000",    //docker="http://localhost:3000" local="http://localhost:8080" elias="http://0.0.0.0:8080"
  },
 });
