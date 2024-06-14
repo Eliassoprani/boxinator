@@ -144,6 +144,9 @@ function OrderList({ orders, setOrders }) {
                                 {user.role === 0 && (
                                     <td><button style={{ backgroundColor: 'var(--dark-turquoise)' }} onClick={() => handleOpenModal(order)}>Update Status</button></td>
                                 )}
+                                {user.role === 1 && order.status !== 4 && (
+                                    <td><button style={{ backgroundColor: 'var(--dark-turquoise)' }} onClick={() => handleOpenModal(order)}>Cancel Order</button></td>
+                                )}
                             </tr>
                         );
                     })}

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { urlBackendBasePath } from '../../assets/strings.js'
 
 function OrderModal({ isOpen, closeModal, orderObj, orders, setOrders }) {
-    const { token } = useContext(UserContext);
+    const { token, user } = useContext(UserContext);
     const [selectedStatus, setSelectedStatus] = useState(0);
 
     const STATUS = Object.freeze({
@@ -18,8 +18,10 @@ function OrderModal({ isOpen, closeModal, orderObj, orders, setOrders }) {
 
     const changeStatus = async () => {
         const data = {
-            orderStatus: selectedStatus
-        };
+            orderStatus: user.role === 0 ? selectedStatus : 4
+        };        
+
+        console.log("Selected status: " + selectedStatus);
 
         try {
             const headers = {
@@ -44,7 +46,7 @@ function OrderModal({ isOpen, closeModal, orderObj, orders, setOrders }) {
             const orderIndex = updatedOrders.findIndex(order => order.id === orderObj.id);
 
             if (orderIndex !== -1) {
-                orderObj.status = selectedStatus;
+                orderObj.status = user.role === 0 ? selectedStatus : 4;
 
                 // Ersätt gamla objektet 'updatedOrders[orderIndex]' med det nya uppdaterade objektet 'orderObj'
                 updatedOrders[orderIndex] = { ...updatedOrders[orderIndex], orderObj: orderObj };
@@ -58,6 +60,13 @@ function OrderModal({ isOpen, closeModal, orderObj, orders, setOrders }) {
         }
     }
 
+
+    //alert - are you sure?
+    //uppdatera order i databas
+    //uppdatera order i orderlist
+    //om order är cancelled - ta bort cancel order knapp
+
+
     return (
         <Modal
             className="modal"
@@ -69,16 +78,22 @@ function OrderModal({ isOpen, closeModal, orderObj, orders, setOrders }) {
                 <button className="close-button" onClick={closeModal}>X</button>
             </div>
 
-            <select
-                className="status-dropdown"
-                value={selectedStatus}
-                onChange={e => setSelectedStatus(parseInt(e.target.value))}>
-                {Object.keys(STATUS).map(statusKey => (
-                    <option key={statusKey} value={statusKey}>{STATUS[statusKey]}</option>
-                ))}
-            </select>
+            {user.role === 0 && (
+                <select
+                    className="status-dropdown"
+                    value={selectedStatus}
+                    onChange={e => setSelectedStatus(parseInt(e.target.value))}>
+                    {Object.keys(STATUS).map(statusKey => (
+                        <option key={statusKey} value={statusKey}>{STATUS[statusKey]}</option>
+                    ))}
+                </select>
+            )}
 
-            <button onClick={changeStatus}>Update Status</button>
+            {user.role === 1 && (
+                <p>Are you sure you wish to cancel your order? Order id: {orderObj.id}</p>
+            )}
+
+            <button onClick={changeStatus}>{user.role === 0 ? 'Update Status' : 'Cancel'}</button>
         </Modal>
     )
 }
