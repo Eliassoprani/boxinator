@@ -155,27 +155,29 @@ function Login() {
                     )}
 
                     <form>
-                        <label htmlFor='email'>
-                            Email:
-                            <input
-                                id='email'
-                                type="email"
-                                name="email"
-                                value={userData.email}
-                                onChange={handleChange}
-                            />
-                        </label>
+                        <div className='user-info'>
+                            <label htmlFor='email'>
+                                Email:
+                                <input
+                                    id='email'
+                                    type="email"
+                                    name="email"
+                                    value={userData.email}
+                                    onChange={handleChange}
+                                />
+                            </label>
 
-                        <label htmlFor='password'>
-                            Password:
-                            <input
-                                id='password'
-                                type="password"
-                                name="password"
-                                value={userData.password}
-                                onChange={handleChange}
-                            />
-                        </label>
+                            <label htmlFor='password'>
+                                Password:
+                                <input
+                                    id='password'
+                                    type="password"
+                                    name="password"
+                                    value={userData.password}
+                                    onChange={handleChange}
+                                />
+                            </label>
+                        </div>
 
                         <input
                             className="submit-input"

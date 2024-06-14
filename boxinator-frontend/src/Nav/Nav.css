@@ -3,9 +3,53 @@ nav {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  position: fixed;
-  width: 100vw;
+  width: 100%;
   flex-wrap: wrap; /* Få med allt vid 200% zoom */
+}
+
+/* Ändra nav till fixed på skärm bredare än 1024px */
+@media (min-width: 1024px) {
+  nav {
+    position: fixed;
+  }
+  main {
+    margin-top: 160px;
+  }
+  nav h1 {
+    font-size: 3rem;
+  }
+}
+
+/* Ändra nav till dropdown meny på skärm mindre än 1024px */
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-header {
+  display: flex;
+  border: 1px solid var(--medium-turquoise);
+  border-radius: 20px;
+  padding: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  z-index: 1;
+  padding: 0;
+  margin: 0;  /* Blir ej mellanrum mellan header och menu */
+  text-align: center;
+}
+.dropdown-container:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+.dropdown-container:focus .dropdown-content {
+  display: flex;
+  flex-direction: column;
 }
 
 #nav-dark {
@@ -20,10 +64,10 @@ nav {
 #nav-dark a:focus {
   color: var(--light-turquoise);
 }
-#nav-dark .theme-btn{
+#nav-dark .theme-btn {
   border-color: black;
 }
-#nav-dark .theme-btn:active{
+#nav-dark .theme-btn:active {
   border: inset;
 }
 
@@ -32,14 +76,10 @@ nav {
   color: var(--dark-text);
 }
 #nav-light .theme-btn {
-  border-color: #FFF;
+  border-color: #fff;
 }
 #nav-light .theme-btn:active {
   border: inset;
-}
-
-h1 {
-  letter-spacing: 2px;
 }
 
 nav button {
@@ -51,4 +91,3 @@ nav button {
   border: 2px outset;
   border-radius: 20px;
 }
-

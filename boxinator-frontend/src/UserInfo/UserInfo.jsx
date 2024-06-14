@@ -69,7 +69,7 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
 
 
     return (
-        <>
+        <div className='user-info'>
             <label htmlFor="firstName">
                 First Name:
                 <input
@@ -174,7 +174,7 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
             {inputNumberInvalid && (
                 <p>Invalid input. Can only be numbers.</p>
             )}
-        </>
+        </div>
     )
 }
 

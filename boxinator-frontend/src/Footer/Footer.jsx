@@ -22,35 +22,39 @@ function Footer() {
 
     return (
         <footer id={lightTheme ? 'footer-light' : 'footer-dark'}>
-            <section className='newsletter'>
-                <label htmlFor="newsLetterEmail">
-                    Sign up for our Newsletter:
-                    <input
-                        id='newsLetterEmail'
-                        type="email"
-                        name="newsLetterEmail"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)} />
-                </label>
+            <div className='footer-items'>
+                <section className='newsletter'>
+                    <label htmlFor="newsLetterEmail">
+                        Sign up for our Newsletter:
+                        <input
+                            id='newsLetterEmail'
+                            type="email"
+                            name="newsLetterEmail"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)} />
+                    </label>
 
-                <div className='button-response'>
-                    <button onClick={signUpForNewsLetter}>Sign me up</button>
+                    <div className='button-response'>
+                        <button onClick={(e) => { e.target.blur(); signUpForNewsLetter(); }}>Sign me up</button>
 
-                    {signedUp && (
-                        <p style={{ marginLeft: "14px" }} role="status">Thanks!</p>
-                    )}
-                </div>
-            </section>
+                        {signedUp && (
+                            <p style={{ marginLeft: "14px" }} role="status">Thanks!</p>
+                        )}
+                    </div>
+                </section>
 
-            <section>
-                <h3>Our Locations</h3>
-                <p>Stockholm</p>
-                <p>Växjö</p>
-            </section>
+                <section>
+                    <h3>Our Locations</h3>
+                    <p>Stockholm</p>
+                    <p>Växjö</p>
+                </section>
 
-            <section>
-                <a href="/sitemap" onClick={(e) => { e.preventDefault(); navigate('/sitemap'); }}>Sitemap</a>
-            </section>
+                <section>
+                    <a href="/sitemap" onClick={(e) => { e.preventDefault(); navigate('/sitemap'); }} style={{ fontWeight: 'bold' }}>Sitemap</a>
+                </section>
+            </div>
+
+            <p style={{ textAlign: 'center', color: 'grey' }}>©2024 Boxinator</p>
         </footer >
     )
 }

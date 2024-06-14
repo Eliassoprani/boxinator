@@ -1,10 +1,23 @@
 footer {
+  margin-top: auto; /* Push footer to the bottom */
+}
+
+.footer-items {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   padding: 20px;
-  margin-top: auto; /* Push footer to the bottom */
+}
+@media (max-width: 850px) {
+  /* Lägg footer items i kolumner */
+  .footer-items {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-items * {
+    margin-top: 20px;
+  }
 }
 
 #footer-dark {
@@ -32,6 +45,12 @@ footer {
   background-color: #f9fafd;
   color: rgb(19, 19, 19);
   border-radius: 5px;
+}
+
+@media (max-width: 270px) {
+  .newsletter {
+      display: none;
+  }
 }
 
 .button-response {
