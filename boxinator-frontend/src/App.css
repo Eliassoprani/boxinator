@@ -1,7 +1,6 @@
 
 /* All elements are vertically stacked in a column (footer hamnar i botten)*/
 .app {
-  width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,8 +21,4 @@
 
 #app-dark {
   background-color: var(--dark-bg);
-}
-
-main {
-  margin-top: 160px;  /* Så main hamnar under Nav */
 }
