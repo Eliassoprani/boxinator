@@ -15,8 +15,8 @@ function Nav() {
       };
     
       useEffect(() => {
-        handleResize(); //Sätt rätt layout från början
-        window.addEventListener('resize', handleResize);
+        handleResize(); //Get correct layout from start
+        window.addEventListener('resize', handleResize);    //Set layout if screen size changes
         return () => {
           window.removeEventListener('resize', handleResize);
         };
@@ -80,7 +80,7 @@ function Nav() {
                             <>
                                 <ul>
                                     <li>
-                                        {/* e.preventDefault gör så att sidan ej laddar om (för SPA)  e.target.blur är för att byta tillbakafärg efter active */}
+                                        {/* e.preventDefault makes the page not reload (for SPA)  e.target.blur changes link color back to normal */}
                                         <a href="/dashboard" onClick={(e) => { e.preventDefault(); e.target.blur(); navigate('/dashboard'); }}>Dashboard</a>
                                     </li>
                                     <li>

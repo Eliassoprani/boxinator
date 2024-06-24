@@ -102,7 +102,7 @@ namespace backend.Repositories
             if (payload.DateOfBirth != null)
                 user.DateOfBirth = payload.DateOfBirth;
             if (payload.Phone != null)
-                user.Phone = payload.Phone.Value; // Phone är int => .Value
+                user.Phone = payload.Phone.Value; // Phone is an integer which means .Value is added
             if (payload.CountryOfResidence != null)
                 user.CountryOfResidence = payload.CountryOfResidence;
             if (payload.ZipCode != null)

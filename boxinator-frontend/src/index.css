@@ -138,6 +138,18 @@ a:focus {
   border-radius: 20px;
 }
 
+@media (max-width: 600px) {
+  .modal {
+    width: 300px;
+  }
+}
+
+@media (max-width: 400px) {
+  .modal {
+    width: 200px;
+  }
+}
+
 .modal * {
   margin-bottom: 10px;
 }

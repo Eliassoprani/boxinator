@@ -1,19 +1,14 @@
 import emailjs from "@emailjs/browser";
-import { urlFrontendBasePath } from "../assets/strings.js";
+import { urlFrontendBasePath, serviceId, templateIdAccountActivation, publicKey } from "../assets/strings.js";
 
 export function accountActivationEmail(firstName, email) {
-
-  const serviceId = "service_krhq75r";
-  const templateId = "template_7v9fupt";
-  const publicKey = "llG6edCvnODXdraEf";
-  
   const templateParams = {
     to_name: firstName,
     to_email: email,
     message: `Visit us at ${urlFrontendBasePath}`,
   };
 
-  emailjs.send(serviceId, templateId, templateParams, publicKey).then(
+  emailjs.send(serviceId, templateIdAccountActivation, templateParams, publicKey).then(
     () => {
       console.log("Account activation email sent");
     },

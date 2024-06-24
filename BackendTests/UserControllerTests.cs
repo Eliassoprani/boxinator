@@ -48,14 +48,15 @@ namespace backend.tests
             );
 
             var loginResponse = await _client.PostAsync("/authentication/login", loginContent);
+
             loginResponse.EnsureSuccessStatusCode();
 
             var loginResponseData = await loginResponse.Content.ReadAsStringAsync();
+
             var actualLoginResPayload = JsonConvert.DeserializeObject<LoginResPayload>(
                 loginResponseData
             );
 
-            Assert.NotNull(actualLoginResPayload);
             Assert.AreEqual("alex.hernstrom@gmail.com", actualLoginResPayload.Email);
         }
 
@@ -81,10 +82,14 @@ namespace backend.tests
                 "application/json"
             );
 
-            var registerResponse = await _client.PostAsync("/authentication/signup", registerContent);
+            var registerResponse = await _client.PostAsync(
+                "/authentication/signup",
+                registerContent
+            );
             registerResponse.EnsureSuccessStatusCode();
 
             var registerResponseData = await registerResponse.Content.ReadAsStringAsync();
+
             var actualRegisterResPayload = JsonConvert.DeserializeObject<RegisterResPayload>(
                 registerResponseData
             );
@@ -107,9 +112,11 @@ namespace backend.tests
             );
 
             var loginResponse = await _client.PostAsync("/authentication/login", loginContent);
+
             loginResponse.EnsureSuccessStatusCode();
 
             var loginResponseData = await loginResponse.Content.ReadAsStringAsync();
+
             var actualLoginResPayload = JsonConvert.DeserializeObject<LoginResPayload>(
                 loginResponseData
             );
@@ -122,7 +129,15 @@ namespace backend.tests
             );
 
             var updateUserRequest = JsonConvert.SerializeObject(
-                new UserPutPayload("Updated", "User", "newpassword", "1991-01-01", 9876543210, "Canada", 54321)
+                new UserPutPayload(
+                    "Updated",
+                    "User",
+                    "newpassword",
+                    "1991-01-01",
+                    9876543210,
+                    "Canada",
+                    54321
+                )
             );
 
             var userContent = new StringContent(
@@ -132,12 +147,12 @@ namespace backend.tests
             );
 
             var updateUserResponse = await _client.PutAsync("/authentication/update", userContent);
+
             updateUserResponse.EnsureSuccessStatusCode();
 
             var updateUserResponseData = await updateUserResponse.Content.ReadAsStringAsync();
-            var actualUserDTO = JsonConvert.DeserializeObject<UserDTO>(
-                updateUserResponseData
-            );
+
+            var actualUserDTO = JsonConvert.DeserializeObject<UserDTO>(updateUserResponseData);
 
             Assert.NotNull(actualUserDTO);
             Assert.AreEqual("Updated", actualUserDTO.FirstName);
@@ -158,9 +173,11 @@ namespace backend.tests
             );
 
             var loginResponse = await _client.PostAsync("/authentication/login", loginContent);
+
             loginResponse.EnsureSuccessStatusCode();
 
             var loginResponseData = await loginResponse.Content.ReadAsStringAsync();
+
             var actualLoginResPayload = JsonConvert.DeserializeObject<LoginResPayload>(
                 loginResponseData
             );
@@ -178,6 +195,7 @@ namespace backend.tests
             Assert.NotNull(response);
 
             var responseData = await response.Content.ReadAsStringAsync();
+
             var userDTO = JsonConvert.DeserializeObject<UserDTO>(responseData);
 
             Assert.NotNull(userDTO);
@@ -187,12 +205,16 @@ namespace backend.tests
         [Test]
         public async Task GetUserByEmailTest()
         {
-            var response = await _client.GetAsync("/authentication/getUserByEmail/alex.hernstrom@gmail.com");
+            var response = await _client.GetAsync(
+                "/authentication/getUserByEmail/alex.hernstrom@gmail.com"
+            );
 
             response.EnsureSuccessStatusCode();
+
             Assert.NotNull(response);
 
             var responseData = await response.Content.ReadAsStringAsync();
+
             var userId = JsonConvert.DeserializeObject<string>(responseData);
 
             Assert.NotNull(userId);
@@ -202,12 +224,15 @@ namespace backend.tests
         [Test]
         public async Task GetUserByIdTest()
         {
-            var response = await _client.GetAsync("/authentication/getUserById/64b278e4-902e-4685-afac-7614c737a31b");
+            var response = await _client.GetAsync(
+                "/authentication/getUserById/64b278e4-902e-4685-afac-7614c737a31b"
+            );
 
             response.EnsureSuccessStatusCode();
             Assert.NotNull(response);
 
             var responseData = await response.Content.ReadAsStringAsync();
+            
             var userDTO = JsonConvert.DeserializeObject<UserDTO>(responseData);
 
             Assert.NotNull(userDTO);

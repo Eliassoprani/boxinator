@@ -19,7 +19,7 @@ function OrderList({ orders, setOrders }) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState({});
-    const [selectedStatus, setSelectedStatus] = useState(null); // Ändrar text i dropdown menyn
+    const [selectedStatus, setSelectedStatus] = useState(null); //Changes the text in the dropdown menu
     const [fullTextSearch, setFullTextSearch] = useState("");
     const [filteredOrders, setFilteredOrders] = useState(orders);
 
@@ -108,7 +108,7 @@ function OrderList({ orders, setOrders }) {
                 </section>
             </div>
 
-            <p style={{ marginLeft: '17px'}}>Number of orders: {filteredOrders.length}</p>
+            <p style={{ marginLeft: '17px' }}>Number of orders: {filteredOrders.length}</p>
 
             <table className="order-table">
                 <thead>
@@ -142,10 +142,9 @@ function OrderList({ orders, setOrders }) {
                                 <td>{order.cost}</td>
                                 <td>{STATUS[order.status].toUpperCase()}</td>
                                 {user.role === 0 && (
-                                    <td><button style={{ backgroundColor: 'var(--dark-turquoise)' }} onClick={() => handleOpenModal(order)}>Update Status</button></td>
-                                )}
-                                {user.role === 1 && order.status !== 4 && (
-                                    <td><button style={{ backgroundColor: 'var(--dark-turquoise)' }} onClick={() => handleOpenModal(order)}>Cancel Order</button></td>
+                                    <td>
+                                        <button style={{ backgroundColor: 'var(--dark-btn)' }} onClick={() => handleOpenModal(order)}>Update Status</button>
+                                    </td>
                                 )}
                             </tr>
                         );

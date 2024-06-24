@@ -1,5 +1,5 @@
 export const calculateCost = (shipmentData, setShipmentData, multiplier, setSubmitDisabled) => {
-  //Dessa fält måste vara ifyllda
+  //These fields are required
   if (shipmentData.weight === 0 || shipmentData.sourceCountry === "" || shipmentData.destinationCountry === "" || shipmentData.email === "") {
     console.log("wrong fields (weight cannot be 0)");
   } 
@@ -7,7 +7,7 @@ export const calculateCost = (shipmentData, setShipmentData, multiplier, setSubm
   else {
     
     if (shipmentData.destinationCountry === "Sweden" || shipmentData.destinationCountry === "Norway" || shipmentData.destinationCountry === "Denmark") {
-        //Flat rate
+        //Flat rate is 100
         setShipmentData({ ...shipmentData, cost: 100 });
     } 
     else {

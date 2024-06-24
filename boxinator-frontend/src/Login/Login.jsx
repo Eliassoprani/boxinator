@@ -15,12 +15,12 @@ function Login() {
     const [userData, setUserData] = useState({ email: "", password: "" });
     const [addedOrder, setAddedOrder] = useState(false);
 
-    //Om order finns är det en re-direct från Claim Order
+    //If order exists then this login is a re-direct from component ClaimOrder and the user is an unregistered guest
     useEffect(() => {
         if (order !== "") {
             setSignUp(true);
         }
-    }, [order]); // Only run the effect when the value of 'order' changes
+    }, [order]); //Only run the effect when the value of 'order' changes
 
     const handleChange = (event) => {
         const inputName = event.target.name;
@@ -81,7 +81,7 @@ function Login() {
             setAddedOrder(true);
         }
 
-        setSignUp(false);
+        setSignUp(false);   //Newly registered user is sent to login
 
         setOrder("");
     }
@@ -93,9 +93,7 @@ function Login() {
     }
 
     async function handleGoogleCallbackResponse(response) {
-        //console.log("encoded jwt id token:" + response.credential)
         var userObject = jwtDecode(response.credential);
-        //console.log(userObject);
 
         const signUpResponse = await fetch(`${urlBackendBasePath}/authentication/google_signup`, {
             method: "POST",

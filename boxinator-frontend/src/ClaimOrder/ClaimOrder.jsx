@@ -11,7 +11,7 @@ function ClaimOrder() {
     const { order, setOrder } = useContext(UserContext);
     const [registered, setRegistered] = useState(false);
 
-    //Logga ut får att kunna registrera sig samt gå direkt till sign up
+    //Log out 
     localStorage.clear();
 
     useEffect(() => {
@@ -19,7 +19,7 @@ function ClaimOrder() {
     });
 
     const claimOrder = async () => {
-        //Kolla om email finns i databasen
+        //Check if user is registered by checking if email is in database
         const userResponse = await fetch(`${urlBackendBasePath}/authentication/getUserByEmail/${email}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -31,24 +31,25 @@ function ClaimOrder() {
 
         const userId = await userResponse.json();
 
-        //Om email inte finns registrerad
+        //If email is not registered
         if (userId === "notRegistered") {
             console.log("User is not in database");
 
-            setOrder(orderId);
+            setOrder(orderId);  //Handled in Login component at line 20
+
             console.log("Order set to " + orderId);
         }
-        //Om email finns
+        //If email is registered
         else {
             setRegistered(true);
 
-            //Uppdatera order
+            //Update order with user's id
             updateOrder(userId, orderId);
         }
     }
 
     const goToLogin = () => {
-        //Gå till log in / sign up
+        //Go to log in for registered user / sign up for guest
         navigate("/");
     }
 

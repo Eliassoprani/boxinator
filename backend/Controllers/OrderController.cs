@@ -24,7 +24,7 @@ namespace backend.Controllers
             authGroup.MapPut("/updateOrdersUser", updateOrdersUser);
         }
 
-        [Authorize(Roles = "Admin")]    //Denna annotation fungerar ej. Måste ändå kolla user's role i metoden
+        [Authorize(Roles = "Admin")]
         public static async Task<IResult> getAllOrders([FromServices] IOrderRepository orderRepository, ClaimsPrincipal user)
         {
             var roleClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
@@ -89,6 +89,8 @@ namespace backend.Controllers
             {
                 return TypedResults.Unauthorized();
             }
+
+            Console.WriteLine("Order status: " + payload);
             
             var order = await orderRepository.UpdateOrder(payload, OrderId);
 
@@ -97,7 +99,7 @@ namespace backend.Controllers
             return TypedResults.Ok(order);
         }
 
-        //Om en guest claimat ett konto ska deras order få deras user id
+        //When a guest claims an order, the order is updated with the new user's id
         [Authorize]
         public static async Task<IResult> updateOrdersUser([FromServices] IOrderRepository orderRepository, OrderPutUserPayload payload)
         {

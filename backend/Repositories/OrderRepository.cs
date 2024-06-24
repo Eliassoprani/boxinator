@@ -48,7 +48,7 @@ namespace backend.Repositories
                 Cost = payload.Cost,
             };
 
-            //Lägg till manuellt i databas
+            //Add order manually to database
             try
             {
                 _databaseContext.Orders.Add(order);
@@ -63,7 +63,7 @@ namespace backend.Repositories
 
         public async Task<IEnumerable<Order>> GetAllUserOrders(string UserId)
         {
-            //Filtrera ut och returnera endast de ordrar som har rätt user
+            //Filter orders by user id
             List<Order> userOrders = await _databaseContext
                 .Orders.Where(order => order.UserId == UserId)
                 .Include(order => order.SourceCountry)
@@ -90,7 +90,7 @@ namespace backend.Repositories
             return order;
         }
 
-        //För guest som claimat sitt konto
+        //When a guest claim an order and create an account, the order is updated with their new user id
         public async Task<Order?> UpdateOrdersUser(OrderPutUserPayload payload)
         {
             int orderIdInt = int.Parse(payload.OrderId);

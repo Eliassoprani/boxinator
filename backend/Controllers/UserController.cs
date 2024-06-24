@@ -75,7 +75,6 @@ namespace backend.Controllers
             return TypedResults.BadRequest();
         }
 
-        [Microsoft.AspNetCore.Authorization.Authorize] //Kollar om jwt finns och är giltig
         public static async Task<IResult> updateUser([FromServices] IUserRepository userRepository, ClaimsPrincipal user, UserPutPayload payload)
         {
             string? userId = user.UserId();

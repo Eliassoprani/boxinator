@@ -1,5 +1,6 @@
 import emailjs from "@emailjs/browser";
-import { urlFrontendBasePath } from "../assets/strings.js";
+import { urlFrontendBasePath, serviceId, templateIdOrderConfirmation, publicKey } from "../assets/strings.js";
+
 
 export function orderConfirmationEmail(user, email, responseData) {
   var toName = "";
@@ -21,16 +22,13 @@ export function orderConfirmationEmail(user, email, responseData) {
     message = `${message}\n${orderLink}`;
   }
 
-  const serviceId = "service_krhq75r";
-  const templateId = "template_86k79yo";
-  const publicKey = "llG6edCvnODXdraEf";
   const templateParams = {
     to_name: toName,
     to_email: toEmail,
     message: message,
   };
 
-  emailjs.send(serviceId, templateId, templateParams, publicKey).then(
+  emailjs.send(serviceId, templateIdOrderConfirmation, templateParams, publicKey).then(
     () => {
       console.log("Order confirmation email sent");
     },
