@@ -56,7 +56,7 @@ function ShipmentModal({ isOpen, closeModal }) {
 
         const responseData = await newShipmentResponse.json();
 
-        //Skicka email
+        //Send email
         //orderConfirmationEmail(user, shipmentData.email, responseData);
 
         setThankYouNote(true);

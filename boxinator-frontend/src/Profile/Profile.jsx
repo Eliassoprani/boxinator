@@ -43,7 +43,7 @@ function Profile() {
 
         setUser(responseData);
 
-        //user feedback
+        //User feedback for 3 sec
         setUpdatedAlert(true);
     }
 
@@ -53,13 +53,17 @@ function Profile() {
         }
     }, [updatedAlert]);
 
-    
+
     return (
         <div className='profile' id={lightTheme ? 'profile-light' : 'profile-dark'} aria-label='profile page'>
             <h2>Profile Page</h2>
 
             <form>
                 <UserInfo userData={userData} setUserData={setUserData} update={update} allCountries={allCountries} />
+
+                {updatedAlert && (
+                    <p style={{ color: 'var(--medium-turquoise' }}>User updated</p>
+                )}
 
                 <input
                     className="submit-input"
@@ -68,10 +72,6 @@ function Profile() {
                     onClick={updateUser}
                 />
             </form>
-
-            {updatedAlert && (
-                <p style={{ color: '#BBF3F7' }}>User updated</p>
-            )}
         </div>
     )
 }

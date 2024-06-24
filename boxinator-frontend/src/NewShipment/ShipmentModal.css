@@ -1,4 +1,3 @@
-
 .close-button {
   margin-left: auto;
   margin-right: 8px;
@@ -39,4 +38,15 @@ input:disabled {
 }
 .form-submit:hover {
   cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .modal-title {
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-title h2 {
+    margin: 0;
+    margin-bottom: 10px;
+  }
 }

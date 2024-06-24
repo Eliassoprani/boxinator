@@ -15,7 +15,7 @@ function UserInfo({ userData, setUserData, update, allCountries }) {
         const inputValue = event.target.value;
 
         if (inputName && inputValue !== undefined) {
-            //Validera user input dynamiskt
+            //Validate user input dynamically
             switch (inputName) {
                 case "firstName":
                 case "lastName":
